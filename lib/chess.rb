@@ -1,3 +1,4 @@
+require_relative "chess/coordinates"
 require_relative "chess/board"
 
 require_relative "chess/piece"

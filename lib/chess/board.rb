@@ -59,9 +59,13 @@ class Board
     4.times { @grid << %w[- - - - - - - -] }
   end
 
+  # Translates coordinates as expressed in the board
+  # to their positions in the grid.
+  # Letter represents column and number represents row.
+  # Example: "a2" would be translated as [6, 0]
   def translate_coords(coords)
-    letter = coordinates[coords[0]] # Represents column.
-    number = coordinates[coords[1]] # Represents row.
+    letter = coordinates[coords[0]]
+    number = coordinates[coords[1]]
     [number, letter]
   end
 

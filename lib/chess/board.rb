@@ -82,6 +82,6 @@ class Board
   end
 
   def move_possible?(piece, from, to)
-    # TODO
+    piece.allowed_move?(from, to)
   end
 end

@@ -7,7 +7,7 @@ describe Queen do
     end
 
     it "has eight allowed moves" do
-      expect(queen.allowed_moves.length).to be(8)
+      expect(queen.allowed_moves.length).to be(56)
     end
   end
 end

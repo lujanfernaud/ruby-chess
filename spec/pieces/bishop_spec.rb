@@ -7,7 +7,7 @@ describe Bishop do
     end
 
     it "has four allowed moves" do
-      expect(bishop.allowed_moves.length).to be(4)
+      expect(bishop.allowed_moves.length).to be(28)
     end
   end
 end

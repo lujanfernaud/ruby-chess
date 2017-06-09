@@ -7,7 +7,7 @@ describe Rook do
     end
 
     it "has four allowed moves" do
-      expect(rook.allowed_moves.length).to be(4)
+      expect(rook.allowed_moves.length).to be(28)
     end
   end
 end

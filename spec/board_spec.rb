@@ -9,7 +9,27 @@ describe Board do
     end
 
     it "has an 8x8 grid" do
-      expect(board.grid.inject(:+).count).to eq(64)
+      expect(grid.inject(:+).count).to eq(64)
+    end
+
+    it "has two rows of black pieces" do
+      black_rows = grid[0..1].flatten
+      black_rows.all? { |piece| expect(piece.color).to be(:black) }
+    end
+
+    it "has a row of black pawns" do
+      black_pawns = grid[1]
+      black_pawns.all? { |piece| expect(piece).to be_a(Pawn) }
+    end
+
+    it "has two rows of white pieces" do
+      white_rows = grid[6..7].flatten
+      white_rows.all? { |piece| expect(piece.color).to be(:white) }
+    end
+
+    it "has a row of white pawns" do
+      white_pawns = grid[6]
+      white_pawns.all? { |piece| expect(piece).to be_a(Pawn) }
     end
   end
 

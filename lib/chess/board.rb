@@ -9,7 +9,8 @@ class Board
                   "5" => 3, "6" => 2, "7" => 1, "8" => 0 }.freeze
 
   def initialize
-    @grid = Array.new(8) { Array.new(8) { "-" } }
+    @grid = []
+    set_board
     @coordinates = COORDINATES
   end
 
@@ -25,6 +26,40 @@ class Board
   end
 
   private
+
+  def set_board
+    add_royal_row(:black)
+    add_pawn_row(:black, 1)
+    add_empty_rows
+    add_pawn_row(:white, 6)
+    add_royal_row(:white)
+  end
+
+  def add_royal_row(color)
+    @grid << [Rook.new(color: color),
+              Knight.new(color: color),
+              Bishop.new(color: color),
+              King.new(color: color),
+              Queen.new(color: color),
+              Bishop.new(color: color),
+              Knight.new(color: color),
+              Rook.new(color: color)]
+  end
+
+  def add_pawn_row(color, row)
+    @grid << [Pawn.new(color: color, position: [row, 0]),
+              Pawn.new(color: color, position: [row, 1]),
+              Pawn.new(color: color, position: [row, 2]),
+              Pawn.new(color: color, position: [row, 3]),
+              Pawn.new(color: color, position: [row, 4]),
+              Pawn.new(color: color, position: [row, 5]),
+              Pawn.new(color: color, position: [row, 6]),
+              Pawn.new(color: color, position: [row, 7])]
+  end
+
+  def add_empty_rows
+    4.times { @grid << %w[- - - - - - - -] }
+  end
 
   def translate_coords(coords)
     letter = coordinates[coords[0]] # Represents column.

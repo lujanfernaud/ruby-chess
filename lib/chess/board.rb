@@ -2,8 +2,7 @@
 class Board
   include Coordinates
 
-  attr_accessor :grid
-  attr_reader   :coordinates, :piece
+  attr_reader :coordinates, :piece
 
   def initialize
     @grid = []
@@ -23,6 +22,8 @@ class Board
   end
 
   private
+
+  attr_accessor :grid
 
   def set_board
     add_royal_row(:black)

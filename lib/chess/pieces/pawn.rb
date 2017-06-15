@@ -49,10 +49,6 @@ class Pawn < Piece
     end
   end
 
-  def move_inside_board?(row, column)
-    (0..7).cover?(row) && (0..7).cover?(column)
-  end
-
   def set_allowed_moves_for_white
     @allowed_moves = [[-1, 0]]
     @allowed_moves << [-2, 0] if initial_position_white

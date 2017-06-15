@@ -45,14 +45,14 @@ class Board
   end
 
   def add_pawn_row(color, row)
-    @grid << [Pawn.new(color: color, position: [row, 0]),
-              Pawn.new(color: color, position: [row, 1]),
-              Pawn.new(color: color, position: [row, 2]),
-              Pawn.new(color: color, position: [row, 3]),
-              Pawn.new(color: color, position: [row, 4]),
-              Pawn.new(color: color, position: [row, 5]),
-              Pawn.new(color: color, position: [row, 6]),
-              Pawn.new(color: color, position: [row, 7])]
+    @grid << [Pawn.new(color: color, position: [row, 0], board: self),
+              Pawn.new(color: color, position: [row, 1], board: self),
+              Pawn.new(color: color, position: [row, 2], board: self),
+              Pawn.new(color: color, position: [row, 3], board: self),
+              Pawn.new(color: color, position: [row, 4], board: self),
+              Pawn.new(color: color, position: [row, 5], board: self),
+              Pawn.new(color: color, position: [row, 6], board: self),
+              Pawn.new(color: color, position: [row, 7], board: self)]
   end
 
   def add_empty_rows

@@ -1,5 +1,6 @@
 describe Pawn do
-  let(:pawn) { described_class.new(color: :white, position: [5, 0]) }
+  let(:board) { Board.new }
+  let(:pawn)  { described_class.new(color: :white, position: [5, 0], board: board) }
 
   describe "attributes" do
     it "is a Piece" do
@@ -15,13 +16,13 @@ describe Pawn do
     end
 
     context "when the color is white" do
-      it "has [[-1, 0], [-1, -1], [-1, 1]] as allowed moves" do
-        expect(pawn.allowed_moves).to eq([[-1, 0], [-1, -1], [-1, 1]])
+      it "has [[-1, 0]] as an allowed move" do
+        expect(pawn.allowed_moves).to eq([[-1, 0]])
       end
     end
 
     context "when the color is white and the position is the initial one" do
-      let(:pawn) { described_class.new(color: :white, position: [6, 0]) }
+      let(:pawn) { described_class.new(color: :white, position: [6, 0], board: board) }
 
       it "also has [-2, 0] as an allowed move" do
         expect(pawn.allowed_moves.include?([-2, 0])).to be(true)
@@ -29,7 +30,7 @@ describe Pawn do
     end
 
     context "when the color is white and the position is not the initial one" do
-      let(:pawn) { described_class.new(color: :white, position: [5, 0]) }
+      let(:pawn) { described_class.new(color: :white, position: [5, 0], board: board) }
 
       it "doesn't have [-2, 0] as an allowed move" do
         expect(pawn.allowed_moves.include?([-2, 0])).to be(false)
@@ -37,25 +38,25 @@ describe Pawn do
     end
 
     context "when the color is black" do
-      let(:pawn) { described_class.new(color: :black, position: [2, 0]) }
+      let(:pawn) { described_class.new(color: :black, position: [2, 0], board: board) }
 
-      it "has [[1, 0], [1, 1], [1, -1]] as allowed moves" do
-        expect(pawn.allowed_moves).to eq([[1, 0], [1, 1], [1, -1]])
+      it "has [[1, 0]] as an allowed move" do
+        expect(pawn.allowed_moves).to eq([[1, 0]])
       end
     end
 
     context "when the color is black and the position is the initial one" do
-      let(:pawn) { described_class.new(color: :black, position: [1, 0]) }
+      let(:pawn) { described_class.new(color: :black, position: [1, 0], board: board) }
 
-      it "also has [2, 0] as a special move" do
+      it "also has [2, 0] as a capturing move" do
         expect(pawn.allowed_moves.include?([2, 0])).to be(true)
       end
     end
 
     context "when the color is black and the position is not the initial one" do
-      let(:pawn) { described_class.new(color: :black, position: [2, 0]) }
+      let(:pawn) { described_class.new(color: :black, position: [2, 0], board: board) }
 
-      it "doesn't have [2, 0] as a special move" do
+      it "doesn't have [2, 0] as a capturing move" do
         expect(pawn.allowed_moves.include?([2, 0])).to be(false)
       end
     end

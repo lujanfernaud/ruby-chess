@@ -54,6 +54,27 @@ describe Board do
       end
     end
 
+    context "when a capturing move is possible for a pawn" do
+      before do
+        grid[5][1] = Pawn.new(color: :black, position: [6, 0], board: board)
+        board.move_piece("a2b3")
+      end
+
+      it "removes pawn from 'a2'" do
+        expect(grid[6][0]).to eq("-")
+      end
+
+      it "eats piece in 'b3'" do
+        expect(grid[5][1]).to be_a(Pawn)
+      end
+    end
+
+    context "when a capturing move is not possible for a pawn" do
+      it "returns 'The move is not possible.'" do
+        expect(board.move_piece("c2d3")).to eq("The move is not possible.")
+      end
+    end
+
     context "when a vertical move is possible for a rook" do
       before do
         board.move_piece("a1a3")

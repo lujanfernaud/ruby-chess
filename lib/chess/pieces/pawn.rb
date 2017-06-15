@@ -1,10 +1,12 @@
 # Holds color, position and allowed moves for pawns.
 class Pawn < Piece
-  attr_reader :position
+  attr_reader :position, :capturing_moves
 
-  def initialize(color:, position:)
-    @color    = color
-    @position = position
+  def initialize(color:, position:, board:)
+    @color          = color
+    @position       = position
+    @board          = board
+    @opponent_color = @color == :white ? :black : :white
 
     if color == :white
       set_allowed_moves_for_white
@@ -13,16 +15,54 @@ class Pawn < Piece
     end
   end
 
+  def allowed_move?(from, to)
+    capturing_moves = prepare_capturing_moves(from, to)
+    allowed_moves   = prepare_allowed_moves(from)
+
+    (capturing_moves + allowed_moves).include?(to)
+  end
+
   private
 
+  def prepare_capturing_moves(from, to)
+    capturing_moves.map do |move|
+      row    = from[0] + move[0]
+      column = from[1] + move[1]
+      [row, column] if opponent_in_destination?(row, column, to)
+    end
+  end
+
+  def opponent_in_destination?(row, column, to)
+    [row, column] == to && opponent_in_square?(row, column)
+  end
+
+  def opponent_in_square?(row, column)
+    @board.grid[row][column] != "-" &&
+    @board.grid[row][column].color == @opponent_color
+  end
+
+  def prepare_allowed_moves(from)
+    allowed_moves.map do |move|
+      row    = from[0] + move[0]
+      column = from[1] + move[1]
+      [row, column] if move_inside_board?(row, column)
+    end
+  end
+
+  def move_inside_board?(row, column)
+    (0..7).cover?(row) && (0..7).cover?(column)
+  end
+
   def set_allowed_moves_for_white
-    @allowed_moves = [[-1, 0], [-1, -1], [-1, 1]]
+    @allowed_moves = [[-1, 0]]
     @allowed_moves << [-2, 0] if initial_position_white
+    @capturing_moves = [[-1, -1], [-1, 1]]
   end
 
   def set_allowed_moves_for_black
-    @allowed_moves = [[1, 0], [1, 1], [1, -1]]
-    @allowed_moves << [2, 0]  if initial_position_black
+    @allowed_moves = [[1, 0]]
+    @allowed_moves << [2, 0] if initial_position_black
+    @capturing_moves = [[1, 1], [1, -1]]
   end
 
   def initial_position_white

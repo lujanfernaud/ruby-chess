@@ -1,5 +1,6 @@
 describe Rook do
-  let(:rook) { described_class.new(color: :white) }
+  let(:board) { Board.new }
+  let(:rook)  { described_class.new(color: :white, board: board) }
 
   describe "attributes" do
     it "has a color" do

@@ -1,5 +1,6 @@
 describe Queen do
-  let(:queen) { described_class.new(color: :black) }
+  let(:board) { Board.new }
+  let(:queen) { described_class.new(color: :black, board: board) }
 
   describe "attributes" do
     it "has a color" do

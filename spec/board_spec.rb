@@ -52,11 +52,16 @@ describe Board do
       it "returns 'The move is not possible.'" do
         expect(board.move_piece("a2a5")).to eq("The move is not possible.")
       end
+
+      it "returns 'The move is not possible.'" do
+        grid[5][0] = Knight.new(color: :white, board: :board)
+        expect(board.move_piece("a2a3")).to eq("The move is not possible.")
+      end
     end
 
     context "when a capturing move is possible for a pawn" do
       before do
-        grid[5][1] = Pawn.new(color: :black, position: [6, 0], board: board)
+        grid[5][1] = Pawn.new(color: :black, position: [5, 1], board: board)
         board.move_piece("a2b3")
       end
 
@@ -77,20 +82,22 @@ describe Board do
 
     context "when a vertical move is possible for a rook" do
       before do
-        board.move_piece("a1a3")
+        grid[5][0] = Rook.new(color: :white, board: board)
+        board.move_piece("a3a5")
       end
 
-      it "removes rook from 'a1'" do
-        expect(grid[7][0]).to eq("-")
+      it "removes rook from 'a3'" do
+        expect(grid[5][0]).to eq("-")
       end
 
-      it "places rook in 'a3'" do
-        expect(grid[5][0]).to be_a(Rook)
+      it "places rook in 'a5'" do
+        expect(grid[3][0]).to be_a(Rook)
       end
     end
 
     context "when a horizontal move is possible for a rook" do
       before do
+        grid[0][1] = "-"
         board.move_piece("a8b8")
       end
 
@@ -131,15 +138,16 @@ describe Board do
 
     context "when the move is possible for a bishop" do
       before do
-        board.move_piece("c8e6")
+        grid[2][4] = Bishop.new(color: :black, board: board)
+        board.move_piece("e6g4")
       end
 
       it "removes bishop from 'c8'" do
-        expect(grid[0][2]).to eq("-")
+        expect(grid[2][4]).to eq("-")
       end
 
       it "places bishop in 'e6'" do
-        expect(grid[2][4]).to be_a(Bishop)
+        expect(grid[4][6]).to be_a(Bishop)
       end
     end
 
@@ -147,10 +155,15 @@ describe Board do
       it "returns 'The move is not possible.'" do
         expect(board.move_piece("c1c6")).to eq("The move is not possible.")
       end
+
+      it "returns 'There are pieces in between.'" do
+        expect(board.move_piece("c8e6")).to eq("There are pieces in between.")
+      end
     end
 
     context "when a vertical move is possible for a king" do
       before do
+        grid[1][3] = "-"
         board.move_piece("d8d7")
       end
 
@@ -165,6 +178,7 @@ describe Board do
 
     context "when a diagonal move is possible for a king" do
       before do
+        grid[6][4] = "-"
         board.move_piece("d1e2")
       end
 
@@ -179,6 +193,7 @@ describe Board do
 
     context "when a horizontal move is possible for a king" do
       before do
+        grid[0][2] = "-"
         board.move_piece("d8c8")
       end
 
@@ -199,43 +214,46 @@ describe Board do
 
     context "when a vertical move is possible for a queen" do
       before do
-        board.move_piece("e8e6")
+        grid[2][4] = Queen.new(color: :black, board: board)
+        board.move_piece("e6e4")
       end
 
       it "removes queen from 'e8'" do
-        expect(grid[0][4]).to eq("-")
+        expect(grid[2][4]).to eq("-")
       end
 
       it "places queen in 'e6'" do
-        expect(grid[2][4]).to be_a(Queen)
+        expect(grid[4][4]).to be_a(Queen)
       end
     end
 
     context "when a diagonal move is possible for a queen" do
       before do
-        board.move_piece("e1g3")
+        grid[5][2] = Queen.new(color: :white, board: board)
+        board.move_piece("c3e5")
       end
 
       it "removes queen from 'e1'" do
-        expect(grid[7][4]).to eq("-")
+        expect(grid[5][2]).to eq("-")
       end
 
       it "places queen in 'g3'" do
-        expect(grid[5][6]).to be_a(Queen)
+        expect(grid[3][4]).to be_a(Queen)
       end
     end
 
     context "when a horizontal move is possible for a queen" do
       before do
-        board.move_piece("e8g8")
+        grid[2][4] = Queen.new(color: :white, board: board)
+        board.move_piece("e6g6")
       end
 
       it "removes rook from 'e8'" do
-        expect(grid[0][4]).to eq("-")
+        expect(grid[2][4]).to eq("-")
       end
 
       it "places rook in 'g8'" do
-        expect(grid[0][6]).to be_a(Queen)
+        expect(grid[2][6]).to be_a(Queen)
       end
     end
 

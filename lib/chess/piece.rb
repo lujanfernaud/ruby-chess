@@ -19,6 +19,24 @@ class Piece
 
   private
 
+  def opponent_in_destination?(row, column, to)
+    [row, column] == to && opponent_in_square?(row, column)
+  end
+
+  def opponent_in_square?(row, column)
+    @board.grid[row][column] != "-" &&
+    @board.grid[row][column].color == @opponent_color
+  end
+
+  def valid_move?(row, column)
+    not_player_piece?(row, column) && move_inside_board?(row, column)
+  end
+
+  def not_player_piece?(row, column)
+    @board.grid[row][column] == "-" ||
+    @board.grid[row][column].color == @opponent_color
+  end
+
   def move_inside_board?(row, column)
     (0..7).cover?(row) && (0..7).cover?(column)
   end

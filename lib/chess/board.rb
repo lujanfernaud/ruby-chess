@@ -34,14 +34,14 @@ class Board
   end
 
   def add_royal_row(color)
-    @grid << [Rook.new(color: color),
-              Knight.new(color: color),
-              Bishop.new(color: color),
-              King.new(color: color),
-              Queen.new(color: color),
-              Bishop.new(color: color),
-              Knight.new(color: color),
-              Rook.new(color: color)]
+    @grid << [Rook.new(color: color, board: self),
+              Knight.new(color: color, board: self),
+              Bishop.new(color: color, board: self),
+              King.new(color: color, board: self),
+              Queen.new(color: color, board: self),
+              Bishop.new(color: color, board: self),
+              Knight.new(color: color, board: self),
+              Rook.new(color: color, board: self)]
   end
 
   def add_pawn_row(color, row)

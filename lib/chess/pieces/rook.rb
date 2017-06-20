@@ -1,7 +1,8 @@
 # Holds color and allowed moves for rooks.
 class Rook < Piece
-  def initialize(color:)
+  def initialize(color:, board:)
     @color = color
+    @board = board
     @allowed_moves = [[-7, 0], [0, 7], [7, 0], [0, -7],
                       [-6, 0], [0, 6], [6, 0], [0, -6],
                       [-5, 0], [0, 5], [5, 0], [0, -5],

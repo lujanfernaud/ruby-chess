@@ -11,7 +11,7 @@ class Piece
     moves = allowed_moves.map do |move|
       row    = from[0] + move[0]
       column = from[1] + move[1]
-      [row, column] if move_inside_board?(row, column)
+      [row, column] if valid_move?(row, column)
     end
 
     moves.include?(to)
@@ -29,7 +29,7 @@ class Piece
   end
 
   def valid_move?(row, column)
-    not_player_piece?(row, column) && move_inside_board?(row, column)
+    move_inside_board?(row, column) && not_player_piece?(row, column)
   end
 
   def not_player_piece?(row, column)

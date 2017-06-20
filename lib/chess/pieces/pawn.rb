@@ -32,20 +32,11 @@ class Pawn < Piece
     end
   end
 
-  def opponent_in_destination?(row, column, to)
-    [row, column] == to && opponent_in_square?(row, column)
-  end
-
-  def opponent_in_square?(row, column)
-    @board.grid[row][column] != "-" &&
-    @board.grid[row][column].color == @opponent_color
-  end
-
   def prepare_allowed_moves(from)
     allowed_moves.map do |move|
       row    = from[0] + move[0]
       column = from[1] + move[1]
-      [row, column] if move_inside_board?(row, column)
+      [row, column] if valid_move?(row, column)
     end
   end
 

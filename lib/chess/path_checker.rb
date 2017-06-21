@@ -43,7 +43,7 @@ class PathChecker < Board
   end
 
   def check_path
-    empty = proc { |position| grid[position[0]][position[1]] == "-" }
+    empty = proc { |position| grid[position[0]][position[1]].to_s == "-" }
     path.all?(&empty)
   end
 

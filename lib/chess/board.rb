@@ -57,7 +57,7 @@ class Board
   end
 
   def add_empty_rows
-    4.times { @grid << %w[- - - - - - - -] }
+    4.times { @grid << Array.new(8) { NullPiece.new } }
   end
 
   # Translates coordinates as expressed in the board
@@ -76,7 +76,7 @@ class Board
   end
 
   def remove_piece(from)
-    grid[from[0]][from[1]] = "-"
+    grid[from[0]][from[1]] = NullPiece.new
   end
 
   def place_piece(piece, to)

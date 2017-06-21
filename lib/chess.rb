@@ -3,6 +3,7 @@ require_relative "chess/board"
 require_relative "chess/path_checker"
 
 require_relative "chess/piece"
+require_relative "chess/pieces/null_piece.rb"
 require_relative "chess/pieces/pawn.rb"
 require_relative "chess/pieces/rook.rb"
 require_relative "chess/pieces/knight.rb"

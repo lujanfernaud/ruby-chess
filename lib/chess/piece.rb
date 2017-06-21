@@ -24,7 +24,6 @@ class Piece
   end
 
   def opponent_in_square?(row, column)
-    @board.grid[row][column] != "-" &&
     @board.grid[row][column].color == @opponent_color
   end
 
@@ -33,8 +32,7 @@ class Piece
   end
 
   def not_player_piece?(row, column)
-    @board.grid[row][column] == "-" ||
-    @board.grid[row][column].color == @opponent_color
+    @board.grid[row][column].color != @color
   end
 
   def move_inside_board?(row, column)

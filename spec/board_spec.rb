@@ -2,6 +2,7 @@ describe Board do
   let(:board)       { described_class.new }
   let(:grid)        { board.grid }
   let(:coordinates) { board.coordinates }
+  let(:null_piece)  { NullPiece.new }
 
   describe "attributes" do
     it "has a coordinates hash" do
@@ -40,7 +41,7 @@ describe Board do
       end
 
       it "removes pawn from 'a2'" do
-        expect(grid[6][0]).to eq("-")
+        expect(grid[6][0].to_s).to eq("-")
       end
 
       it "places pawn in 'a4'" do
@@ -66,7 +67,7 @@ describe Board do
       end
 
       it "removes pawn from 'a2'" do
-        expect(grid[6][0]).to eq("-")
+        expect(grid[6][0].to_s).to eq("-")
       end
 
       it "eats piece in 'b3'" do
@@ -87,7 +88,7 @@ describe Board do
       end
 
       it "removes rook from 'a3'" do
-        expect(grid[5][0]).to eq("-")
+        expect(grid[5][0].to_s).to eq("-")
       end
 
       it "places rook in 'a5'" do
@@ -97,12 +98,12 @@ describe Board do
 
     context "when a horizontal move is possible for a rook" do
       before do
-        grid[0][1] = "-"
+        grid[0][1] = null_piece
         board.move_piece("a8b8")
       end
 
       it "removes rook from 'a8'" do
-        expect(grid[0][0]).to eq("-")
+        expect(grid[0][0].to_s).to eq("-")
       end
 
       it "places rook in 'b8'" do
@@ -122,7 +123,7 @@ describe Board do
       end
 
       it "removes knight from 'b8'" do
-        expect(grid[0][1]).to eq("-")
+        expect(grid[0][1].to_s).to eq("-")
       end
 
       it "places knight in 'c6'" do
@@ -143,7 +144,7 @@ describe Board do
       end
 
       it "removes bishop from 'c8'" do
-        expect(grid[2][4]).to eq("-")
+        expect(grid[2][4].to_s).to eq("-")
       end
 
       it "places bishop in 'e6'" do
@@ -163,12 +164,12 @@ describe Board do
 
     context "when a vertical move is possible for a king" do
       before do
-        grid[1][3] = "-"
+        grid[1][3] = null_piece
         board.move_piece("d8d7")
       end
 
       it "removes king from 'd8'" do
-        expect(grid[0][3]).to eq("-")
+        expect(grid[0][3].to_s).to eq("-")
       end
 
       it "places king in 'd7'" do
@@ -178,12 +179,12 @@ describe Board do
 
     context "when a diagonal move is possible for a king" do
       before do
-        grid[6][4] = "-"
+        grid[6][4] = null_piece
         board.move_piece("d1e2")
       end
 
       it "removes king from 'd1'" do
-        expect(grid[7][3]).to eq("-")
+        expect(grid[7][3].to_s).to eq("-")
       end
 
       it "places king in 'e2'" do
@@ -193,12 +194,12 @@ describe Board do
 
     context "when a horizontal move is possible for a king" do
       before do
-        grid[0][2] = "-"
+        grid[0][2] = null_piece
         board.move_piece("d8c8")
       end
 
       it "removes rook from 'd8'" do
-        expect(grid[0][3]).to eq("-")
+        expect(grid[0][3].to_s).to eq("-")
       end
 
       it "places rook in 'c8'" do
@@ -219,7 +220,7 @@ describe Board do
       end
 
       it "removes queen from 'e8'" do
-        expect(grid[2][4]).to eq("-")
+        expect(grid[2][4].to_s).to eq("-")
       end
 
       it "places queen in 'e6'" do
@@ -234,7 +235,7 @@ describe Board do
       end
 
       it "removes queen from 'e1'" do
-        expect(grid[5][2]).to eq("-")
+        expect(grid[5][2].to_s).to eq("-")
       end
 
       it "places queen in 'g3'" do
@@ -249,7 +250,7 @@ describe Board do
       end
 
       it "removes rook from 'e8'" do
-        expect(grid[2][4]).to eq("-")
+        expect(grid[2][4].to_s).to eq("-")
       end
 
       it "places rook in 'g8'" do

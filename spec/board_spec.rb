@@ -162,57 +162,6 @@ describe Board do
       end
     end
 
-    context "when a vertical move is possible for a king" do
-      before do
-        grid[1][3] = null_piece
-        board.move_piece("d8d7")
-      end
-
-      it "removes king from 'd8'" do
-        expect(grid[0][3].to_s).to eq("-")
-      end
-
-      it "places king in 'd7'" do
-        expect(grid[1][3]).to be_a(King)
-      end
-    end
-
-    context "when a diagonal move is possible for a king" do
-      before do
-        grid[6][4] = null_piece
-        board.move_piece("d1e2")
-      end
-
-      it "removes king from 'd1'" do
-        expect(grid[7][3].to_s).to eq("-")
-      end
-
-      it "places king in 'e2'" do
-        expect(grid[6][4]).to be_a(King)
-      end
-    end
-
-    context "when a horizontal move is possible for a king" do
-      before do
-        grid[0][2] = null_piece
-        board.move_piece("d8c8")
-      end
-
-      it "removes rook from 'd8'" do
-        expect(grid[0][3].to_s).to eq("-")
-      end
-
-      it "places rook in 'c8'" do
-        expect(grid[0][2]).to be_a(King)
-      end
-    end
-
-    context "when the move is not possible for a king" do
-      it "returns 'The move is not possible.'" do
-        expect(board.move_piece("d8e6")).to eq("The move is not possible.")
-      end
-    end
-
     context "when a vertical move is possible for a queen" do
       before do
         grid[2][4] = Queen.new(color: :black, board: board)
@@ -261,6 +210,57 @@ describe Board do
     context "when the move is not possible for a queen" do
       it "returns 'The move is not possible.'" do
         expect(board.move_piece("e8f6")).to eq("The move is not possible.")
+      end
+    end
+
+    context "when a vertical move is possible for a king" do
+      before do
+        grid[1][4] = null_piece
+        board.move_piece("e8e7")
+      end
+
+      it "removes king from 'e8'" do
+        expect(grid[0][4].to_s).to eq("-")
+      end
+
+      it "places king in 'e7'" do
+        expect(grid[1][4]).to be_a(King)
+      end
+    end
+
+    context "when a diagonal move is possible for a king" do
+      before do
+        grid[6][5] = null_piece
+        board.move_piece("e1f2")
+      end
+
+      it "removes king from 'd1'" do
+        expect(grid[7][4].to_s).to eq("-")
+      end
+
+      it "places king in 'e2'" do
+        expect(grid[6][5]).to be_a(King)
+      end
+    end
+
+    context "when a horizontal move is possible for a king" do
+      before do
+        grid[0][3] = null_piece
+        board.move_piece("e8d8")
+      end
+
+      it "removes rook from 'd8'" do
+        expect(grid[0][4].to_s).to eq("-")
+      end
+
+      it "places rook in 'c8'" do
+        expect(grid[0][3]).to be_a(King)
+      end
+    end
+
+    context "when the move is not possible for a king" do
+      it "returns 'The move is not possible.'" do
+        expect(board.move_piece("d8e6")).to eq("The move is not possible.")
       end
     end
   end

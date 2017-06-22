@@ -35,7 +35,7 @@ class Board
   end
 
   def add_royal_row(color)
-    royal_row = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
+    royal_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
     @grid << royal_row.map { |piece| piece.new(color: color, board: self) }
   end
 

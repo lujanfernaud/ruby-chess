@@ -35,25 +35,15 @@ class Board
   end
 
   def add_royal_row(color)
-    @grid << [Rook.new(color: color, board: self),
-              Knight.new(color: color, board: self),
-              Bishop.new(color: color, board: self),
-              King.new(color: color, board: self),
-              Queen.new(color: color, board: self),
-              Bishop.new(color: color, board: self),
-              Knight.new(color: color, board: self),
-              Rook.new(color: color, board: self)]
+    royal_row = [Rook, Knight, Bishop, King, Queen, Bishop, Knight, Rook]
+    @grid << royal_row.map { |piece| piece.new(color: color, board: self) }
   end
 
   def add_pawn_row(color, row)
-    @grid << [Pawn.new(color: color, position: [row, 0], board: self),
-              Pawn.new(color: color, position: [row, 1], board: self),
-              Pawn.new(color: color, position: [row, 2], board: self),
-              Pawn.new(color: color, position: [row, 3], board: self),
-              Pawn.new(color: color, position: [row, 4], board: self),
-              Pawn.new(color: color, position: [row, 5], board: self),
-              Pawn.new(color: color, position: [row, 6], board: self),
-              Pawn.new(color: color, position: [row, 7], board: self)]
+    pawn_row = Array.new(8) { Pawn }
+    @grid << pawn_row.map.with_index do |pawn, index|
+      pawn.new(color: color, position: [row, index], board: self)
+    end
   end
 
   def add_empty_rows

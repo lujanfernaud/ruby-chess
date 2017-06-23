@@ -263,5 +263,31 @@ describe Board do
         expect(board.move_piece("d8e6")).to eq("The move is not possible.")
       end
     end
+
+    context "the white king is in check" do
+      before do
+        grid[1][0] = null_piece  # Remove pawn in front of black rook.
+        grid[6][4] = null_piece  # Remove pawn in front of white king.
+        board.move_piece("e1e2") #
+        board.move_piece("e2e3") # Move king.
+      end
+
+      it "returns 'Check.'" do
+        expect(board.move_piece("a8a3")).to eq("Check.")
+      end
+    end
+
+    context "the black king is in check" do
+      before do
+        grid[6][0] = null_piece  # Remove pawn in front of white rook.
+        grid[1][4] = null_piece  # Remove pawn in front of black king.
+        board.move_piece("e8e7") #
+        board.move_piece("e7e6") # Move king.
+      end
+
+      it "returns 'Check.'" do
+        expect(board.move_piece("a1a6")).to eq("Check.")
+      end
+    end
   end
 end

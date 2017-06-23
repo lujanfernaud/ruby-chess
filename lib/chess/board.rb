@@ -3,11 +3,16 @@ class Board
   include Coordinates
 
   attr_reader :grid, :coordinates, :piece
+  attr_reader :black_king, :white_king
 
   def initialize
     @grid = []
     set_board
     @coordinates = COORDINATES
+    @black_king  = grid[0][4]
+    @white_king  = grid[7][4]
+    @last_moved_position = nil
+    @last_moved_piece    = NullPiece.new
   end
 
   def move_piece(coords)
@@ -20,6 +25,8 @@ class Board
 
     remove_piece(from)
     place_piece(piece, to)
+
+    return king_in_check if king_in_check?
   end
 
   private
@@ -70,7 +77,8 @@ class Board
   end
 
   def place_piece(piece, to)
-    grid[to[0]][to[1]] = piece
+    grid[to[0]][to[1]]   = piece
+    @last_moved_position = to
   end
 
   def move_not_possible
@@ -87,5 +95,23 @@ class Board
 
   def empty_path?(piece, from, to)
     PathChecker.new(grid, piece, from, to).empty_path?
+  end
+
+  def king_in_check
+    "Check."
+  end
+
+  def king_in_check?
+    move_possible?(last_moved_piece, @last_moved_position, king_position)
+  end
+
+  def last_moved_piece
+    @last_moved_piece = grid[@last_moved_position[0]][@last_moved_position[1]]
+  end
+
+  def king_position
+    king = @last_moved_piece.color == :black ? white_king : black_king
+    row  = grid.detect { |line| line.include?(king) }
+    [grid.index(row), row.index(king)]
   end
 end

@@ -198,11 +198,11 @@ describe Board do
         board.move_piece("e6g6")
       end
 
-      it "removes rook from 'e8'" do
+      it "removes queen from 'e8'" do
         expect(grid[2][4].to_s).to eq("-")
       end
 
-      it "places rook in 'g8'" do
+      it "places queen in 'g8'" do
         expect(grid[2][6]).to be_a(Queen)
       end
     end
@@ -249,11 +249,11 @@ describe Board do
         board.move_piece("e8d8")
       end
 
-      it "removes rook from 'd8'" do
+      it "removes king from 'd8'" do
         expect(grid[0][4].to_s).to eq("-")
       end
 
-      it "places rook in 'c8'" do
+      it "places king in 'c8'" do
         expect(grid[0][3]).to be_a(King)
       end
     end

@@ -2,7 +2,7 @@
 class Board
   include Coordinates
 
-  attr_reader :grid, :coordinates, :piece
+  attr_reader :grid, :coordinates
   attr_reader :black_king, :white_king
 
   def initialize

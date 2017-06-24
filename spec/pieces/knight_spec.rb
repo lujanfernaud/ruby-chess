@@ -1,6 +1,8 @@
 describe Knight do
   let(:board)  { Board.new }
-  let(:knight) { described_class.new(color: :black, board: board) }
+  let(:knight) do
+    described_class.new(color: :black, position: [0, 1], board: board)
+  end
 
   describe "attributes" do
     it "has a color" do

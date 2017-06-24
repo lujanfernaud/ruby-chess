@@ -1,8 +1,9 @@
 # Holds color and allowed moves for queens.
 class Queen < Piece
-  def initialize(color:, board:)
-    @color = color
-    @board = board
+  def initialize(color:, position:, board:)
+    @color    = color
+    @position = position
+    @board    = board
     @allowed_moves = [[-7, 0], [0, 7], [7, 0], [0, -7],
                       [-6, 0], [0, 6], [6, 0], [0, -6],
                       [-5, 0], [0, 5], [5, 0], [0, -5],

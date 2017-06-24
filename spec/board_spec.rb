@@ -55,7 +55,7 @@ describe Board do
       end
 
       it "returns 'The move is not possible.'" do
-        grid[5][0] = Knight.new(color: :white, board: :board)
+        grid[5][0] = Knight.new(color: :white, position: [5, 0], board: :board)
         expect(board.move_piece("a2a3")).to eq("The move is not possible.")
       end
     end
@@ -83,7 +83,7 @@ describe Board do
 
     context "when a vertical move is possible for a rook" do
       before do
-        grid[5][0] = Rook.new(color: :white, board: board)
+        grid[5][0] = Rook.new(color: :white, position: [5, 0], board: board)
         board.move_piece("a3a5")
       end
 
@@ -139,7 +139,7 @@ describe Board do
 
     context "when the move is possible for a bishop" do
       before do
-        grid[2][4] = Bishop.new(color: :black, board: board)
+        grid[2][4] = Bishop.new(color: :black, position: [2, 4], board: board)
         board.move_piece("e6g4")
       end
 
@@ -164,7 +164,7 @@ describe Board do
 
     context "when a vertical move is possible for a queen" do
       before do
-        grid[2][4] = Queen.new(color: :black, board: board)
+        grid[2][4] = Queen.new(color: :black, position: [2, 4], board: board)
         board.move_piece("e6e4")
       end
 
@@ -179,7 +179,7 @@ describe Board do
 
     context "when a diagonal move is possible for a queen" do
       before do
-        grid[5][2] = Queen.new(color: :white, board: board)
+        grid[5][2] = Queen.new(color: :white, position: [5, 2], board: board)
         board.move_piece("c3e5")
       end
 
@@ -194,7 +194,7 @@ describe Board do
 
     context "when a horizontal move is possible for a queen" do
       before do
-        grid[2][4] = Queen.new(color: :white, board: board)
+        grid[2][4] = Queen.new(color: :white, position: [2, 4], board: board)
         board.move_piece("e6g6")
       end
 

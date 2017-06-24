@@ -1,6 +1,8 @@
 describe Rook do
   let(:board) { Board.new }
-  let(:rook)  { described_class.new(color: :white, board: board) }
+  let(:rook) do
+    described_class.new(color: :white, position: [7, 0], board: board)
+  end
 
   describe "attributes" do
     it "has a color" do

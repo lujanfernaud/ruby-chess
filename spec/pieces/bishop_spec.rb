@@ -1,6 +1,8 @@
 describe Bishop do
   let(:board)  { Board.new }
-  let(:bishop) { described_class.new(color: :black, board: board) }
+  let(:bishop) do
+    described_class.new(color: :black, position: [0, 2], board: board)
+  end
 
   describe "attributes" do
     it "has a color" do

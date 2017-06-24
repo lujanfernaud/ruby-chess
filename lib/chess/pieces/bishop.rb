@@ -1,8 +1,9 @@
 # Holds color and allowed moves for bishops.
 class Bishop < Piece
-  def initialize(color:, board:)
-    @color = color
-    @board = board
+  def initialize(color:, position:, board:)
+    @color    = color
+    @position = position
+    @board    = board
     @allowed_moves = [[-7, 7], [-7, -7], [7, 7], [7, -7],
                       [-6, 6], [-6, -6], [6, 6], [6, -6],
                       [-5, 5], [-5, -5], [5, 5], [5, -5],

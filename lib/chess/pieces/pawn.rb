@@ -1,6 +1,6 @@
 # Holds color, position and allowed moves for pawns.
 class Pawn < Piece
-  attr_reader :position, :capturing_moves
+  attr_reader :capturing_moves
 
   def initialize(color:, position:, board:)
     @color          = color

@@ -7,8 +7,8 @@ describe Piece do
     expect(piece).to respond_to(:color)
   end
 
-  it "knows its location" do
-    expect(piece).to respond_to(:location)
+  it "knows its position" do
+    expect(piece).to respond_to(:position)
   end
 
   it "has allowed moves" do
@@ -20,9 +20,9 @@ describe Piece do
       board.move_piece("a7a6")
     end
 
-    it "its location gets updated" do
+    it "its position gets updated" do
       piece = grid[2][0]
-      expect(piece.location).to eq([2, 0])
+      expect(piece.position).to eq([2, 0])
     end
   end
 end

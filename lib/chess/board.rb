@@ -88,7 +88,7 @@ class Board
 
     grid[row][column] = piece
     @last_moved_piece = piece
-    piece.location    = to
+    piece.position    = to
   end
 
   def move_not_possible
@@ -112,11 +112,11 @@ class Board
   end
 
   def king_in_check?
-    move_possible?(@last_moved_piece, @last_moved_piece.location, king_location)
+    move_possible?(@last_moved_piece, @last_moved_piece.position, king_position)
   end
 
-  def king_location
+  def king_position
     king = @last_moved_piece.color == :black ? white_king : black_king
-    king.location
+    king.position
   end
 end

@@ -11,8 +11,7 @@ class Board
     @coordinates = COORDINATES
     @black_king  = grid[0][4]
     @white_king  = grid[7][4]
-    @last_moved_position = nil
-    @last_moved_piece    = NullPiece.new
+    @last_moved_piece = NullPiece.new
   end
 
   def move_piece(coords)
@@ -65,20 +64,31 @@ class Board
   def translate_coords(coords)
     letter = coordinates[coords[0]]
     number = coordinates[coords[1]]
+
     [number, letter]
   end
 
-  def get_piece(coords)
-    grid[coords[0]][coords[1]]
+  def get_piece(from)
+    row    = from[0]
+    column = from[1]
+
+    grid[row][column]
   end
 
   def remove_piece(from)
-    grid[from[0]][from[1]] = NullPiece.new
+    row    = from[0]
+    column = from[1]
+
+    grid[row][column] = NullPiece.new
   end
 
   def place_piece(piece, to)
-    grid[to[0]][to[1]]   = piece
-    @last_moved_position = to
+    row    = to[0]
+    column = to[1]
+
+    grid[row][column] = piece
+    @last_moved_piece = piece
+    piece.location    = to
   end
 
   def move_not_possible
@@ -102,16 +112,11 @@ class Board
   end
 
   def king_in_check?
-    move_possible?(last_moved_piece, @last_moved_position, king_position)
+    move_possible?(@last_moved_piece, @last_moved_piece.location, king_location)
   end
 
-  def last_moved_piece
-    @last_moved_piece = grid[@last_moved_position[0]][@last_moved_position[1]]
-  end
-
-  def king_position
+  def king_location
     king = @last_moved_piece.color == :black ? white_king : black_king
-    row  = grid.detect { |line| line.include?(king) }
-    [grid.index(row), row.index(king)]
+    king.location
   end
 end

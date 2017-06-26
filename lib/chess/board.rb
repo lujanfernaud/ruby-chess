@@ -42,15 +42,17 @@ class Board
 
   def add_royal_row(color:, row:)
     royal_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
-    @grid << royal_row.map.with_index do |piece, index|
-      piece.new(color: color, position: [row, index], board: self)
-    end
+    add_pieces_for(royal_row, color, row)
   end
 
   def add_pawn_row(color:, row:)
     pawn_row = Array.new(8) { Pawn }
-    @grid << pawn_row.map.with_index do |pawn, index|
-      pawn.new(color: color, position: [row, index], board: self)
+    add_pieces_for(pawn_row, color, row)
+  end
+
+  def add_pieces_for(pieces_row, color, row)
+    @grid << pieces_row.map.with_index do |piece, index|
+      piece.new(color: color, position: [row, index], board: self)
     end
   end
 

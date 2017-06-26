@@ -19,7 +19,7 @@ class Board
     to    = translate_coords(coords[2..3])
     piece = get_piece(from)
 
-    return move_not_possible unless move_possible?(piece, to)
+    return move_not_possible unless piece.allowed_move?(to)
     return pieces_in_between unless empty_path?(piece, to)
 
     remove_piece(from)
@@ -98,10 +98,6 @@ class Board
     "The move is not possible."
   end
 
-  def move_possible?(piece, to)
-    piece.allowed_move?(to)
-  end
-
   def pieces_in_between
     "There are pieces in between."
   end
@@ -115,11 +111,10 @@ class Board
   end
 
   def king_in_check?
-    move_possible?(@last_moved_piece, king_position)
+    @last_moved_piece.allowed_move?(king.position)
   end
 
-  def king_position
-    king = @last_moved_piece.color == :black ? white_king : black_king
-    king.position
+  def king
+    @last_moved_piece.color == :black ? white_king : black_king
   end
 end

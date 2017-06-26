@@ -73,26 +73,25 @@ class Board
   end
 
   def get_piece(from)
-    row    = from[0]
-    column = from[1]
-
-    grid[row][column]
+    grid[row(from)][column(from)]
   end
 
   def remove_piece(from)
-    row    = from[0]
-    column = from[1]
-
-    grid[row][column] = NullPiece.new
+    grid[row(from)][column(from)] = NullPiece.new
   end
 
   def place_piece(piece, to)
-    row    = to[0]
-    column = to[1]
-
-    grid[row][column] = piece
+    grid[row(to)][column(to)] = piece
     @last_moved_piece = piece
     piece.position    = to
+  end
+
+  def row(coords)
+    coords[0]
+  end
+
+  def column(coords)
+    coords[1]
   end
 
   def move_not_possible

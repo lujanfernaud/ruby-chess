@@ -9,14 +9,16 @@ class Piece
     @allowed_moves = []
   end
 
-  def allowed_move?(from, to)
-    moves = allowed_moves.map do |move|
-      row    = from[0] + move[0]
-      column = from[1] + move[1]
+  def allowed_move?(to)
+    valid_destinations.include?(to)
+  end
+
+  def valid_destinations
+    allowed_moves.map do |move|
+      row    = position[0] + move[0]
+      column = position[1] + move[1]
       [row, column] if valid_move?(row, column)
     end
-
-    moves.include?(to)
   end
 
   private

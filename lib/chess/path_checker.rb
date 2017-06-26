@@ -6,11 +6,11 @@ class PathChecker < Board
   DIRECTIONS = { row:    { down:  1, up:   -1 },
                  column: { left: -1, right: 1 } }.freeze
 
-  def initialize(grid, piece, from, to)
+  def initialize(grid, piece, to)
     @grid        = grid
     @piece       = piece
-    @from_row    = from[0]
-    @from_column = from[1]
+    @from_row    = piece.position[0]
+    @from_column = piece.position[1]
     @to_row      = to[0]
     @to_column   = to[1]
     @path        = []

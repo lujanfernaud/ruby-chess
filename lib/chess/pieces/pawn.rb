@@ -15,28 +15,18 @@ class Pawn < Piece
     end
   end
 
-  def allowed_move?(from, to)
-    capturing_moves = prepare_capturing_moves(from, to)
-    allowed_moves   = prepare_allowed_moves(from)
-
-    (capturing_moves + allowed_moves).include?(to)
+  def allowed_move?(to)
+    capturing_moves = prepare_capturing_moves(to)
+    (capturing_moves + valid_destinations).include?(to)
   end
 
   private
 
-  def prepare_capturing_moves(from, to)
+  def prepare_capturing_moves(to)
     capturing_moves.map do |move|
-      row    = from[0] + move[0]
-      column = from[1] + move[1]
+      row    = position[0] + move[0]
+      column = position[1] + move[1]
       [row, column] if opponent_in_destination?(row, column, to)
-    end
-  end
-
-  def prepare_allowed_moves(from)
-    allowed_moves.map do |move|
-      row    = from[0] + move[0]
-      column = from[1] + move[1]
-      [row, column] if valid_move?(row, column)
     end
   end
 

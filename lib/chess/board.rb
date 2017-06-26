@@ -33,21 +33,21 @@ class Board
   attr_writer :grid
 
   def set_board
-    add_royal_row(:black, 0)
-    add_pawn_row(:black, 1)
+    add_royal_row(color: :black, row: 0)
+    add_pawn_row(color: :black, row: 1)
     add_empty_rows
-    add_pawn_row(:white, 6)
-    add_royal_row(:white, 7)
+    add_pawn_row(color: :white, row: 6)
+    add_royal_row(color: :white, row: 7)
   end
 
-  def add_royal_row(color, row)
+  def add_royal_row(color:, row:)
     royal_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
     @grid << royal_row.map.with_index do |piece, index|
       piece.new(color: color, position: [row, index], board: self)
     end
   end
 
-  def add_pawn_row(color, row)
+  def add_pawn_row(color:, row:)
     pawn_row = Array.new(8) { Pawn }
     @grid << pawn_row.map.with_index do |pawn, index|
       pawn.new(color: color, position: [row, index], board: self)

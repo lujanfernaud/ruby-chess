@@ -16,7 +16,7 @@ class Path < Board
     @path        = []
   end
 
-  def empty_path?
+  def empty?
     return true if piece.is_a?(Knight)
 
     add_directions_to_path

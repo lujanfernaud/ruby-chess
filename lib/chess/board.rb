@@ -103,7 +103,7 @@ class Board
   end
 
   def empty_path?(piece, to)
-    Path.new(grid, piece, to).empty_path?
+    Path.new(grid, piece, to).empty?
   end
 
   def king_in_check

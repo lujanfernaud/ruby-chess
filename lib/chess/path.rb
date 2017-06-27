@@ -1,5 +1,5 @@
 # Checks if there are no pieces from the origin to the destination.
-class PathChecker < Board
+class Path < Board
   attr_reader :grid, :piece
   attr_reader :from_row, :to_row, :from_column, :to_column
 

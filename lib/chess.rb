@@ -1,6 +1,6 @@
 require_relative "chess/coordinates"
 require_relative "chess/board"
-require_relative "chess/path_checker"
+require_relative "chess/path"
 
 require_relative "chess/piece"
 require_relative "chess/pieces/null_piece.rb"

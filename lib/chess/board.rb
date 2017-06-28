@@ -141,7 +141,7 @@ class Board
   end
 
   def king_in_checkmate?
-    king.cannot_escape?(opponent)
+    king_in_check? && king.cannot_escape?(opponent)
   end
 
   def king

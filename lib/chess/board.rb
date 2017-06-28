@@ -4,13 +4,16 @@ class Board
 
   attr_reader :grid, :coordinates
   attr_reader :black_king, :white_king
+  attr_reader :black_pieces, :white_pieces
 
   def initialize
     @grid = []
     set_board
-    @coordinates = COORDINATES
-    @black_king  = grid[0][4]
-    @white_king  = grid[7][4]
+    @coordinates  = COORDINATES
+    @black_pieces = set_black_pieces
+    @white_pieces = set_white_pieces
+    @black_king   = grid[0][4]
+    @white_king   = grid[7][4]
     @last_moved_piece = NullPiece.new
   end
 
@@ -25,7 +28,8 @@ class Board
     remove_piece(from)
     place_piece(piece, to)
 
-    return king_in_check if king_in_check?
+    return king_in_checkmate if king_in_checkmate?
+    return king_in_check     if king_in_check?
   end
 
   private
@@ -58,6 +62,20 @@ class Board
 
   def add_empty_rows
     4.times { @grid << Array.new(8) { NullPiece.new } }
+  end
+
+  def set_black_pieces
+    get_pieces(from_row: 0, to_row: 1)
+  end
+
+  def set_white_pieces
+    get_pieces(from_row: 6, to_row: 7)
+  end
+
+  def get_pieces(from_row:, to_row:)
+    grid[from_row..to_row].flatten.select do |piece|
+      piece unless piece.is_a?(King)
+    end
   end
 
   # Translates coordinates as expressed in the board
@@ -114,7 +132,19 @@ class Board
     @last_moved_piece.allowed_move?(king.position)
   end
 
+  def king_in_checkmate
+    "Checkmate."
+  end
+
+  def king_in_checkmate?
+    king.cannot_escape?(opponent)
+  end
+
   def king
     @last_moved_piece.color == :black ? white_king : black_king
+  end
+
+  def opponent
+    @last_moved_piece.color == :black ? black_pieces : white_pieces
   end
 end

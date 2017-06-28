@@ -32,6 +32,14 @@ describe Board do
       white_pawns = grid[6]
       white_pawns.all? { |piece| expect(piece).to be_a(Pawn) }
     end
+
+    it "has an array of black pieces" do
+      expect(board.black_pieces.length).to eq(15)
+    end
+
+    it "has an array of white pieces" do
+      expect(board.white_pieces.length).to eq(15)
+    end
   end
 
   describe "#move_piece" do
@@ -287,6 +295,50 @@ describe Board do
 
       it "returns 'Check.'" do
         expect(board.move_piece("a1a6")).to eq("Check.")
+      end
+    end
+
+    context "the white king is in checkmate" do
+      before do
+        grid[1][2] = null_piece  # Remove pawn in front of black bishop.
+        grid[6][3] = null_piece  # Remove pawn in front of white queen.
+      end
+
+      it "returns 'Checkmate.'" do
+        expect(board.move_piece("d8a5")).to eq("Checkmate.")
+      end
+    end
+
+    context "the white king is in checkmate" do
+      before do
+        grid[1][4] = null_piece  # Remove pawn in front of black king.
+        grid[6][5] = null_piece  # Remove pawn in front of white bishop.
+      end
+
+      it "returns 'Checkmate.'" do
+        expect(board.move_piece("d8h4")).to eq("Checkmate.")
+      end
+    end
+
+    context "the black king is in checkmate" do
+      before do
+        grid[6][2] = null_piece  # Remove pawn in front of white bishop.
+        grid[1][3] = null_piece  # Remove pawn in front of black queen.
+      end
+
+      it "returns 'Checkmate.'" do
+        expect(board.move_piece("d1a4")).to eq("Checkmate.")
+      end
+    end
+
+    context "the black king is in checkmate" do
+      before do
+        grid[6][4] = null_piece  # Remove pawn in front of white king.
+        grid[1][5] = null_piece  # Remove pawn in front of black bishop.
+      end
+
+      it "returns 'Checkmate.'" do
+        expect(board.move_piece("d1h5")).to eq("Checkmate.")
       end
     end
   end

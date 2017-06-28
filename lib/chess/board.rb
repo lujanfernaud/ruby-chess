@@ -25,8 +25,7 @@ class Board
     return move_not_possible unless piece.allowed_move?(to)
     return pieces_in_between unless empty_path?(piece, to)
 
-    remove_piece(from)
-    place_piece(piece, to)
+    move(piece, from, to)
 
     return king_in_checkmate if king_in_checkmate?
     return king_in_check     if king_in_check?
@@ -94,16 +93,6 @@ class Board
     grid[row(from)][column(from)]
   end
 
-  def remove_piece(from)
-    grid[row(from)][column(from)] = NullPiece.new
-  end
-
-  def place_piece(piece, to)
-    grid[row(to)][column(to)] = piece
-    @last_moved_piece = piece
-    piece.position    = to
-  end
-
   def row(coords)
     coords[0]
   end
@@ -122,6 +111,21 @@ class Board
 
   def empty_path?(piece, to)
     Path.new(grid, piece, to).empty?
+  end
+
+  def move(piece, from, to)
+    remove_piece(from)
+    place_piece(piece, to)
+  end
+
+  def remove_piece(from)
+    grid[row(from)][column(from)] = NullPiece.new
+  end
+
+  def place_piece(piece, to)
+    grid[row(to)][column(to)] = piece
+    @last_moved_piece = piece
+    piece.position    = to
   end
 
   def king_in_check

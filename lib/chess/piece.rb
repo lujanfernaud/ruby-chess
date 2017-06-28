@@ -18,7 +18,7 @@ class Piece
       row    = position[0] + move[0]
       column = position[1] + move[1]
       [row, column] if valid_move?(row, column)
-    end
+    end.compact
   end
 
   private

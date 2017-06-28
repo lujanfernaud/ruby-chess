@@ -102,6 +102,8 @@ class Path < Board
         next  if column == from_column
         break if column == to_column
         path << [row, column]
+        column_step += column_step
+        break
       end
     end
   end

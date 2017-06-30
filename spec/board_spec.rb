@@ -4,6 +4,14 @@ describe Board do
   let(:coordinates) { board.coordinates }
   let(:null_piece)  { NullPiece.new }
 
+  let(:empty_board) do
+    0.upto(7) do |row|
+      0.upto(7) do |column|
+        grid[row][column] = null_piece
+      end
+    end
+  end
+
   describe "attributes" do
     it "has a coordinates hash" do
       expect(coordinates).to be_kind_of(Hash)
@@ -31,14 +39,6 @@ describe Board do
     it "has a row of white pawns" do
       white_pawns = grid[6]
       white_pawns.all? { |piece| expect(piece).to be_a(Pawn) }
-    end
-
-    it "has an array of black pieces" do
-      expect(board.black_pieces.length).to eq(15)
-    end
-
-    it "has an array of white pieces" do
-      expect(board.white_pieces.length).to eq(15)
     end
   end
 
@@ -339,6 +339,80 @@ describe Board do
 
       it "returns 'Checkmate.'" do
         expect(board.move_piece("d1h5")).to eq("Checkmate.")
+      end
+    end
+
+    context "the black player is in stalemate" do
+      let(:black_king)   { King.new(color: :black, position: [0, 5], board: board) }
+      let(:white_bishop) { Bishop.new(color: :white, position: [1, 5], board: board) }
+      let(:white_king)   { King.new(color: :white, position: [3, 5], board: board) }
+
+      before do
+        empty_board
+
+        grid[0][5] = black_king
+        grid[1][5] = white_bishop
+        grid[3][5] = white_king
+      end
+
+      it "returns 'Stalemate.'" do
+        expect(board.move_piece("f5f6")).to eq("Stalemate.")
+      end
+    end
+
+    context "the black player is in stalemate" do
+      let(:black_king)   { King.new(color: :black, position: [0, 0], board: board) }
+      let(:black_bishop) { Bishop.new(color: :black, position: [0, 1], board: board) }
+      let(:white_rook)   { Rook.new(color: :white, position: [0, 7], board: board) }
+      let(:white_king)   { King.new(color: :white, position: [3, 1], board: board) }
+
+      before do
+        empty_board
+
+        grid[0][0] = black_king
+        grid[0][1] = black_bishop
+        grid[0][7] = white_rook
+        grid[3][1] = white_king
+      end
+
+      it "returns 'Stalemate.'" do
+        expect(board.move_piece("b5b6")).to eq("Stalemate.")
+      end
+    end
+
+    context "the black player is in stalemate" do
+      let(:black_king)   { King.new(color: :black, position: [7, 0], board: board) }
+      let(:white_rook)   { Rook.new(color: :white, position: [6, 1], board: board) }
+      let(:white_king)   { King.new(color: :white, position: [4, 2], board: board) }
+
+      before do
+        empty_board
+
+        grid[7][0] = black_king
+        grid[6][1] = white_rook
+        grid[4][2] = white_king
+      end
+
+      it "returns 'Stalemate.'" do
+        expect(board.move_piece("c4c3")).to eq("Stalemate.")
+      end
+    end
+
+    context "the black player is in stalemate" do
+      let(:black_king)   { King.new(color: :black, position: [0, 0], board: board) }
+      let(:white_bishop) { Bishop.new(color: :white, position: [4, 5], board: board) }
+      let(:white_king)   { King.new(color: :white, position: [3, 0], board: board) }
+
+      before do
+        empty_board
+
+        grid[0][0] = black_king
+        grid[4][5] = white_bishop
+        grid[3][0] = white_king
+      end
+
+      it "returns 'Stalemate.'" do
+        expect(board.move_piece("a5a6")).to eq("Stalemate.")
       end
     end
   end

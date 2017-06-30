@@ -21,6 +21,14 @@ class Piece
     end.compact
   end
 
+  def valid_destinations_tresspassing
+    allowed_moves.map do |move|
+      row    = position[0] + move[0]
+      column = position[1] + move[1]
+      [row, column] if move_inside_board?(row, column)
+    end.compact
+  end
+
   private
 
   def opponent_in_destination?(row, column, to)
@@ -35,11 +43,19 @@ class Piece
     move_inside_board?(row, column) && not_player_piece?(row, column)
   end
 
+  def move_inside_board?(row, column)
+    (0..7).cover?(row) && (0..7).cover?(column)
+  end
+
   def not_player_piece?(row, column)
+    opponent_in_square(row, column) || empty_square?(row, column)
+  end
+
+  def opponent_in_square(row, column)
     @board.grid[row][column].color != @color
   end
 
-  def move_inside_board?(row, column)
-    (0..7).cover?(row) && (0..7).cover?(column)
+  def empty_square?(row, column)
+    @board.grid[row][column].color == :null
   end
 end

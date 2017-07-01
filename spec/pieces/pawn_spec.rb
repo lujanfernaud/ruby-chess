@@ -1,6 +1,16 @@
 describe Pawn do
   let(:board) { Board.new }
+  let(:grid)  { board.grid }
   let(:pawn)  { described_class.new(color: :white, position: [5, 0], board: board) }
+  let(:null_piece) { NullPiece.new }
+
+  let(:empty_board) do
+    0.upto(7) do |row|
+      0.upto(7) do |column|
+        grid[row][column] = null_piece
+      end
+    end
+  end
 
   describe "attributes" do
     it "is a Piece" do
@@ -17,6 +27,7 @@ describe Pawn do
 
     context "when the color is white" do
       it "has [[-1, 0]] as an allowed move" do
+        pawn.allowed_move?([4, 0])
         expect(pawn.allowed_moves).to eq([[-1, 0]])
       end
     end
@@ -25,6 +36,7 @@ describe Pawn do
       let(:pawn) { described_class.new(color: :white, position: [6, 0], board: board) }
 
       it "also has [-2, 0] as an allowed move" do
+        pawn.allowed_move?([4, 0])
         expect(pawn.allowed_moves.include?([-2, 0])).to be(true)
       end
     end
@@ -33,6 +45,7 @@ describe Pawn do
       let(:pawn) { described_class.new(color: :white, position: [5, 0], board: board) }
 
       it "doesn't have [-2, 0] as an allowed move" do
+        pawn.allowed_move?([3, 0])
         expect(pawn.allowed_moves.include?([-2, 0])).to be(false)
       end
     end
@@ -41,6 +54,7 @@ describe Pawn do
       let(:pawn) { described_class.new(color: :black, position: [2, 0], board: board) }
 
       it "has [[1, 0]] as an allowed move" do
+        pawn.allowed_move?([3, 0])
         expect(pawn.allowed_moves).to eq([[1, 0]])
       end
     end
@@ -49,6 +63,7 @@ describe Pawn do
       let(:pawn) { described_class.new(color: :black, position: [1, 0], board: board) }
 
       it "also has [2, 0] as a capturing move" do
+        pawn.allowed_move?([3, 0])
         expect(pawn.allowed_moves.include?([2, 0])).to be(true)
       end
     end
@@ -57,7 +72,42 @@ describe Pawn do
       let(:pawn) { described_class.new(color: :black, position: [2, 0], board: board) }
 
       it "doesn't have [2, 0] as a capturing move" do
+        pawn.allowed_move?([4, 0])
         expect(pawn.allowed_moves.include?([2, 0])).to be(false)
+      end
+    end
+  end
+
+  describe "#allowed_move?" do
+    context "when there is an opponent piece in front of a white pawn" do
+      let(:black_king) { King.new(color: :black, position: [0, 5], board: board) }
+      let(:white_pawn) { described_class.new(color: :white, position: [1, 5], board: board) }
+
+      before do
+        empty_board
+
+        grid[0][5] = black_king
+        grid[1][5] = white_pawn
+      end
+
+      it "does not capture the opponent piece" do
+        expect(white_pawn.allowed_move?([0, 5])).to be(false)
+      end
+    end
+
+    context "when there is an opponent piece in front of a black pawn" do
+      let(:black_pawn) { described_class.new(color: :black, position: [6, 5], board: board) }
+      let(:white_king) { King.new(color: :white, position: [7, 5], board: board) }
+
+      before do
+        empty_board
+
+        grid[6][5] = black_pawn
+        grid[7][5] = white_king
+      end
+
+      it "does not capture the opponent piece" do
+        expect(black_pawn.allowed_move?([7, 5])).to be(false)
       end
     end
   end

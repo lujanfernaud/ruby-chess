@@ -2,6 +2,11 @@
 class Pawn < Piece
   attr_reader :capturing_moves
 
+  INITIAL_POSITION = { black: [[1, 0], [1, 1], [1, 2], [1, 3],
+                               [1, 4], [1, 5], [1, 6], [1, 7]],
+                       white: [[6, 0], [6, 1], [6, 2], [6, 3],
+                               [6, 4], [6, 5], [6, 6], [6, 7]] }.freeze
+
   def initialize(color:, position:, board:)
     @color          = color
     @position       = position
@@ -28,13 +33,13 @@ class Pawn < Piece
 
   def set_allowed_moves_for_white
     @allowed_moves << [-1, 0] if empty_position?(-1)
-    @allowed_moves << [-2, 0] if initial_position_white && empty_position?(-2)
+    @allowed_moves << [-2, 0] if initial_position? && empty_position?(-2)
     @capturing_moves = [[-1, -1], [-1, 1]]
   end
 
   def set_allowed_moves_for_black
     @allowed_moves << [1, 0] if empty_position?(1)
-    @allowed_moves << [2, 0] if initial_position_black && empty_position?(2)
+    @allowed_moves << [2, 0] if initial_position? && empty_position?(2)
     @capturing_moves = [[1, 1], [1, -1]]
   end
 
@@ -45,16 +50,8 @@ class Pawn < Piece
     empty_square?(row, column)
   end
 
-  def initial_position_white
-    initial_position = [[6, 0], [6, 1], [6, 2], [6, 3],
-                        [6, 4], [6, 5], [6, 6], [6, 7]]
-    initial_position.include?(position)
-  end
-
-  def initial_position_black
-    initial_position = [[1, 0], [1, 1], [1, 2], [1, 3],
-                        [1, 4], [1, 5], [1, 6], [1, 7]]
-    initial_position.include?(position)
+  def initial_position?
+    INITIAL_POSITION[color].include?(position)
   end
 
   def prepare_capturing_moves(to)

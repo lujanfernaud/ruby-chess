@@ -106,7 +106,7 @@ class Board
   def place_piece(piece, to)
     grid[row(to)][column(to)] = piece
     @last_moved_piece = piece
-    piece.position    = to
+    piece.update_position(to)
   end
 
   def king_in_check

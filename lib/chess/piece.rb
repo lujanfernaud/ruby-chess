@@ -29,6 +29,10 @@ class Piece
     end.compact
   end
 
+  def update_position(to)
+    @position = to
+  end
+
   private
 
   def opponent_in_destination?(row, column, to)

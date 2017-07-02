@@ -1,6 +1,6 @@
 # Holds color, position and allowed moves for pawns.
 class Pawn < Piece
-  attr_reader :capturing_moves
+  attr_reader :capturing_moves, :moved_two
 
   INITIAL_POSITION = { black: [[1, 0], [1, 1], [1, 2], [1, 3],
                                [1, 4], [1, 5], [1, 6], [1, 7]],
@@ -13,12 +13,18 @@ class Pawn < Piece
     @allowed_moves  = []
     @board          = board
     @opponent_color = @color == :white ? :black : :white
+    @moved_two      = false
   end
 
   def allowed_move?(to)
     prepare_allowed_moves
     capturing_moves = prepare_capturing_moves(to)
     (capturing_moves + valid_destinations).include?(to)
+  end
+
+  def update_position(to)
+    @moved_two = move_two_from_initial?(to) ? true : false
+    @position  = to
   end
 
   private
@@ -60,5 +66,13 @@ class Pawn < Piece
       column = position[1] + move[1]
       [row, column] if opponent_in_destination?(row, column, to)
     end
+  end
+
+  def move_two_from_initial?(to)
+    initial_position? && two_squares?(to)
+  end
+
+  def two_squares?(to)
+    (to[0] - position[0]).abs == 2
   end
 end

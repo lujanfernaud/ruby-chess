@@ -78,6 +78,80 @@ describe Pawn do
     end
   end
 
+  describe "#update_position" do
+    context "when black is moved two squares from initial position" do
+      let(:pawn) { described_class.new(color: :black, position: [1, 0], board: board) }
+
+      it "has moved_two as 'false' before the movement" do
+        expect(pawn.moved_two).to be(false)
+      end
+
+      it "has moved_two as 'true' after the movement" do
+        pawn.update_position([3, 0])
+        expect(pawn.moved_two).to be(true)
+      end
+    end
+
+    context "when black is moved after being moved two" do
+      let(:pawn) { described_class.new(color: :black, position: [1, 0], board: board) }
+
+      it "has moved_two as 'true' before the movement" do
+        pawn.update_position([3, 0])
+        expect(pawn.moved_two).to be(true)
+      end
+
+      it "has moved_two as 'false' after the movement" do
+        pawn.update_position([4, 0])
+        expect(pawn.moved_two).to be(false)
+      end
+    end
+
+    context "when black is moved one square from initial position" do
+      let(:pawn) { described_class.new(color: :black, position: [1, 0], board: board) }
+
+      it "has moved_two as 'false' after the movement" do
+        pawn.update_position([2, 0])
+        expect(pawn.moved_two).to be(false)
+      end
+    end
+
+    context "when white is moved two squares from initial position" do
+      let(:pawn) { described_class.new(color: :white, position: [6, 0], board: board) }
+
+      it "has moved_two as 'false' before the movement" do
+        expect(pawn.moved_two).to be(false)
+      end
+
+      it "has moved_two as 'true' after the movement" do
+        pawn.update_position([4, 0])
+        expect(pawn.moved_two).to be(true)
+      end
+    end
+
+    context "when white is moved after being moved two" do
+      let(:pawn) { described_class.new(color: :white, position: [6, 0], board: board) }
+
+      it "has moved_two as 'true' before the movement" do
+        pawn.update_position([4, 0])
+        expect(pawn.moved_two).to be(true)
+      end
+
+      it "has moved_two as 'false' after the movement" do
+        pawn.update_position([3, 0])
+        expect(pawn.moved_two).to be(false)
+      end
+    end
+
+    context "when white is moved one square from initial position" do
+      let(:pawn) { described_class.new(color: :white, position: [6, 0], board: board) }
+
+      it "has moved_two as 'false' after the movement" do
+        pawn.update_position([5, 0])
+        expect(pawn.moved_two).to be(false)
+      end
+    end
+  end
+
   describe "#allowed_move?" do
     context "when there is an opponent piece in front of a white pawn" do
       let(:black_king) { King.new(color: :black, position: [0, 5], board: board) }

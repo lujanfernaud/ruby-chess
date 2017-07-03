@@ -101,28 +101,24 @@ class Board
     place_piece(piece, to)
   end
 
+  def remove_piece(from)
+    grid[row(from)][column(from)] = NullPiece.new
+  end
+
   def capture_en_passant_piece(from, to)
     grid[row(from)][column(to)] = NullPiece.new
   end
 
   def en_passant_possible?(from, to)
     piece = grid[row(from)][column(to)]
-    en_passant && pawn_that_moved_two?(piece)
-  end
-
-  def remove_piece(from)
-    grid[row(from)][column(from)] = NullPiece.new
+    en_passant && piece.moved_two
   end
 
   def place_piece(piece, to)
     grid[row(to)][column(to)] = piece
     piece.update_position(to)
     @last_moved_piece = piece
-    @en_passant = pawn_that_moved_two?(piece)
-  end
-
-  def pawn_that_moved_two?(piece)
-    piece.is_a?(Pawn) && piece.moved_two
+    @en_passant = piece.moved_two
   end
 
   def king_in_check

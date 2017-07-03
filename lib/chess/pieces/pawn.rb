@@ -78,11 +78,7 @@ class Pawn < Piece
 
     return false unless empty_square?(to[0], column)
 
-    pawn_that_moved_two?(piece) && @board.en_passant
-  end
-
-  def pawn_that_moved_two?(piece)
-    piece.is_a?(Pawn) && piece.moved_two
+    piece.moved_two && @board.en_passant
   end
 
   def move_two_from_initial?(to)

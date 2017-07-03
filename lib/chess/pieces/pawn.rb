@@ -64,8 +64,25 @@ class Pawn < Piece
     capturing_moves.map do |move|
       row    = position[0] + move[0]
       column = position[1] + move[1]
-      [row, column] if opponent_in_destination?(row, column, to)
+      [row, column] if valid_capture?(row, column, to)
     end
+  end
+
+  def valid_capture?(row, column, to)
+    opponent_in_destination?(row, column, to) || en_passant?(to)
+  end
+
+  def en_passant?(to)
+    column = to[1]
+    piece  = @board.grid[position[0]][column]
+
+    return false unless empty_square?(to[0], column)
+
+    pawn_that_moved_two?(piece) && @board.en_passant
+  end
+
+  def pawn_that_moved_two?(piece)
+    piece.is_a?(Pawn) && piece.moved_two
   end
 
   def move_two_from_initial?(to)

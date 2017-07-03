@@ -89,6 +89,48 @@ describe Board do
       end
     end
 
+    context "when an 'en passant' capturing move is possible for a pawn" do
+      before do
+        board.move_piece("a7a5")
+        board.move_piece("a5a4")
+        board.move_piece("b2b4")
+        board.move_piece("a4b3")
+      end
+
+      it "removes pawn from 'a4'" do
+        expect(grid[4][0].to_s).to eq("-")
+      end
+
+      it "removes captured pawn from 'b4'" do
+        expect(grid[4][1].to_s).to eq("-")
+      end
+
+      it "places pawn in 'b3'" do
+        expect(grid[5][1]).to be_a(Pawn)
+      end
+    end
+
+    context "when an 'en passant' capturing move is possible for a pawn" do
+      before do
+        board.move_piece("b2b4")
+        board.move_piece("b4b5")
+        board.move_piece("a7a5")
+        board.move_piece("b5a6")
+      end
+
+      it "removes pawn from 'b5'" do
+        expect(grid[5][1].to_s).to eq("-")
+      end
+
+      it "removes captured pawn from 'a5'" do
+        expect(grid[5][0].to_s).to eq("-")
+      end
+
+      it "places pawn in 'a6'" do
+        expect(grid[2][0]).to be_a(Pawn)
+      end
+    end
+
     context "when a vertical move is possible for a rook" do
       before do
         grid[5][0] = Rook.new(color: :white, position: [5, 0], board: board)

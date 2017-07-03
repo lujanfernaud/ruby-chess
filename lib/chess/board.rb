@@ -2,13 +2,14 @@
 class Board
   include Coordinates
 
-  attr_reader :grid, :coordinates
+  attr_reader :grid, :coordinates, :en_passant
 
   def initialize
     @grid = []
     set_board
     @coordinates = COORDINATES
     @last_moved_piece = NullPiece.new
+    @en_passant = false
   end
 
   def move_piece(coords)
@@ -96,7 +97,17 @@ class Board
 
   def move(piece, from, to)
     remove_piece(from)
+    capture_en_passant_piece(from, to) if en_passant_possible?(from, to)
     place_piece(piece, to)
+  end
+
+  def capture_en_passant_piece(from, to)
+    grid[row(from)][column(to)] = NullPiece.new
+  end
+
+  def en_passant_possible?(from, to)
+    piece = grid[row(from)][column(to)]
+    en_passant && pawn_that_moved_two?(piece)
   end
 
   def remove_piece(from)
@@ -105,8 +116,13 @@ class Board
 
   def place_piece(piece, to)
     grid[row(to)][column(to)] = piece
-    @last_moved_piece = piece
     piece.update_position(to)
+    @last_moved_piece = piece
+    @en_passant = pawn_that_moved_two?(piece)
+  end
+
+  def pawn_that_moved_two?(piece)
+    piece.is_a?(Pawn) && piece.moved_two
   end
 
   def king_in_check

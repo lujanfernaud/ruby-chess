@@ -1,6 +1,6 @@
 # Holds color, position and allowed moves for pawns.
 class Pawn < Piece
-  attr_reader :capturing_moves, :moved_two
+  attr_reader :capturing_moves
 
   INITIAL_POSITION = { black: [[1, 0], [1, 1], [1, 2], [1, 3],
                                [1, 4], [1, 5], [1, 6], [1, 7]],

@@ -27,6 +27,10 @@ class Pawn < Piece
     @position  = to
   end
 
+  def to_s
+    color == :black ? "p" : "P"
+  end
+
   private
 
   def prepare_allowed_moves

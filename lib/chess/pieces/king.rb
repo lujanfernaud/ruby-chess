@@ -15,4 +15,8 @@ class King < Piece
 
     escape_destinations.empty?
   end
+
+  def to_s
+    color == :black ? "k" : "K"
+  end
 end

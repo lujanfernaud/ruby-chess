@@ -76,6 +76,20 @@ describe Pawn do
         expect(pawn.allowed_moves.include?([2, 0])).to be(false)
       end
     end
+
+    context "when the piece is black" do
+      let(:pawn) { described_class.new(color: :black, position: [1, 0], board: board) }
+
+      it "is represented as 'p'" do
+        expect(pawn.to_s).to eq("p")
+      end
+    end
+
+    context "when the piece is white" do
+      it "is represented as 'P'" do
+        expect(pawn.to_s).to eq("P")
+      end
+    end
   end
 
   describe "#update_position" do

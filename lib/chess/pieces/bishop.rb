@@ -12,4 +12,8 @@ class Bishop < Piece
                       [-2, 2], [-2, -2], [2, 2], [2, -2],
                       [-1, 1], [-1, -1], [1, 1], [1, -1]]
   end
+
+  def to_s
+    color == :black ? "b" : "B"
+  end
 end

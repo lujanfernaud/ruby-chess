@@ -7,4 +7,8 @@ class Knight < Piece
     @allowed_moves = [[-2,  1], [-1,  2], [1,  2], [2,  1],
                       [-2, -1], [-1, -2], [1, -2], [2, -1]]
   end
+
+  def to_s
+    color == :black ? "n" : "N"
+  end
 end

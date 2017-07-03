@@ -1,11 +1,12 @@
 # Common attributes and behaviour for all pieces.
 class Piece
-  attr_reader :color, :position, :allowed_moves
+  attr_reader :color, :position, :allowed_moves, :moved_two
 
   def initialize
     @color         = color
     @position      = []
     @allowed_moves = []
+    @moved_two     = nil
   end
 
   def allowed_move?(to)

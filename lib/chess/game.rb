@@ -1,11 +1,10 @@
 # Controls game flow.
 class Game
-  attr_reader :board, :printer, :grid, :player1, :player2, :players
+  attr_reader :board, :printer, :player1, :player2, :players
 
   def initialize(player1, player2)
     @board   = Board.new
     @printer = Printer.new(board)
-    @grid    = @board.grid
     @player1 = player1
     @player2 = player2
     @players = [player1, player2]

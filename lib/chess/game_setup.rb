@@ -1,6 +1,6 @@
 # Sets players properties and starts game.
 class GameSetup
-  attr_reader :game, :player1, :player2, :players
+  attr_reader :game, :player1, :player2
 
   def initialize
     @player1 = Player.new("Player 1", :null)

@@ -7,6 +7,10 @@ class NullPiece
     @moved_two = nil
   end
 
+  def allowed_move?(_argument)
+    false
+  end
+
   def to_s
     "-"
   end

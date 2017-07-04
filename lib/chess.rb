@@ -2,6 +2,8 @@ require_relative "chess/coordinates"
 require_relative "chess/board"
 require_relative "chess/path"
 
+require_relative "chess/game_setup"
+require_relative "chess/game"
 require_relative "chess/player"
 
 require_relative "chess/piece"

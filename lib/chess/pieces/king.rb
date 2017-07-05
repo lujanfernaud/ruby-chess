@@ -8,6 +8,10 @@ class King < Piece
                       [1, 0], [1, -1], [0, -1], [-1, -1]]
   end
 
+  def valid_destinations?
+    !valid_destinations.empty?
+  end
+
   def cannot_escape?(pieces)
     destinations        = proc { |piece| piece.valid_destinations_tresspassing }
     pieces_destinations = pieces.flat_map(&destinations)

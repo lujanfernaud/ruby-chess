@@ -1,5 +1,6 @@
 describe Board do
   let(:board)        { described_class.new }
+  let(:screen)       { board.screen }
   let(:grid)         { board.grid }
   let(:coordinates)  { board.coordinates }
   let(:null_piece)   { NullPiece.new }
@@ -45,6 +46,10 @@ describe Board do
   end
 
   describe "#move_piece" do
+    before do
+      allow(screen).to receive(:print_board)
+    end
+
     context "when the color of the player and the piece are not the same" do
       it "says so when the player is white and the piece black" do
         expect(board.move_piece(player_white, "a6a5"))

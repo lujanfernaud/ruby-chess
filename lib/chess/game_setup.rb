@@ -1,11 +1,12 @@
 # Sets players properties and starts game.
 class GameSetup
-  attr_reader :game, :player1, :player2
+  attr_reader :game, :screen, :player1, :player2
 
   def initialize
     @player1 = Player.new("Player 1", :null)
     @player2 = Player.new("Player 2", :null)
     @game    = Game.new(player1, player2)
+    @screen  = game.screen
   end
 
   def setup
@@ -24,13 +25,13 @@ class GameSetup
   end
 
   def ask_name_for(player)
-    clear_screen
+    screen.clear
     puts "Please, introduce #{player.name} name:"
     player.name = gets.chomp
   end
 
   def set_players_colors
-    clear_screen
+    screen.clear
     puts "#{player1.name}, do you want to be black or white?:"
     player1.color = sanitize_color(gets.chomp.to_sym)
     player2.color = player1.color == :black ? :white : :black
@@ -40,13 +41,9 @@ class GameSetup
     loop do
       return input if input == :black || input == :white
 
-      clear_screen
+      screen.clear
       puts "Please #{player1.name}, introduce 'black' or 'white':"
       input = gets.chomp.to_sym
     end
-  end
-
-  def clear_screen
-    system "clear" or system "cls"
   end
 end

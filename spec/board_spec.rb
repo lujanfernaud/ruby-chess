@@ -7,13 +7,13 @@ describe Board do
   let(:player_black) { Player.new("Matz", :black) }
   let(:player_white) { Player.new("Sandi", :white) }
 
-  let(:same_color_white)  { "You can only move pieces that are #{player_white.color}."}
-  let(:same_color_black)  { "You can only move pieces that are #{player_black.color}."}
-  let(:move_not_possible) { "The move is not possible." }
-  let(:pieces_in_between) { "There are pieces in between." }
-  let(:check)             { "Check." }
-  let(:checkmate)         { "Checkmate." }
-  let(:stalemate)         { "Stalemate." }
+  let(:same_color_white)  { "You can only move pieces that are #{player_white.color}.\n\n"}
+  let(:same_color_black)  { "You can only move pieces that are #{player_black.color}.\n\n"}
+  let(:move_not_possible) { "The move is not possible.\n\n" }
+  let(:pieces_in_between) { "There are pieces in between.\n\n" }
+  let(:check)             { "Check.\n\n" }
+  let(:checkmate)         { "Checkmate.\n\n" }
+  let(:stalemate)         { "Stalemate.\n\n" }
 
   let(:empty_board) do
     0.upto(7) do |row|

@@ -29,7 +29,7 @@ class Game
       players.each do |player|
         screen.print_board
         movement = input(player)
-        board.move_piece(movement)
+        board.move_piece(player, movement)
       end
     end
   end

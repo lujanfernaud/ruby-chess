@@ -1,8 +1,10 @@
 describe Board do
-  let(:board)       { described_class.new }
-  let(:grid)        { board.grid }
-  let(:coordinates) { board.coordinates }
-  let(:null_piece)  { NullPiece.new }
+  let(:board)        { described_class.new }
+  let(:grid)         { board.grid }
+  let(:coordinates)  { board.coordinates }
+  let(:null_piece)   { NullPiece.new }
+  let(:player_black) { Player.new("Matz", :black) }
+  let(:player_white) { Player.new("Sandi", :white) }
 
   let(:empty_board) do
     0.upto(7) do |row|
@@ -43,9 +45,21 @@ describe Board do
   end
 
   describe "#move_piece" do
+    context "when the color of the player and the piece are not the same" do
+      it "says so when the player is white and the piece black" do
+        expect(board.move_piece(player_white, "a6a5"))
+          .to eq("You can only move pieces that are #{player_white.color}.")
+      end
+
+      it "says so when the player is black and the piece white" do
+        expect(board.move_piece(player_black, "b2b3"))
+          .to eq("You can only move pieces that are #{player_black.color}.")
+      end
+    end
+
     context "when the move is possible for a pawn" do
       before do
-        board.move_piece("a2a4")
+        board.move_piece(player_white, "a2a4")
       end
 
       it "removes pawn from 'a2'" do
@@ -59,19 +73,19 @@ describe Board do
 
     context "when the move is not possible for a pawn" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("a2a5")).to eq("The move is not possible.")
+        expect(board.move_piece(player_white, "a2a5")).to eq("The move is not possible.")
       end
 
       it "returns 'The move is not possible.'" do
         grid[5][0] = Knight.new(color: :white, position: [5, 0], board: :board)
-        expect(board.move_piece("a2a3")).to eq("The move is not possible.")
+        expect(board.move_piece(player_white, "a2a3")).to eq("The move is not possible.")
       end
     end
 
     context "when a capturing move is possible for a pawn" do
       before do
         grid[5][1] = Pawn.new(color: :black, position: [5, 1], board: board)
-        board.move_piece("a2b3")
+        board.move_piece(player_white, "a2b3")
       end
 
       it "removes pawn from 'a2'" do
@@ -85,16 +99,16 @@ describe Board do
 
     context "when a capturing move is not possible for a pawn" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("c2d3")).to eq("The move is not possible.")
+        expect(board.move_piece(player_white, "c2d3")).to eq("The move is not possible.")
       end
     end
 
     context "when an 'en passant' capturing move is possible for a pawn" do
       before do
-        board.move_piece("a7a5")
-        board.move_piece("a5a4")
-        board.move_piece("b2b4")
-        board.move_piece("a4b3")
+        board.move_piece(player_black, "a7a5")
+        board.move_piece(player_black, "a5a4")
+        board.move_piece(player_white, "b2b4")
+        board.move_piece(player_black, "a4b3")
       end
 
       it "removes pawn from 'a4'" do
@@ -112,10 +126,10 @@ describe Board do
 
     context "when an 'en passant' capturing move is possible for a pawn" do
       before do
-        board.move_piece("b2b4")
-        board.move_piece("b4b5")
-        board.move_piece("a7a5")
-        board.move_piece("b5a6")
+        board.move_piece(player_white, "b2b4")
+        board.move_piece(player_white, "b4b5")
+        board.move_piece(player_black, "a7a5")
+        board.move_piece(player_white, "b5a6")
       end
 
       it "removes pawn from 'b5'" do
@@ -134,7 +148,7 @@ describe Board do
     context "when a vertical move is possible for a rook" do
       before do
         grid[5][0] = Rook.new(color: :white, position: [5, 0], board: board)
-        board.move_piece("a3a5")
+        board.move_piece(player_white, "a3a5")
       end
 
       it "removes rook from 'a3'" do
@@ -149,7 +163,7 @@ describe Board do
     context "when a horizontal move is possible for a rook" do
       before do
         grid[0][1] = null_piece
-        board.move_piece("a8b8")
+        board.move_piece(player_black, "a8b8")
       end
 
       it "removes rook from 'a8'" do
@@ -163,13 +177,13 @@ describe Board do
 
     context "when the move is not possible for a rook" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("a8b1")).to eq("The move is not possible.")
+        expect(board.move_piece(player_black, "a8b1")).to eq("The move is not possible.")
       end
     end
 
     context "when the move is possible for a knight" do
       before do
-        board.move_piece("b8c6")
+        board.move_piece(player_black, "b8c6")
       end
 
       it "removes knight from 'b8'" do
@@ -183,14 +197,14 @@ describe Board do
 
     context "when the move is not possible for a knight" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("b8c8")).to eq("The move is not possible.")
+        expect(board.move_piece(player_black, "b8c8")).to eq("The move is not possible.")
       end
     end
 
     context "when the move is possible for a bishop" do
       before do
         grid[2][4] = Bishop.new(color: :black, position: [2, 4], board: board)
-        board.move_piece("e6g4")
+        board.move_piece(player_black, "e6g4")
       end
 
       it "removes bishop from 'c8'" do
@@ -204,18 +218,18 @@ describe Board do
 
     context "when the move is not possible for a bishop" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("c1c6")).to eq("The move is not possible.")
+        expect(board.move_piece(player_white, "c1c6")).to eq("The move is not possible.")
       end
 
       it "returns 'There are pieces in between.'" do
-        expect(board.move_piece("c8e6")).to eq("There are pieces in between.")
+        expect(board.move_piece(player_black, "c8e6")).to eq("There are pieces in between.")
       end
     end
 
     context "when a vertical move is possible for a queen" do
       before do
         grid[2][4] = Queen.new(color: :black, position: [2, 4], board: board)
-        board.move_piece("e6e4")
+        board.move_piece(player_black, "e6e4")
       end
 
       it "removes queen from 'e8'" do
@@ -230,7 +244,7 @@ describe Board do
     context "when a diagonal move is possible for a queen" do
       before do
         grid[5][2] = Queen.new(color: :white, position: [5, 2], board: board)
-        board.move_piece("c3e5")
+        board.move_piece(player_white, "c3e5")
       end
 
       it "removes queen from 'e1'" do
@@ -245,7 +259,7 @@ describe Board do
     context "when a horizontal move is possible for a queen" do
       before do
         grid[2][4] = Queen.new(color: :white, position: [2, 4], board: board)
-        board.move_piece("e6g6")
+        board.move_piece(player_white, "e6g6")
       end
 
       it "removes queen from 'e8'" do
@@ -259,14 +273,14 @@ describe Board do
 
     context "when the move is not possible for a queen" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("e8f6")).to eq("The move is not possible.")
+        expect(board.move_piece(player_black, "e8f6")).to eq("The move is not possible.")
       end
     end
 
     context "when a vertical move is possible for a king" do
       before do
         grid[1][4] = null_piece
-        board.move_piece("e8e7")
+        board.move_piece(player_black, "e8e7")
       end
 
       it "removes king from 'e8'" do
@@ -281,7 +295,7 @@ describe Board do
     context "when a diagonal move is possible for a king" do
       before do
         grid[6][5] = null_piece
-        board.move_piece("e1f2")
+        board.move_piece(player_white, "e1f2")
       end
 
       it "removes king from 'd1'" do
@@ -296,7 +310,7 @@ describe Board do
     context "when a horizontal move is possible for a king" do
       before do
         grid[0][3] = null_piece
-        board.move_piece("e8d8")
+        board.move_piece(player_black, "e8d8")
       end
 
       it "removes king from 'd8'" do
@@ -310,7 +324,7 @@ describe Board do
 
     context "when the move is not possible for a king" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece("d8e6")).to eq("The move is not possible.")
+        expect(board.move_piece(player_black, "d8e6")).to eq("The move is not possible.")
       end
     end
 
@@ -318,12 +332,12 @@ describe Board do
       before do
         grid[1][0] = null_piece  # Remove pawn in front of black rook.
         grid[6][4] = null_piece  # Remove pawn in front of white king.
-        board.move_piece("e1e2") #
-        board.move_piece("e2e3") # Move king.
+        board.move_piece(player_white, "e1e2") #
+        board.move_piece(player_white, "e2e3") # Move king.
       end
 
       it "returns 'Check.'" do
-        expect(board.move_piece("a8a3")).to eq("Check.")
+        expect(board.move_piece(player_black, "a8a3")).to eq("Check.")
       end
     end
 
@@ -331,12 +345,12 @@ describe Board do
       before do
         grid[6][0] = null_piece  # Remove pawn in front of white rook.
         grid[1][4] = null_piece  # Remove pawn in front of black king.
-        board.move_piece("e8e7") #
-        board.move_piece("e7e6") # Move king.
+        board.move_piece(player_black, "e8e7") #
+        board.move_piece(player_black, "e7e6") # Move king.
       end
 
       it "returns 'Check.'" do
-        expect(board.move_piece("a1a6")).to eq("Check.")
+        expect(board.move_piece(player_white, "a1a6")).to eq("Check.")
       end
     end
 
@@ -347,7 +361,7 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece("d8a5")).to eq("Checkmate.")
+        expect(board.move_piece(player_black, "d8a5")).to eq("Checkmate.")
       end
     end
 
@@ -358,7 +372,7 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece("d8h4")).to eq("Checkmate.")
+        expect(board.move_piece(player_black, "d8h4")).to eq("Checkmate.")
       end
     end
 
@@ -369,7 +383,7 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece("d1a4")).to eq("Checkmate.")
+        expect(board.move_piece(player_white, "d1a4")).to eq("Checkmate.")
       end
     end
 
@@ -380,7 +394,7 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece("d1h5")).to eq("Checkmate.")
+        expect(board.move_piece(player_white, "d1h5")).to eq("Checkmate.")
       end
     end
 
@@ -398,7 +412,7 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece("f5f6")).to eq("Stalemate.")
+        expect(board.move_piece(player_white, "f5f6")).to eq("Stalemate.")
       end
     end
 
@@ -418,7 +432,7 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece("b5b6")).to eq("Stalemate.")
+        expect(board.move_piece(player_white, "b5b6")).to eq("Stalemate.")
       end
     end
 
@@ -436,7 +450,7 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece("c4c3")).to eq("Stalemate.")
+        expect(board.move_piece(player_white, "c4c3")).to eq("Stalemate.")
       end
     end
 
@@ -454,7 +468,7 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece("a5a6")).to eq("Stalemate.")
+        expect(board.move_piece(player_white, "a5a6")).to eq("Stalemate.")
       end
     end
   end

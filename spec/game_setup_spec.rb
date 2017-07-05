@@ -1,12 +1,12 @@
 describe GameSetup do
   let(:game_setup) { described_class.new }
-  let(:player1) { game_setup.player1 }
-  let(:player2) { game_setup.player2 }
+  let(:screen)     { game_setup.screen }
+  let(:player1)    { game_setup.player1 }
+  let(:player2)    { game_setup.player2 }
 
   describe "#setup" do
     before do
-      allow(game_setup).to receive(:system).with("clear")
-      allow(game_setup).to receive(:system).with("cls")
+      allow(screen).to receive(:clear)
       allow(game_setup).to receive(:puts)
         .with("Please, introduce Player 1 name:")
       allow(game_setup).to receive(:gets).and_return("Matz", "black", "Sandi")

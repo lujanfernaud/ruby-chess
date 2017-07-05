@@ -14,7 +14,7 @@ describe Game do
       allow(game).to receive(:puts).with("Player 1, introduce a movement:")
       allow(game).to receive(:puts).with("Player 2, introduce a movement:")
       allow(game).to receive(:gets).and_return("b2b3")
-      allow(game.board).to receive(:move_piece).with("b2b3")
+      allow(game.board).to receive(:move_piece)
       game.start
     end
 

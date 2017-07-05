@@ -17,7 +17,7 @@ class Game
   end
 
   def exit_game
-    screen.clear_screen
+    screen.clear
     puts "Thanks for playing. Hope you enjoyed it!\n\n"
     exit
   end

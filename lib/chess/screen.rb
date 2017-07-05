@@ -8,7 +8,7 @@ class Screen
   end
 
   def print_board
-    clear_screen
+    clear
     puts
     print_game_title
     puts
@@ -16,7 +16,7 @@ class Screen
     puts
   end
 
-  def clear_screen
+  def clear
     system "clear" or system "cls"
   end
 

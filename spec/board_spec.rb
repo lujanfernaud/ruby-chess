@@ -59,6 +59,7 @@ describe Board do
     before do
       allow(screen).to receive(:print_board)
       allow(board).to receive(:puts)
+      allow(game).to receive(:retry_turn)
     end
 
     context "when the color of the player and the piece are not the same" do

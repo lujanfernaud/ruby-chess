@@ -10,13 +10,13 @@ class Game
     @players = [player1, player2]
   end
 
-  def start_game
+  def start
     players_turns
   rescue Interrupt
-    exit_game
+    finish
   end
 
-  def exit_game
+  def finish
     screen.clear
     puts "Thanks for playing. Hope you enjoyed it!\n\n"
     exit

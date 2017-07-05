@@ -14,7 +14,7 @@ describe GameSetup do
         .with("Matz, do you want to be black or white?:")
       allow(game_setup).to receive(:puts)
         .with("Please, introduce Player 2 name:")
-      allow(game_setup.game).to receive(:start_game)
+      allow(game_setup.game).to receive(:start)
       game_setup.setup
     end
 

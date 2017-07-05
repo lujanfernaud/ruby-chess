@@ -11,9 +11,9 @@ class GameSetup
 
   def setup
     ask_names_and_colors
-    game.start_game
+    game.start
   rescue Interrupt
-    game.exit_game
+    game.finish
   end
 
   private

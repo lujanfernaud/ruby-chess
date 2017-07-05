@@ -15,7 +15,7 @@ describe Game do
       allow(game).to receive(:puts).with("Player 2, introduce a movement:")
       allow(game).to receive(:gets).and_return("b2b3")
       allow(game.board).to receive(:move_piece).with("b2b3")
-      game.start_game
+      game.start
     end
 
     it "prints board" do
@@ -40,7 +40,7 @@ describe Game do
       allow(game).to receive(:puts)
         .with("Thanks for playing. Hope you enjoyed it!\n\n")
       allow(game).to receive(:exit)
-      game.exit_game
+      game.finish
     end
 
     it "prints exit message" do

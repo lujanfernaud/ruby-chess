@@ -129,7 +129,7 @@ class Board
     current_piece.update_position(to)
 
     @last_moved_piece = current_piece
-    @en_passant = current_piece.moved_two
+    @en_passant = current_piece.moved_two?
   end
 
   def king_in_check

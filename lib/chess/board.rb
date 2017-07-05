@@ -160,7 +160,7 @@ class Board
   end
 
   def stalemate?
-    king.cannot_escape?(opponent)
+    king.valid_destinations? && king.cannot_escape?(opponent)
   end
 
   def king

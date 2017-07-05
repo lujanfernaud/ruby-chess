@@ -1,5 +1,7 @@
 describe Board do
-  let(:board)        { described_class.new }
+  let(:game_setup)   { GameSetup.new }
+  let(:game)         { game_setup.game }
+  let(:board)        { described_class.new(game) }
   let(:screen)       { board.screen }
   let(:grid)         { board.grid }
   let(:coordinates)  { board.coordinates }

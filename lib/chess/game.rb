@@ -3,7 +3,7 @@ class Game
   attr_reader :board, :screen, :player1, :player2, :players
 
   def initialize(player1, player2)
-    @board   = Board.new
+    @board   = Board.new(self)
     @screen  = Screen.new(board)
     @player1 = player1
     @player2 = player2

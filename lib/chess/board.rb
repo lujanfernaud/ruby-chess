@@ -2,12 +2,13 @@
 class Board
   include Coordinates
 
-  attr_reader :grid, :coordinates, :en_passant
+  attr_reader :grid, :screen, :coordinates, :en_passant
   attr_reader :current_player, :current_piece
 
   def initialize
     @grid = []
     set_board
+    @screen           = Screen.new(self)
     @coordinates      = COORDINATES
     @current_player   = nil
     @current_piece    = nil

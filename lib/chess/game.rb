@@ -16,6 +16,11 @@ class Game
     finish
   end
 
+  def retry_turn(player)
+    movement = input(player)
+    board.move_piece(player, movement)
+  end
+
   def finish
     screen.clear
     puts "Thanks for playing. Hope you enjoyed it!\n\n"

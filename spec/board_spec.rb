@@ -7,6 +7,14 @@ describe Board do
   let(:player_black) { Player.new("Matz", :black) }
   let(:player_white) { Player.new("Sandi", :white) }
 
+  let(:same_color_white)  { "You can only move pieces that are #{player_white.color}."}
+  let(:same_color_black)  { "You can only move pieces that are #{player_black.color}."}
+  let(:move_not_possible) { "The move is not possible." }
+  let(:pieces_in_between) { "There are pieces in between." }
+  let(:check)             { "Check." }
+  let(:checkmate)         { "Checkmate." }
+  let(:stalemate)         { "Stalemate." }
+
   let(:empty_board) do
     0.upto(7) do |row|
       0.upto(7) do |column|
@@ -48,17 +56,20 @@ describe Board do
   describe "#move_piece" do
     before do
       allow(screen).to receive(:print_board)
+      allow(board).to receive(:puts)
     end
 
     context "when the color of the player and the piece are not the same" do
       it "says so when the player is white and the piece black" do
-        expect(board.move_piece(player_white, "a6a5"))
-          .to eq("You can only move pieces that are #{player_white.color}.")
+        allow(board).to receive(:puts).with(same_color_white)
+        board.move_piece(player_white, "a6a5")
+        expect(board).to have_received(:puts).with(same_color_white)
       end
 
       it "says so when the player is black and the piece white" do
-        expect(board.move_piece(player_black, "b2b3"))
-          .to eq("You can only move pieces that are #{player_black.color}.")
+        allow(board).to receive(:puts).with(same_color_black)
+        board.move_piece(player_black, "b2b3")
+        expect(board).to have_received(:puts).with(same_color_black)
       end
     end
 
@@ -78,12 +89,17 @@ describe Board do
 
     context "when the move is not possible for a pawn" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_white, "a2a5")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_white, "a2a5")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
 
       it "returns 'The move is not possible.'" do
         grid[5][0] = Knight.new(color: :white, position: [5, 0], board: :board)
-        expect(board.move_piece(player_white, "a2a3")).to eq("The move is not possible.")
+
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_white, "a2a3")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
     end
 
@@ -104,7 +120,9 @@ describe Board do
 
     context "when a capturing move is not possible for a pawn" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_white, "c2d3")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_white, "c2d3")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
     end
 
@@ -182,7 +200,9 @@ describe Board do
 
     context "when the move is not possible for a rook" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_black, "a8b1")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "a8b1")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
     end
 
@@ -202,7 +222,9 @@ describe Board do
 
     context "when the move is not possible for a knight" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_black, "b8c8")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "b8c8")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
     end
 
@@ -223,11 +245,15 @@ describe Board do
 
     context "when the move is not possible for a bishop" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_white, "c1c6")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_white, "c1c6")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
 
       it "returns 'There are pieces in between.'" do
-        expect(board.move_piece(player_black, "c8e6")).to eq("There are pieces in between.")
+        allow(board).to receive(:puts).with(pieces_in_between)
+        board.move_piece(player_black, "c8e6")
+        expect(board).to have_received(:puts).with(pieces_in_between)
       end
     end
 
@@ -278,7 +304,9 @@ describe Board do
 
     context "when the move is not possible for a queen" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_black, "e8f6")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "e8f6")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
     end
 
@@ -329,7 +357,9 @@ describe Board do
 
     context "when the move is not possible for a king" do
       it "returns 'The move is not possible.'" do
-        expect(board.move_piece(player_black, "d8e6")).to eq("The move is not possible.")
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "d8e6")
+        expect(board).to have_received(:puts).with(move_not_possible)
       end
     end
 
@@ -342,7 +372,9 @@ describe Board do
       end
 
       it "returns 'Check.'" do
-        expect(board.move_piece(player_black, "a8a3")).to eq("Check.")
+        allow(board).to receive(:puts).with(check)
+        board.move_piece(player_black, "a8a3")
+        expect(board).to have_received(:puts).with(check)
       end
     end
 
@@ -355,7 +387,9 @@ describe Board do
       end
 
       it "returns 'Check.'" do
-        expect(board.move_piece(player_white, "a1a6")).to eq("Check.")
+        allow(board).to receive(:puts).with(check)
+        board.move_piece(player_white, "a1a6")
+        expect(board).to have_received(:puts).with(check)
       end
     end
 
@@ -366,7 +400,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece(player_black, "d8a5")).to eq("Checkmate.")
+        allow(board).to receive(:puts).with(checkmate)
+        board.move_piece(player_black, "d8a5")
+        expect(board).to have_received(:puts).with(checkmate)
       end
     end
 
@@ -377,7 +413,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece(player_black, "d8h4")).to eq("Checkmate.")
+        allow(board).to receive(:puts).with(checkmate)
+        board.move_piece(player_black, "d8h4")
+        expect(board).to have_received(:puts).with(checkmate)
       end
     end
 
@@ -388,7 +426,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece(player_white, "d1a4")).to eq("Checkmate.")
+        allow(board).to receive(:puts).with(checkmate)
+        board.move_piece(player_white, "d1a4")
+        expect(board).to have_received(:puts).with(checkmate)
       end
     end
 
@@ -399,7 +439,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        expect(board.move_piece(player_white, "d1h5")).to eq("Checkmate.")
+        allow(board).to receive(:puts).with(checkmate)
+        board.move_piece(player_white, "d1h5")
+        expect(board).to have_received(:puts).with(checkmate)
       end
     end
 
@@ -417,7 +459,9 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece(player_white, "f5f6")).to eq("Stalemate.")
+        allow(board).to receive(:puts).with(stalemate)
+        board.move_piece(player_white, "f5f6")
+        expect(board).to have_received(:puts).with(stalemate)
       end
     end
 
@@ -437,7 +481,9 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece(player_white, "b5b6")).to eq("Stalemate.")
+        allow(board).to receive(:puts).with(stalemate)
+        board.move_piece(player_white, "b5b6")
+        expect(board).to have_received(:puts).with(stalemate)
       end
     end
 
@@ -455,7 +501,9 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece(player_white, "c4c3")).to eq("Stalemate.")
+        allow(board).to receive(:puts).with(stalemate)
+        board.move_piece(player_white, "c4c3")
+        expect(board).to have_received(:puts).with(stalemate)
       end
     end
 
@@ -473,7 +521,9 @@ describe Board do
       end
 
       it "returns 'Stalemate.'" do
-        expect(board.move_piece(player_white, "a5a6")).to eq("Stalemate.")
+        allow(board).to receive(:puts).with(stalemate)
+        board.move_piece(player_white, "a5a6")
+        expect(board).to have_received(:puts).with(stalemate)
       end
     end
   end

@@ -92,17 +92,17 @@ class Board
 
   def incorrect_color
     screen.print_board
-    "You can only move pieces that are #{current_player.color}."
+    puts "You can only move pieces that are #{current_player.color}."
   end
 
   def move_not_possible
     screen.print_board
-    "The move is not possible."
+    puts "The move is not possible."
   end
 
   def pieces_in_between
     screen.print_board
-    "There are pieces in between."
+    puts "There are pieces in between."
   end
 
   def empty_path?(to)
@@ -138,7 +138,7 @@ class Board
 
   def king_in_check
     screen.print_board
-    "Check."
+    puts "Check."
   end
 
   def king_in_check?
@@ -147,7 +147,7 @@ class Board
 
   def king_in_checkmate
     screen.print_board
-    "Checkmate."
+    puts "Checkmate."
   end
 
   def king_in_checkmate?
@@ -156,7 +156,7 @@ class Board
 
   def stalemate
     screen.print_board
-    "Stalemate."
+    puts "Stalemate."
   end
 
   def stalemate?

@@ -33,6 +33,10 @@ class Piece
     @position = to
   end
 
+  def moved_two?
+    moved_two
+  end
+
   private
 
   def opponent_in_destination?(row, column, to)

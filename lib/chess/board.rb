@@ -102,7 +102,7 @@ class Board
   end
 
   def empty_path?(to)
-    Path.new(grid, current_piece, to).empty?
+    Path.empty?(grid, current_piece, to)
   end
 
   def move(from, to)

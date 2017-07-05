@@ -1,10 +1,10 @@
 # Controls game flow.
 class Game
-  attr_reader :board, :printer, :player1, :player2, :players
+  attr_reader :board, :screen, :player1, :player2, :players
 
   def initialize(player1, player2)
     @board   = Board.new
-    @printer = Printer.new(board)
+    @screen  = Screen.new(board)
     @player1 = player1
     @player2 = player2
     @players = [player1, player2]
@@ -17,7 +17,7 @@ class Game
   end
 
   def exit_game
-    printer.clear_screen
+    screen.clear_screen
     puts "Thanks for playing. Hope you enjoyed it!\n\n"
     exit
   end
@@ -27,7 +27,7 @@ class Game
   def players_turns
     loop do
       players.each do |player|
-        printer.print_board
+        screen.print_board
         movement = input(player)
         board.move_piece(movement)
       end

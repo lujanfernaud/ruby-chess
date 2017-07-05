@@ -1,5 +1,5 @@
 # Takes care of almost everything that needs to be printed to the screen.
-class Printer
+class Screen
   attr_reader :grid
 
   def initialize(board)

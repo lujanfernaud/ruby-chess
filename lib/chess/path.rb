@@ -6,6 +6,10 @@ class Path < Board
   DIRECTIONS = { row:    { down:  1, up:   -1 },
                  column: { left: -1, right: 1 } }.freeze
 
+  def self.empty?(grid, piece, to)
+    new(grid, piece, to).empty?
+  end
+
   def initialize(grid, piece, to)
     @grid        = grid
     @piece       = piece

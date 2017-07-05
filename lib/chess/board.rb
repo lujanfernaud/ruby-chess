@@ -20,13 +20,13 @@ class Board
     to   = translate_coords(coords[2..3])
 
     @current_player = player
-    @current_piece  = piece = get_piece(from)
+    @current_piece  = get_piece(from)
 
     return incorrect_color   unless current_piece.color == current_player.color
-    return move_not_possible unless piece.allowed_move?(to)
-    return pieces_in_between unless empty_path?(piece, to)
+    return move_not_possible unless current_piece.allowed_move?(to)
+    return pieces_in_between unless empty_path?(to)
 
-    move(piece, from, to)
+    move(from, to)
 
     return king_in_checkmate if king_in_checkmate?
     return king_in_check     if king_in_check?
@@ -101,14 +101,14 @@ class Board
     "There are pieces in between."
   end
 
-  def empty_path?(piece, to)
-    Path.new(grid, piece, to).empty?
+  def empty_path?(to)
+    Path.new(grid, current_piece, to).empty?
   end
 
-  def move(piece, from, to)
+  def move(from, to)
     remove_piece(from)
     capture_en_passant_piece(from, to) if en_passant_possible?(from, to)
-    place_piece(piece, to)
+    place_piece(to)
   end
 
   def remove_piece(from)
@@ -124,11 +124,12 @@ class Board
     en_passant && piece.moved_two
   end
 
-  def place_piece(piece, to)
-    grid[row(to)][column(to)] = piece
-    piece.update_position(to)
-    @last_moved_piece = piece
-    @en_passant = piece.moved_two
+  def place_piece(to)
+    grid[row(to)][column(to)] = current_piece
+    current_piece.update_position(to)
+
+    @last_moved_piece = current_piece
+    @en_passant = current_piece.moved_two
   end
 
   def king_in_check

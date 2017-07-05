@@ -2,25 +2,27 @@
 class Board
   include Coordinates
 
-  attr_reader :grid, :coordinates, :current_player, :en_passant
+  attr_reader :grid, :coordinates, :en_passant
+  attr_reader :current_player, :current_piece
 
   def initialize
     @grid = []
     set_board
     @coordinates      = COORDINATES
     @current_player   = nil
+    @current_piece    = nil
     @last_moved_piece = NullPiece.new
     @en_passant       = false
   end
 
   def move_piece(player, coords)
+    from = translate_coords(coords[0..1])
+    to   = translate_coords(coords[2..3])
+
     @current_player = player
+    @current_piece  = piece = get_piece(from)
 
-    from  = translate_coords(coords[0..1])
-    to    = translate_coords(coords[2..3])
-    piece = get_piece(from)
-
-    return incorrect_color   unless piece.color == current_player.color
+    return incorrect_color   unless current_piece.color == current_player.color
     return move_not_possible unless piece.allowed_move?(to)
     return pieces_in_between unless empty_path?(piece, to)
 

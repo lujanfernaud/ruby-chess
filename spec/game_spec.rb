@@ -5,7 +5,7 @@ describe Game do
   let(:player1)    { game.player1 }
   let(:player2)    { game.player2 }
 
-  describe "#start_game" do
+  describe "#start" do
     before do
       player1.color = :black
       player2.color = :white
@@ -33,7 +33,7 @@ describe Game do
     end
   end
 
-  describe "#exit_game" do
+  describe "#finish" do
     before do
       allow(screen).to receive(:system).with("clear")
       allow(screen).to receive(:system).with("cls")

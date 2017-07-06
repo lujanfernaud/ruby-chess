@@ -27,6 +27,15 @@ class Game
     player_turn_without_printing_board(next_player)
   end
 
+  def try_again
+    input = gets.chomp.downcase
+
+    case input
+    when "y" then restart
+    when "n" then finish
+    end
+  end
+
   def finish
     screen.clear
     puts "Thanks for playing. Hope you enjoyed it!\n\n"
@@ -63,5 +72,9 @@ class Game
   def input(player)
     puts "#{player.name}, introduce a movement:"
     gets.chomp
+  end
+
+  def restart
+    Game.new(player1, player2).start
   end
 end

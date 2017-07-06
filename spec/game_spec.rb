@@ -1,6 +1,7 @@
 describe Game do
   let(:game_setup) { GameSetup.new }
   let(:game)       { game_setup.game }
+  let(:board)      { game.board }
   let(:screen)     { game.screen }
   let(:player1)    { game.player1 }
   let(:player2)    { game.player2 }
@@ -30,6 +31,22 @@ describe Game do
     it "asks player 2 to introduce a movement" do
       expect(game).to have_received(:puts)
         .with("Player 2, introduce a movement:")
+    end
+  end
+
+  describe "#try_again" do
+    it "resets board when 'y'" do
+      allow(game).to receive(:gets).and_return("y")
+      allow(game).to receive(:restart)
+      game.try_again
+      expect(game).to have_received(:restart)
+    end
+
+    it "exits game when 'n'" do
+      allow(game).to receive(:gets).and_return("n")
+      allow(game).to receive(:finish)
+      game.try_again
+      expect(game).to have_received(:finish)
     end
   end
 

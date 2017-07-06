@@ -143,6 +143,7 @@ class Board
   def king_in_check
     screen.print_board
     puts "Check.\n\n"
+    game.next_turn
   end
 
   def king_in_check?

@@ -23,6 +23,10 @@ class Game
     player_turn_without_printing_board(current_player)
   end
 
+  def next_turn
+    player_turn_without_printing_board(next_player)
+  end
+
   def finish
     screen.clear
     puts "Thanks for playing. Hope you enjoyed it!\n\n"

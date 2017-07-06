@@ -19,9 +19,8 @@ class Game
     finish
   end
 
-  def retry_turn(player)
-    movement = input(player)
-    board.move_piece(player, movement)
+  def retry_turn
+    player_turn_without_printing_board(current_player)
   end
 
   def finish
@@ -48,6 +47,11 @@ class Game
 
   def player_turn(player)
     screen.print_board
+    movement = input(player)
+    board.move_piece(player, movement)
+  end
+
+  def player_turn_without_printing_board(player)
     movement = input(player)
     board.move_piece(player, movement)
   end

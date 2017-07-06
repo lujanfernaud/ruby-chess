@@ -94,19 +94,19 @@ class Board
   def incorrect_color
     screen.print_board
     puts "You can only move pieces that are #{current_player.color}.\n\n"
-    game.retry_turn(current_player)
+    game.retry_turn
   end
 
   def move_not_possible
     screen.print_board
     puts "The move is not possible.\n\n"
-    game.retry_turn(current_player)
+    game.retry_turn
   end
 
   def pieces_in_between
     screen.print_board
     puts "There are pieces in between.\n\n"
-    game.retry_turn(current_player)
+    game.retry_turn
   end
 
   def empty_path?(to)

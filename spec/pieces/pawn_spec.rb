@@ -1,8 +1,13 @@
 describe Pawn do
-  let(:board) { Board.new }
-  let(:grid)  { board.grid }
-  let(:pawn)  { described_class.new(color: :white, position: [5, 0], board: board) }
+  let(:game_setup) { GameSetup.new }
+  let(:game)       { game_setup.game }
+  let(:board)      { Board.new(game) }
+  let(:grid)       { board.grid }
   let(:null_piece) { NullPiece.new }
+
+  let(:pawn) do
+    described_class.new(color: :white, position: [5, 0], board: board)
+  end
 
   let(:empty_board) do
     0.upto(7) do |row|

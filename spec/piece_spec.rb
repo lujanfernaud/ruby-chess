@@ -1,7 +1,9 @@
 describe Piece do
-  let(:board) { Board.new }
-  let(:grid)  { board.grid }
-  let(:piece) { described_class.new }
+  let(:game_setup)   { GameSetup.new }
+  let(:game)         { game_setup.game }
+  let(:board)        { Board.new(game) }
+  let(:grid)         { board.grid }
+  let(:piece)        { described_class.new }
   let(:player_black) { Player.new("Matz", :black) }
 
   it "has a color" do

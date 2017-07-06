@@ -1,5 +1,8 @@
 describe Queen do
-  let(:board) { Board.new }
+  let(:game_setup) { GameSetup.new }
+  let(:game)       { game_setup.game }
+  let(:board)      { Board.new(game) }
+
   let(:queen) do
     described_class.new(color: :black, position: [0, 3], board: board)
   end

@@ -33,7 +33,7 @@ class GameSetup
   def set_players_colors
     screen.clear
     puts "#{player1.name}, do you want to be black or white?:"
-    player1.color = sanitize_color(gets.chomp.to_sym)
+    player1.color = sanitize_color(gets.chomp.downcase.to_sym)
     player2.color = player1.color == :black ? :white : :black
   end
 
@@ -43,7 +43,7 @@ class GameSetup
 
       screen.clear
       puts "Please #{player1.name}, introduce 'black' or 'white':"
-      input = gets.chomp.to_sym
+      input = gets.chomp.downcase.to_sym
     end
   end
 end

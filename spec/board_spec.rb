@@ -12,7 +12,6 @@ describe Board do
   let(:same_color_white)  { "You can only move pieces that are #{player_white.color}.\n\n"}
   let(:same_color_black)  { "You can only move pieces that are #{player_black.color}.\n\n"}
   let(:move_not_possible) { "The move is not possible.\n\n" }
-  let(:pieces_in_between) { "There are pieces in between.\n\n" }
   let(:check)             { "Check.\n\n" }
   let(:checkmate)         { "Checkmate.\n\n" }
   let(:stalemate)         { "Stalemate.\n\n" }
@@ -252,12 +251,6 @@ describe Board do
         allow(board).to receive(:puts).with(move_not_possible)
         board.move_piece(player_white, "c1c6")
         expect(board).to have_received(:puts).with(move_not_possible)
-      end
-
-      it "returns 'There are pieces in between.'" do
-        allow(board).to receive(:puts).with(pieces_in_between)
-        board.move_piece(player_black, "c8e6")
-        expect(board).to have_received(:puts).with(pieces_in_between)
       end
     end
 

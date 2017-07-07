@@ -26,7 +26,6 @@ class Board
 
     return incorrect_color   unless current_piece.color == current_player.color
     return move_not_possible unless current_piece.allowed_move?(to)
-    return pieces_in_between unless empty_path?(to)
 
     move(from, to)
 
@@ -106,16 +105,6 @@ class Board
     screen.print_board
     puts "The move is not possible.\n\n"
     game.retry_turn
-  end
-
-  def pieces_in_between
-    screen.print_board
-    puts "There are pieces in between.\n\n"
-    game.retry_turn
-  end
-
-  def empty_path?(to)
-    Path.empty?(grid, current_piece, to)
   end
 
   def move(from, to)

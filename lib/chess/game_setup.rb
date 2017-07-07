@@ -34,7 +34,11 @@ class GameSetup
     screen.clear
     puts "#{player1.name}, do you want to be black or white?:"
     player1.color = sanitize_color(gets.chomp.downcase.to_sym)
-    player2.color = player1.color == :black ? :white : :black
+    player2.color = choose_player2_color
+  end
+
+  def choose_player2_color
+    player1.color == :black ? :white : :black
   end
 
   def sanitize_color(input)

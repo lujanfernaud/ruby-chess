@@ -48,11 +48,17 @@ class Piece
   end
 
   def valid_move?(row, column)
-    move_inside_board?(row, column) && not_player_piece?(row, column)
+    move_inside_board?(row, column) &&
+      empty_path?(row, column) &&
+      not_player_piece?(row, column)
   end
 
   def move_inside_board?(row, column)
     (0..7).cover?(row) && (0..7).cover?(column)
+  end
+
+  def empty_path?(row, column)
+    Path.empty?(@board.grid, self, [row, column])
   end
 
   def not_player_piece?(row, column)

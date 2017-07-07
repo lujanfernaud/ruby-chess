@@ -11,6 +11,10 @@ class NullPiece
     false
   end
 
+  def moved_two?
+    false
+  end
+
   def to_s
     "·"
   end

@@ -529,33 +529,4 @@ describe Board do
       end
     end
   end
-
-  describe "#reset" do
-    let(:black_king)   { King.new(color: :black, position: [0, 0], board: board) }
-    let(:white_bishop) { Bishop.new(color: :white, position: [4, 5], board: board) }
-    let(:white_king)   { King.new(color: :white, position: [3, 0], board: board) }
-
-    before do
-      empty_board
-
-      grid[0][0] = black_king
-      grid[4][5] = white_bishop
-      grid[3][0] = white_king
-    end
-
-    context "before reset" do
-      it "board has 3 pieces" do
-        pieces = board.grid.flatten.count { |piece| piece.is_a?(Piece) }
-        expect(pieces).to eq(3)
-      end
-    end
-
-    context "after reset" do
-      it "board has 32 pieces" do
-        board.reset
-        pieces = board.grid.flatten.count { |piece| piece.is_a?(Piece) }
-        expect(pieces).to eq(32)
-      end
-    end
-  end
 end

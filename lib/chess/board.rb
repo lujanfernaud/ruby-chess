@@ -34,11 +34,6 @@ class Board
     return stalemate         if stalemate?
   end
 
-  def reset
-    @grid = []
-    set_board
-  end
-
   private
 
   attr_writer :grid

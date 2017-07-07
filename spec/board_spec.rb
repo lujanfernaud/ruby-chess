@@ -256,46 +256,47 @@ describe Board do
 
     context "when a vertical move is possible for a queen" do
       before do
-        grid[2][4] = Queen.new(color: :black, position: [2, 4], board: board)
-        board.move_piece(player_black, "e6e4")
+        grid[1][3] = null_piece
+        board.move_piece(player_black, "d8d4")
       end
 
-      it "removes queen from 'e8'" do
-        expect(grid[2][4].to_s).to eq("-")
+      it "removes queen from 'd8'" do
+        expect(grid[0][3].to_s).to eq("-")
       end
 
-      it "places queen in 'e6'" do
-        expect(grid[4][4]).to be_a(Queen)
+      it "places queen in 'd4'" do
+        expect(grid[4][3]).to be_a(Queen)
       end
     end
 
     context "when a diagonal move is possible for a queen" do
       before do
-        grid[5][2] = Queen.new(color: :white, position: [5, 2], board: board)
-        board.move_piece(player_white, "c3e5")
+        grid[6][4] = null_piece
+        board.move_piece(player_white, "d1h5")
       end
 
-      it "removes queen from 'e1'" do
-        expect(grid[5][2].to_s).to eq("-")
+      it "removes queen from 'd1'" do
+        expect(grid[7][3].to_s).to eq("-")
       end
 
-      it "places queen in 'g3'" do
-        expect(grid[3][4]).to be_a(Queen)
+      it "places queen in 'h5'" do
+        expect(grid[3][7]).to be_a(Queen)
       end
     end
 
     context "when a horizontal move is possible for a queen" do
       before do
-        grid[2][4] = Queen.new(color: :white, position: [2, 4], board: board)
-        board.move_piece(player_white, "e6g6")
+        grid[7][2] = null_piece
+        grid[7][1] = null_piece
+        board.move_piece(player_white, "d1b1")
       end
 
-      it "removes queen from 'e8'" do
-        expect(grid[2][4].to_s).to eq("-")
+      it "removes queen from 'd1'" do
+        expect(grid[7][3].to_s).to eq("-")
       end
 
-      it "places queen in 'g8'" do
-        expect(grid[2][6]).to be_a(Queen)
+      it "places queen in 'b1'" do
+        expect(grid[7][1]).to be_a(Queen)
       end
     end
 

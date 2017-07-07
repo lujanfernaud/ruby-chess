@@ -58,7 +58,7 @@ class Piece
   end
 
   def empty_path?(row, column)
-    Path.empty?(@board.grid, self, [row, column])
+    Path.empty?(grid: @board.grid, piece: self, to: [row, column])
   end
 
   def not_player_piece?(row, column)

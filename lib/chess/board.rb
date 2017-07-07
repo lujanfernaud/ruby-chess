@@ -146,7 +146,7 @@ class Board
 
   def king_in_checkmate
     screen.print_board
-    puts "Checkmate.\n\n"
+    puts "Checkmate! #{current_player.name} WINS!\n\n"
     puts "Would you like to play again? (y/n)"
     game.try_again
   end

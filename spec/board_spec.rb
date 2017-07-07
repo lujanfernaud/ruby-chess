@@ -9,11 +9,12 @@ describe Board do
   let(:player_black) { Player.new("Matz", :black) }
   let(:player_white) { Player.new("Sandi", :white) }
 
-  let(:same_color_white)  { "You can only move pieces that are #{player_white.color}.\n\n"}
   let(:same_color_black)  { "You can only move pieces that are #{player_black.color}.\n\n"}
+  let(:same_color_white)  { "You can only move pieces that are #{player_white.color}.\n\n"}
   let(:move_not_possible) { "The move is not possible.\n\n" }
   let(:check)             { "Check.\n\n" }
-  let(:checkmate)         { "Checkmate.\n\n" }
+  let(:checkmate_black)   { "Checkmate! #{player_black.name} WINS!\n\n" }
+  let(:checkmate_white)   { "Checkmate! #{player_white.name} WINS!\n\n" }
   let(:stalemate)         { "Stalemate.\n\n" }
   let(:try_again)         { "Would you like to play again? (y/n)" }
 
@@ -400,9 +401,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        allow(board).to receive(:puts).with(checkmate)
+        allow(board).to receive(:puts).with(checkmate_black)
         board.move_piece(player_black, "d8a5")
-        expect(board).to have_received(:puts).with(checkmate)
+        expect(board).to have_received(:puts).with(checkmate_black)
       end
     end
 
@@ -413,9 +414,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        allow(board).to receive(:puts).with(checkmate)
+        allow(board).to receive(:puts).with(checkmate_black)
         board.move_piece(player_black, "d8h4")
-        expect(board).to have_received(:puts).with(checkmate)
+        expect(board).to have_received(:puts).with(checkmate_black)
       end
     end
 
@@ -426,9 +427,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        allow(board).to receive(:puts).with(checkmate)
+        allow(board).to receive(:puts).with(checkmate_white)
         board.move_piece(player_white, "d1a4")
-        expect(board).to have_received(:puts).with(checkmate)
+        expect(board).to have_received(:puts).with(checkmate_white)
       end
     end
 
@@ -439,9 +440,9 @@ describe Board do
       end
 
       it "returns 'Checkmate.'" do
-        allow(board).to receive(:puts).with(checkmate)
+        allow(board).to receive(:puts).with(checkmate_white)
         board.move_piece(player_white, "d1h5")
-        expect(board).to have_received(:puts).with(checkmate)
+        expect(board).to have_received(:puts).with(checkmate_white)
       end
     end
 

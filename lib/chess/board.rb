@@ -118,7 +118,7 @@ class Board
 
   def en_passant_possible?(from, to)
     piece = grid[row(from)][column(to)]
-    en_passant && piece.moved_two
+    en_passant && piece.moved_two?
   end
 
   def place_piece(to)

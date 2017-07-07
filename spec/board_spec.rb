@@ -15,7 +15,7 @@ describe Board do
   let(:check)             { "Check!\n\n" }
   let(:checkmate_black)   { "Checkmate! #{player_black.name} WINS!\n\n" }
   let(:checkmate_white)   { "Checkmate! #{player_white.name} WINS!\n\n" }
-  let(:stalemate)         { "Stalemate.\n\n" }
+  let(:stalemate)         { "Stalemate. There is no winner.\n\n" }
   let(:try_again)         { "Would you like to play again? (y/n)" }
 
   let(:empty_board) do

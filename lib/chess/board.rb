@@ -157,7 +157,7 @@ class Board
 
   def stalemate
     screen.print_board
-    puts "Stalemate.\n\n"
+    puts "Stalemate. There is no winner.\n\n"
     puts "Would you like to play again? (y/n)"
     game.try_again
   end

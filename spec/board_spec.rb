@@ -15,6 +15,7 @@ describe Board do
   let(:check)             { "Check.\n\n" }
   let(:checkmate)         { "Checkmate.\n\n" }
   let(:stalemate)         { "Stalemate.\n\n" }
+  let(:try_again)         { "Would you like to play again? (y/n)" }
 
   let(:empty_board) do
     0.upto(7) do |row|
@@ -60,6 +61,7 @@ describe Board do
       allow(board).to receive(:puts)
       allow(game).to receive(:retry_turn)
       allow(game).to receive(:next_turn)
+      allow(game).to receive(:try_again)
     end
 
     context "when the color of the player and the piece are not the same" do

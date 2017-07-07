@@ -147,6 +147,8 @@ class Board
   def king_in_checkmate
     screen.print_board
     puts "Checkmate.\n\n"
+    puts "Would you like to play again? (y/n)"
+    game.try_again
   end
 
   def king_in_checkmate?
@@ -156,6 +158,8 @@ class Board
   def stalemate
     screen.print_board
     puts "Stalemate.\n\n"
+    puts "Would you like to play again? (y/n)"
+    game.try_again
   end
 
   def stalemate?

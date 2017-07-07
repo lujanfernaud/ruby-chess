@@ -12,7 +12,7 @@ describe Board do
   let(:same_color_black)  { "You can only move pieces that are #{player_black.color}.\n\n"}
   let(:same_color_white)  { "You can only move pieces that are #{player_white.color}.\n\n"}
   let(:move_not_possible) { "The move is not possible.\n\n" }
-  let(:check)             { "Check.\n\n" }
+  let(:check)             { "Check!\n\n" }
   let(:checkmate_black)   { "Checkmate! #{player_black.name} WINS!\n\n" }
   let(:checkmate_white)   { "Checkmate! #{player_white.name} WINS!\n\n" }
   let(:stalemate)         { "Stalemate.\n\n" }

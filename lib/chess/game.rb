@@ -71,7 +71,17 @@ class Game
 
   def input(player)
     puts "#{player.name}, introduce a movement:"
-    gets.chomp
+    sanitize_movement(gets.chomp.downcase)
+  end
+
+  def sanitize_movement(movement)
+    loop do
+      return movement if movement =~ /\A[a-h][1-8][a-h][1-8]\z/
+
+      screen.print_board
+      puts "Please introduce a correct movement (for example, 'b2b3'):"
+      movement = gets.chomp.downcase
+    end
   end
 
   def restart

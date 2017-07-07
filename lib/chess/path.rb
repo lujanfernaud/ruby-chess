@@ -1,6 +1,6 @@
 # Checks if there are no pieces from the origin to the destination.
 class Path
-  attr_reader :grid, :piece
+  attr_reader :grid, :piece, :null
   attr_reader :from_row, :to_row, :from_column, :to_column
 
   DIRECTIONS = { row:    { down:  1, up:   -1 },
@@ -13,6 +13,7 @@ class Path
   def initialize(grid, piece, to)
     @grid        = grid
     @piece       = piece
+    @null        = NullPiece.new.to_s
     @from_row    = piece.position[0]
     @from_column = piece.position[1]
     @to_row      = to[0]
@@ -47,7 +48,7 @@ class Path
   end
 
   def check_path
-    empty = proc { |position| grid[position[0]][position[1]].to_s == "-" }
+    empty = proc { |position| grid[position[0]][position[1]].to_s == null }
     path.all?(&empty)
   end
 

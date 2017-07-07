@@ -6,6 +6,7 @@ describe Board do
   let(:grid)         { board.grid }
   let(:coordinates)  { board.coordinates }
   let(:null_piece)   { NullPiece.new }
+  let(:null_square)  { null_piece.to_s }
   let(:player_black) { Player.new("Matz", :black) }
   let(:player_white) { Player.new("Sandi", :white) }
 
@@ -85,7 +86,7 @@ describe Board do
       end
 
       it "removes pawn from 'a2'" do
-        expect(grid[6][0].to_s).to eq("-")
+        expect(grid[6][0].to_s).to eq(null_square)
       end
 
       it "places pawn in 'a4'" do
@@ -116,7 +117,7 @@ describe Board do
       end
 
       it "removes pawn from 'a2'" do
-        expect(grid[6][0].to_s).to eq("-")
+        expect(grid[6][0].to_s).to eq(null_square)
       end
 
       it "eats piece in 'b3'" do
@@ -141,11 +142,11 @@ describe Board do
       end
 
       it "removes pawn from 'a4'" do
-        expect(grid[4][0].to_s).to eq("-")
+        expect(grid[4][0].to_s).to eq(null_square)
       end
 
       it "removes captured pawn from 'b4'" do
-        expect(grid[4][1].to_s).to eq("-")
+        expect(grid[4][1].to_s).to eq(null_square)
       end
 
       it "places pawn in 'b3'" do
@@ -162,11 +163,11 @@ describe Board do
       end
 
       it "removes pawn from 'b5'" do
-        expect(grid[5][1].to_s).to eq("-")
+        expect(grid[5][1].to_s).to eq(null_square)
       end
 
       it "removes captured pawn from 'a5'" do
-        expect(grid[5][0].to_s).to eq("-")
+        expect(grid[5][0].to_s).to eq(null_square)
       end
 
       it "places pawn in 'a6'" do
@@ -181,7 +182,7 @@ describe Board do
       end
 
       it "removes rook from 'a3'" do
-        expect(grid[5][0].to_s).to eq("-")
+        expect(grid[5][0].to_s).to eq(null_square)
       end
 
       it "places rook in 'a5'" do
@@ -196,7 +197,7 @@ describe Board do
       end
 
       it "removes rook from 'a8'" do
-        expect(grid[0][0].to_s).to eq("-")
+        expect(grid[0][0].to_s).to eq(null_square)
       end
 
       it "places rook in 'b8'" do
@@ -218,7 +219,7 @@ describe Board do
       end
 
       it "removes knight from 'b8'" do
-        expect(grid[0][1].to_s).to eq("-")
+        expect(grid[0][1].to_s).to eq(null_square)
       end
 
       it "places knight in 'c6'" do
@@ -241,7 +242,7 @@ describe Board do
       end
 
       it "removes bishop from 'c8'" do
-        expect(grid[2][4].to_s).to eq("-")
+        expect(grid[2][4].to_s).to eq(null_square)
       end
 
       it "places bishop in 'e6'" do
@@ -264,7 +265,7 @@ describe Board do
       end
 
       it "removes queen from 'd8'" do
-        expect(grid[0][3].to_s).to eq("-")
+        expect(grid[0][3].to_s).to eq(null_square)
       end
 
       it "places queen in 'd4'" do
@@ -279,7 +280,7 @@ describe Board do
       end
 
       it "removes queen from 'd1'" do
-        expect(grid[7][3].to_s).to eq("-")
+        expect(grid[7][3].to_s).to eq(null_square)
       end
 
       it "places queen in 'h5'" do
@@ -295,7 +296,7 @@ describe Board do
       end
 
       it "removes queen from 'd1'" do
-        expect(grid[7][3].to_s).to eq("-")
+        expect(grid[7][3].to_s).to eq(null_square)
       end
 
       it "places queen in 'b1'" do
@@ -318,7 +319,7 @@ describe Board do
       end
 
       it "removes king from 'e8'" do
-        expect(grid[0][4].to_s).to eq("-")
+        expect(grid[0][4].to_s).to eq(null_square)
       end
 
       it "places king in 'e7'" do
@@ -333,7 +334,7 @@ describe Board do
       end
 
       it "removes king from 'd1'" do
-        expect(grid[7][4].to_s).to eq("-")
+        expect(grid[7][4].to_s).to eq(null_square)
       end
 
       it "places king in 'e2'" do
@@ -348,7 +349,7 @@ describe Board do
       end
 
       it "removes king from 'd8'" do
-        expect(grid[0][4].to_s).to eq("-")
+        expect(grid[0][4].to_s).to eq(null_square)
       end
 
       it "places king in 'c8'" do

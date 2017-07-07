@@ -28,11 +28,14 @@ class Game
   end
 
   def try_again
-    input = gets.chomp.downcase
+    loop do
+      input = gets.chomp.downcase
 
-    case input
-    when "y" then restart
-    when "n" then finish
+      case input
+      when "y" then restart
+      when "n" then finish
+      else type_y_or_n
+      end
     end
   end
 
@@ -86,5 +89,11 @@ class Game
 
   def restart
     Game.new(player1, player2).start
+  end
+
+  def type_y_or_n
+    screen.print_board
+    puts "Please type 'y' or 'n'.\n\n"
+    puts "Would you like to play again? (y/n)"
   end
 end

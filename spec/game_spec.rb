@@ -35,6 +35,10 @@ describe Game do
   end
 
   describe "#try_again" do
+    before do
+      allow(game).to receive(:loop).and_yield
+    end
+
     it "resets board when 'y'" do
       allow(game).to receive(:gets).and_return("y")
       allow(game).to receive(:restart)

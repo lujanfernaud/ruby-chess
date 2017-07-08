@@ -27,7 +27,7 @@ class Game
     player_turn_without_printing_board(next_player)
   end
 
-  def try_again
+  def play_again
     loop do
       input = gets.chomp.downcase
 

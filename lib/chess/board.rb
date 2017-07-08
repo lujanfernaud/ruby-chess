@@ -143,7 +143,7 @@ class Board
     screen.print_board
     puts "Checkmate! #{current_player.name} WINS!\n\n"
     puts "Would you like to play again? (y/n)"
-    game.try_again
+    game.play_again
   end
 
   def king_in_checkmate?
@@ -154,7 +154,7 @@ class Board
     screen.print_board
     puts "Stalemate. There is no winner.\n\n"
     puts "Would you like to play again? (y/n)"
-    game.try_again
+    game.play_again
   end
 
   def stalemate?

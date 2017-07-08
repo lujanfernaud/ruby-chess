@@ -34,7 +34,7 @@ describe Game do
     end
   end
 
-  describe "#try_again" do
+  describe "#play_again" do
     before do
       allow(game).to receive(:loop).and_yield
     end
@@ -42,14 +42,14 @@ describe Game do
     it "resets board when 'y'" do
       allow(game).to receive(:gets).and_return("y")
       allow(game).to receive(:restart)
-      game.try_again
+      game.play_again
       expect(game).to have_received(:restart)
     end
 
     it "exits game when 'n'" do
       allow(game).to receive(:gets).and_return("n")
       allow(game).to receive(:finish)
-      game.try_again
+      game.play_again
       expect(game).to have_received(:finish)
     end
   end

@@ -17,7 +17,7 @@ describe Board do
   let(:checkmate_black)   { "Checkmate! #{player_black.name} WINS!\n\n" }
   let(:checkmate_white)   { "Checkmate! #{player_white.name} WINS!\n\n" }
   let(:stalemate)         { "Stalemate. There is no winner.\n\n" }
-  let(:try_again)         { "Would you like to play again? (y/n)" }
+  let(:play_again)        { "Would you like to play again? (y/n)" }
 
   let(:empty_board) do
     0.upto(7) do |row|
@@ -63,7 +63,7 @@ describe Board do
       allow(board).to receive(:puts)
       allow(game).to receive(:retry_turn)
       allow(game).to receive(:next_turn)
-      allow(game).to receive(:try_again)
+      allow(game).to receive(:play_again)
     end
 
     context "when the color of the player and the piece are not the same" do

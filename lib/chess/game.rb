@@ -80,11 +80,16 @@ class Game
   def sanitize_movement(movement)
     loop do
       return movement if movement =~ /\A[a-h][1-8][a-h][1-8]\z/
+      return finish   if movement =~ /exit/
 
-      screen.print_board
-      puts "Please introduce a correct movement (for example, 'b2b3'):"
-      movement = gets.chomp.downcase
+      movement = please_introduce_a_correct_movement
     end
+  end
+
+  def please_introduce_a_correct_movement
+    screen.print_board
+    puts "Please introduce a correct movement (for example, 'b2b3'):"
+    gets.chomp.downcase
   end
 
   def restart

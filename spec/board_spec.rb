@@ -28,10 +28,6 @@ describe Board do
   end
 
   describe "attributes" do
-    it "has a coordinates hash" do
-      expect(coordinates).to be_kind_of(Hash)
-    end
-
     it "has an 8x8 grid" do
       expect(grid.inject(:+).count).to eq(64)
     end

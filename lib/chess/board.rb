@@ -2,14 +2,13 @@
 class Board
   include Coordinates
 
-  attr_reader :game, :grid, :screen, :coordinates, :en_passant
+  attr_reader :game, :grid, :screen, :en_passant
   attr_reader :current_player, :current_piece, :last_moved_piece
 
   def initialize(game)
-    @game = game
+    @game             = game
     @grid             = Grid.new(self)
     @screen           = Screen.new(self)
-    @coordinates      = COORDINATES
     @current_player   = nil
     @current_piece    = nil
     @last_moved_piece = NullPiece.new
@@ -45,8 +44,8 @@ class Board
   # Example: "a2" would be translated as [6, 0]
 
   def translate_coords(coords)
-    letter = coordinates[coords[0]]
-    number = coordinates[coords[1]]
+    letter = COORDINATES[coords[0]]
+    number = COORDINATES[coords[1]]
 
     [number, letter]
   end

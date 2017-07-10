@@ -42,12 +42,14 @@ class Pawn < Piece
   end
 
   def set_allowed_moves_for_white
+    @allowed_moves = []
     @allowed_moves << [-1, 0] if empty_position?(-1)
     @allowed_moves << [-2, 0] if initial_position? && empty_position?(-2)
     @capturing_moves = [[-1, -1], [-1, 1]]
   end
 
   def set_allowed_moves_for_black
+    @allowed_moves = []
     @allowed_moves << [1, 0] if empty_position?(1)
     @allowed_moves << [2, 0] if initial_position? && empty_position?(2)
     @capturing_moves = [[1, 1], [1, -1]]

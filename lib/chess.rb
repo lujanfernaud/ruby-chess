@@ -1,5 +1,6 @@
 require_relative "chess/coordinates"
 require_relative "chess/board"
+require_relative "chess/move"
 require_relative "chess/screen"
 require_relative "chess/path"
 

@@ -3,7 +3,7 @@ class Board
   include Coordinates
 
   attr_reader :game, :grid, :screen, :coordinates, :en_passant
-  attr_reader :current_player, :current_piece
+  attr_reader :current_player, :current_piece, :last_moved_piece
 
   def initialize(game)
     @game = game
@@ -34,9 +34,11 @@ class Board
     return stalemate         if stalemate?
   end
 
-  private
+  protected
 
-  attr_writer :grid
+  attr_writer :grid, :last_moved_piece, :en_passant
+
+  private
 
   def set_board
     add_royal_row(color: :black, row: 0)
@@ -103,30 +105,7 @@ class Board
   end
 
   def move(from, to)
-    remove_piece(from)
-    capture_en_passant_piece(from, to) if en_passant_possible?(from, to)
-    place_piece(to)
-  end
-
-  def remove_piece(from)
-    grid[row(from)][column(from)] = NullPiece.new
-  end
-
-  def capture_en_passant_piece(from, to)
-    grid[row(from)][column(to)] = NullPiece.new
-  end
-
-  def en_passant_possible?(from, to)
-    piece = grid[row(from)][column(to)]
-    en_passant && piece.moved_two?
-  end
-
-  def place_piece(to)
-    grid[row(to)][column(to)] = current_piece
-    current_piece.update_position(to)
-
-    @last_moved_piece = current_piece
-    @en_passant = current_piece.moved_two?
+    Move.piece(from, to, board: self)
   end
 
   def king_in_check

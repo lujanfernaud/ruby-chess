@@ -7,8 +7,7 @@ class Board
 
   def initialize(game)
     @game = game
-    @grid = []
-    set_board
+    @grid             = Grid.new(self)
     @screen           = Screen.new(self)
     @coordinates      = COORDINATES
     @current_player   = nil
@@ -39,34 +38,6 @@ class Board
   attr_writer :grid, :last_moved_piece, :en_passant
 
   private
-
-  def set_board
-    add_royal_row(color: :black, row: 0)
-    add_pawn_row(color: :black, row: 1)
-    add_empty_rows
-    add_pawn_row(color: :white, row: 6)
-    add_royal_row(color: :white, row: 7)
-  end
-
-  def add_royal_row(color:, row:)
-    royal_row = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
-    add_pieces_for(royal_row, color, row)
-  end
-
-  def add_pawn_row(color:, row:)
-    pawn_row = Array.new(8) { Pawn }
-    add_pieces_for(pawn_row, color, row)
-  end
-
-  def add_pieces_for(pieces_row, color, row)
-    @grid << pieces_row.map.with_index do |piece, index|
-      piece.new(color: color, position: [row, index], board: self)
-    end
-  end
-
-  def add_empty_rows
-    4.times { @grid << Array.new(8) { NullPiece.new } }
-  end
 
   # Translates coordinates as expressed in the board
   # to their positions in the grid.

@@ -25,7 +25,7 @@ class Board
     return incorrect_color   unless current_piece.color == current_player.color
     return move_not_possible unless current_piece.allowed_move?(to)
 
-    move(from, to)
+    Move.piece(from, to, board: self)
 
     return king_in_checkmate if king_in_checkmate?
     return king_in_check     if king_in_check?
@@ -72,10 +72,6 @@ class Board
     screen.print_board
     puts "The move is not possible.\n\n"
     game.retry_turn
-  end
-
-  def move(from, to)
-    Move.piece(from, to, board: self)
   end
 
   def king_in_check

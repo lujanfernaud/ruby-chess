@@ -1,15 +1,14 @@
+require_relative "chess/game_setup"
+require_relative "chess/player"
+require_relative "chess/game"
+require_relative "chess/screen"
+
 require_relative "chess/board/coordinates"
 require_relative "chess/board"
 require_relative "chess/board/grid"
 require_relative "chess/board/move"
 
-require_relative "chess/screen"
 require_relative "chess/path"
-
-require_relative "chess/game_setup"
-require_relative "chess/game"
-require_relative "chess/player"
-
 require_relative "chess/piece"
 require_relative "chess/pieces/null_piece.rb"
 require_relative "chess/pieces/pawn.rb"

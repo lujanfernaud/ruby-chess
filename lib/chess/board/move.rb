@@ -6,6 +6,7 @@ class Move < Board
   def initialize(from, to, board)
     @board         = board
     @grid          = board.grid
+    @screen        = board.screen
     @current_piece = board.current_piece
     @from          = from
     @to            = to
@@ -18,6 +19,7 @@ class Move < Board
   def move
     remove_piece
     capture_en_passant_piece if en_passant_possible?
+    promote_pawn if pawn_promotion_possible?
     place_piece
   end
 
@@ -34,6 +36,11 @@ class Move < Board
   def en_passant_possible?
     piece = grid[row(from)][column(to)]
     board.en_passant && piece.moved_two?
+  end
+
+  def pawn_promotion_possible?
+    return false unless current_piece.is_a?(Pawn)
+    current_piece.promotion_position[current_piece.color].include?(to)
   end
 
   def place_piece

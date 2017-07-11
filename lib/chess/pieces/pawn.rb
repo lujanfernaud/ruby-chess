@@ -1,19 +1,25 @@
 # Holds color, position and allowed moves for pawns.
 class Pawn < Piece
-  attr_reader :capturing_moves
+  attr_reader :capturing_moves, :promotion_position
 
-  INITIAL_POSITION = { black: [[1, 0], [1, 1], [1, 2], [1, 3],
-                               [1, 4], [1, 5], [1, 6], [1, 7]],
-                       white: [[6, 0], [6, 1], [6, 2], [6, 3],
-                               [6, 4], [6, 5], [6, 6], [6, 7]] }.freeze
+  INITIAL_POSITION   = { black: [[1, 0], [1, 1], [1, 2], [1, 3],
+                                 [1, 4], [1, 5], [1, 6], [1, 7]],
+                         white: [[6, 0], [6, 1], [6, 2], [6, 3],
+                                 [6, 4], [6, 5], [6, 6], [6, 7]] }.freeze
+
+  PROMOTION_POSITION = { black: [[7, 0], [7, 1], [7, 2], [7, 3],
+                                 [7, 4], [7, 5], [7, 6], [7, 7]],
+                         white: [[0, 0], [0, 1], [0, 2], [0, 3],
+                                 [0, 4], [0, 5], [0, 6], [0, 7]] }.freeze
 
   def initialize(color:, position:, board:)
-    @color          = color
-    @position       = position
-    @allowed_moves  = []
-    @board          = board
-    @opponent_color = @color == :white ? :black : :white
-    @moved_two      = false
+    @color              = color
+    @position           = position
+    @board              = board
+    @allowed_moves      = []
+    @opponent_color     = @color == :white ? :black : :white
+    @moved_two          = false
+    @promotion_position = PROMOTION_POSITION
   end
 
   def allowed_move?(to)

@@ -6,6 +6,5 @@ This is a work in progress.
 
 ## TO-DO
 
-- Pawn promotion
 - Castling
 - AI

@@ -18,6 +18,7 @@ describe Board do
   let(:checkmate_white)   { "Checkmate! #{player_white.name} WINS!\n\n" }
   let(:stalemate)         { "Stalemate. There is no winner.\n\n" }
   let(:play_again)        { "Would you like to play again? (y/n)" }
+  let(:promote_pawn)      { "To which piece would you like to promote the pawn?" }
 
   let(:empty_board) do
     0.upto(7) do |row|
@@ -168,6 +169,62 @@ describe Board do
 
       it "places pawn in 'a6'" do
         expect(grid[2][0]).to be_a(Pawn)
+      end
+    end
+
+    context "when a white pawn can be promoted" do
+      before do
+        grid[0][0] = null_piece
+        grid[1][0] = null_piece
+
+        board.move_piece(player_white, "a2a4")
+        board.move_piece(player_white, "a4a5")
+        board.move_piece(player_white, "a5a6")
+        board.move_piece(player_white, "a6a7")
+
+        allow(STDOUT).to receive(:puts).with(promote_pawn)
+        allow(STDIN).to receive(:gets).and_return("rook")
+        board.move_piece(player_white, "a7a8")
+      end
+
+      it "removes pawn from 'a7'" do
+        expect(grid[1][0].to_s).to eq(null_square)
+      end
+
+      it "asks for new piece to promote to" do
+        expect(STDOUT).to have_received(:puts).with(promote_pawn)
+      end
+
+      it "places rook in 'a8'" do
+        expect(grid[0][0]).to be_a(Rook)
+      end
+    end
+
+    context "when a black pawn can be promoted" do
+      before do
+        grid[6][0] = null_piece
+        grid[7][0] = null_piece
+
+        board.move_piece(player_black, "a7a5")
+        board.move_piece(player_black, "a5a4")
+        board.move_piece(player_black, "a4a3")
+        board.move_piece(player_black, "a3a2")
+
+        allow(STDOUT).to receive(:puts).with(promote_pawn)
+        allow(STDIN).to receive(:gets).and_return("knight")
+        board.move_piece(player_black, "a2a1")
+      end
+
+      it "removes pawn from 'a2'" do
+        expect(grid[6][0].to_s).to eq(null_square)
+      end
+
+      it "asks for new piece to promote to" do
+        expect(STDOUT).to have_received(:puts).with(promote_pawn)
+      end
+
+      it "places knight in 'a1'" do
+        expect(grid[7][0]).to be_a(Knight)
       end
     end
 

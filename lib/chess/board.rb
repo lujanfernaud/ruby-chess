@@ -34,7 +34,7 @@ class Board
 
   protected
 
-  attr_writer :grid, :last_moved_piece, :en_passant
+  attr_writer :grid, :current_piece, :last_moved_piece, :en_passant
 
   private
 
@@ -72,6 +72,40 @@ class Board
     screen.print_board
     puts "The move is not possible.\n\n"
     game.retry_turn
+  end
+
+  def promote_pawn
+    screen.print_board
+    puts "To which piece would you like to promote the pawn?"
+    choose_piece_for_pawn_promotion
+  end
+
+  def choose_piece_for_pawn_promotion
+    pieces_to_promote_to = %w[rook knight bishop queen]
+
+    loop do
+      input = STDIN.gets.chomp.strip.downcase
+      return switch_current_piece(input) if pieces_to_promote_to.include?(input)
+      incorrect_piece_to_promote_to
+    end
+  end
+
+  def switch_current_piece(input)
+    piece_class_name = Object.const_get(input.capitalize)
+    promoted_piece   = create_new_piece(piece_class_name)
+    @current_piece   = promoted_piece
+  end
+
+  def create_new_piece(piece_class)
+    piece_class.new(color:    current_piece.color,
+                    position: current_piece.position,
+                    board:    self)
+  end
+
+  def incorrect_piece_to_promote_to
+    screen.print_board
+    puts "The pawn can only be promoted to a rook, knight, bishop or queen.\n\n"
+    puts "To which piece would you like to promote the pawn?"
   end
 
   def king_in_check

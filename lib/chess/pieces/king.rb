@@ -12,9 +12,8 @@ class King < Piece
     @position  = position
     @board     = board
     @moved_two = false
-    @opponent_color = @color == :white ? :black : :white
-    @allowed_moves  = [[-1, 0], [-1, 1], [0, 1], [1, 1],
-                       [1, 0], [1, -1], [0, -1], [-1, -1]]
+    @allowed_moves = [[-1, 0], [-1, 1], [0, 1], [1, 1],
+                      [1, 0], [1, -1], [0, -1], [-1, -1]]
   end
 
   def allowed_move?(to)
@@ -47,7 +46,7 @@ class King < Piece
   end
 
   def opponent_destinations
-    opponent_pieces = select_pieces(color: @opponent_color)
+    opponent_pieces = select_pieces(color: opponent_color)
     destinations    = proc { |piece| piece.valid_destinations }
 
     opponent_pieces.flat_map(&destinations)

@@ -13,12 +13,11 @@ class Pawn < Piece
                                   [0, 4], [0, 5], [0, 6], [0, 7]] }.freeze
 
   def initialize(color:, position:, board:)
-    @color          = color
-    @position       = position
-    @board          = board
-    @allowed_moves  = []
-    @opponent_color = @color == :white ? :black : :white
-    @moved_two      = false
+    @color         = color
+    @position      = position
+    @board         = board
+    @allowed_moves = []
+    @moved_two     = false
   end
 
   def allowed_move?(to)

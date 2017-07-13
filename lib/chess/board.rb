@@ -36,6 +36,12 @@ class Board
 
   attr_writer :grid, :current_piece, :last_moved_piece, :en_passant
 
+  def move_not_possible
+    screen.print_board
+    puts "The move is not possible.\n\n"
+    game.retry_turn
+  end
+
   private
 
   # Translates coordinates as expressed in the board
@@ -65,12 +71,6 @@ class Board
   def incorrect_color
     screen.print_board
     puts "You can only move pieces that are #{current_player.color}.\n\n"
-    game.retry_turn
-  end
-
-  def move_not_possible
-    screen.print_board
-    puts "The move is not possible.\n\n"
     game.retry_turn
   end
 
@@ -115,7 +115,7 @@ class Board
   end
 
   def king_in_check?
-    @last_moved_piece.allowed_move?(king.position)
+    king.in_check?
   end
 
   def king_in_checkmate
@@ -126,7 +126,7 @@ class Board
   end
 
   def king_in_checkmate?
-    king_in_check? && king.cannot_escape?(opponent)
+    king.in_check? && king.cannot_escape?(opponent)
   end
 
   def stalemate

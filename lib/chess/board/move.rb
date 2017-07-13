@@ -18,8 +18,7 @@ class Move < Board
 
   def move
     remove_piece
-    capture_en_passant_piece if en_passant_possible?
-    promote_pawn if pawn_promotion_possible?
+    special_actions
     place_piece
   end
 
@@ -27,6 +26,15 @@ class Move < Board
 
   def remove_piece
     grid[row(from)][column(from)] = NullPiece.new
+  end
+
+  def special_actions
+    capture_en_passant_piece if en_passant_possible?
+    promote_pawn             if pawn_promotion_possible?
+
+    return unless trying_to_do_castling?
+
+    do_castling if castling_possible?
   end
 
   def capture_en_passant_piece
@@ -41,6 +49,56 @@ class Move < Board
   def pawn_promotion_possible?
     return false unless current_piece.is_a?(Pawn)
     current_piece.promotion_position[current_piece.color].include?(to)
+  end
+
+  def trying_to_do_castling?
+    current_piece.castling_destination(castling_side) == to
+  end
+
+  def do_castling
+    move_rook(castling_side)
+  end
+
+  def castling_side
+    case column(from) <=> column(to)
+    when  1 then :queen_side
+    when -1 then :king_side
+    else         :null
+    end
+  end
+
+  def move_rook(side)
+    from = rook.position
+    to   = rook.castling_destination(side)
+
+    grid[row(from)][column(from)] = NullPiece.new
+    grid[row(to)][column(to)] = rook
+  end
+
+  def rook
+    rooks = grid.flatten.select do |piece|
+      piece.is_a?(Rook) && piece.color == current_piece.color
+    end
+
+    castling_side == :queen_side ? rooks.first : rooks.last
+  end
+
+  def castling_possible?
+    return board.move_not_possible unless castling?
+
+    castling?
+  end
+
+  def castling?
+    king_not_in_check? && king_can_castle? && rook.not_moved?
+  end
+
+  def king_not_in_check?
+    !current_piece.in_check?
+  end
+
+  def king_can_castle?
+    current_piece.can_castle_to?(castling_side)
   end
 
   def place_piece

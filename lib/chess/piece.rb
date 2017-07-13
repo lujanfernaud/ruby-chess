@@ -33,6 +33,14 @@ class Piece
     @position = to
   end
 
+  def can_castle_to?(_side)
+    false
+  end
+
+  def castling_destination(_side)
+    false
+  end
+
   def moved_two?
     moved_two
   end

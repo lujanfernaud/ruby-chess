@@ -6,5 +6,4 @@ This is a work in progress.
 
 ## TO-DO
 
-- Castling
 - AI

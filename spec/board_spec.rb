@@ -401,7 +401,7 @@ describe Board do
         board.move_piece(player_black, "e8d8")
       end
 
-      it "removes king from 'd8'" do
+      it "removes king from 'e8'" do
         expect(grid[0][4].to_s).to eq(null_square)
       end
 
@@ -415,6 +415,129 @@ describe Board do
         allow(board).to receive(:puts).with(move_not_possible)
         board.move_piece(player_black, "d8e6")
         expect(board).to have_received(:puts).with(move_not_possible)
+      end
+    end
+
+    context "when a castling left move is possible for a black king" do
+      before do
+        grid[0][3] = null_piece
+        grid[0][2] = null_piece
+        board.move_piece(player_black, "e8c8")
+      end
+
+      it "removes king from 'e8'" do
+        expect(grid[0][4].to_s).to eq(null_square)
+      end
+
+      it "places king in 'c8'" do
+        expect(grid[0][2]).to be_a(King)
+      end
+
+      it "removes rook from 'a8'" do
+        expect(grid[0][0].to_s).to eq(null_square)
+      end
+
+      it "places rook in 'd8'" do
+        expect(grid[0][3]).to be_a(Rook)
+      end
+    end
+
+    context "when a castling left move is not possible for a black king" do
+      before do
+        grid[0][3] = null_piece
+      end
+
+      it "returns 'The move is not possible.'" do
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "e8c8")
+        expect(board).to have_received(:puts).with(move_not_possible)
+      end
+    end
+
+    context "when a castling left move is not possible for a black king" do
+      before do
+        grid[0][3] = null_piece
+        grid[0][2] = null_piece
+        grid[1][3] = Rook.new(color: :white, position: [1, 3], board: board)
+        grid[1][2] = null_piece
+      end
+
+      it "returns 'The move is not possible.'" do
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "e8c8")
+        expect(board).to have_received(:puts).with(move_not_possible)
+      end
+    end
+
+    context "when a castling right move is possible for a black king" do
+      before do
+        grid[0][5] = null_piece
+        grid[0][6] = null_piece
+        board.move_piece(player_black, "e8g8")
+      end
+
+      it "removes king from 'e8'" do
+        expect(grid[0][4].to_s).to eq(null_square)
+      end
+
+      it "places king in 'g8'" do
+        expect(grid[0][6]).to be_a(King)
+      end
+
+      it "removes rook from 'h8'" do
+        expect(grid[0][7].to_s).to eq(null_square)
+      end
+
+      it "places rook in 'f8'" do
+        expect(grid[0][5]).to be_a(Rook)
+      end
+    end
+
+    context "when a castling left move is possible for a white king" do
+      before do
+        grid[7][3] = null_piece
+        grid[7][2] = null_piece
+        board.move_piece(player_white, "e1c1")
+      end
+
+      it "removes king from 'e8'" do
+        expect(grid[7][4].to_s).to eq(null_square)
+      end
+
+      it "places king in 'c8'" do
+        expect(grid[7][2]).to be_a(King)
+      end
+
+      it "removes rook from 'a8'" do
+        expect(grid[7][0].to_s).to eq(null_square)
+      end
+
+      it "places rook in 'd8'" do
+        expect(grid[7][3]).to be_a(Rook)
+      end
+    end
+
+    context "when a castling right move is possible for a white king" do
+      before do
+        grid[7][5] = null_piece
+        grid[7][6] = null_piece
+        board.move_piece(player_white, "e1g1")
+      end
+
+      it "removes king from 'e8'" do
+        expect(grid[7][4].to_s).to eq(null_square)
+      end
+
+      it "places king in 'g8'" do
+        expect(grid[7][6]).to be_a(King)
+      end
+
+      it "removes rook from 'h8'" do
+        expect(grid[7][7].to_s).to eq(null_square)
+      end
+
+      it "places rook in 'f8'" do
+        expect(grid[7][5]).to be_a(Rook)
       end
     end
 

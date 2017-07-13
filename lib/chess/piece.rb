@@ -33,6 +33,10 @@ class Piece
     @position = to
   end
 
+  def can_be_promoted?(_to)
+    false
+  end
+
   def can_castle_to?(_side)
     false
   end

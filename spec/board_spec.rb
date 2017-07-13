@@ -13,7 +13,8 @@ describe Board do
   let(:same_color_black)  { "You can only move pieces that are #{player_black.color}.\n\n"}
   let(:same_color_white)  { "You can only move pieces that are #{player_white.color}.\n\n"}
   let(:move_not_possible) { "The move is not possible.\n\n" }
-  let(:check)             { "Check!\n\n" }
+  let(:check_black)       { "The black king is in check!\n\n" }
+  let(:check_white)       { "The white king is in check!\n\n" }
   let(:checkmate_black)   { "Checkmate! #{player_black.name} WINS!\n\n" }
   let(:checkmate_white)   { "Checkmate! #{player_white.name} WINS!\n\n" }
   let(:stalemate)         { "Stalemate. There is no winner.\n\n" }
@@ -550,9 +551,9 @@ describe Board do
       end
 
       it "returns 'Check.'" do
-        allow(board).to receive(:puts).with(check)
+        allow(board).to receive(:puts).with(check_white)
         board.move_piece(player_black, "a8a3")
-        expect(board).to have_received(:puts).with(check)
+        expect(board).to have_received(:puts).with(check_white)
       end
     end
 
@@ -565,9 +566,9 @@ describe Board do
       end
 
       it "returns 'Check.'" do
-        allow(board).to receive(:puts).with(check)
+        allow(board).to receive(:puts).with(check_black)
         board.move_piece(player_white, "a1a6")
-        expect(board).to have_received(:puts).with(check)
+        expect(board).to have_received(:puts).with(check_black)
       end
     end
 

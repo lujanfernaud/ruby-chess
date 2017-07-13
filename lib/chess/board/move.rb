@@ -47,8 +47,7 @@ class Move < Board
   end
 
   def pawn_promotion_possible?
-    return false unless current_piece.is_a?(Pawn)
-    current_piece.promotion_positions[current_piece.color].include?(to)
+    current_piece.can_be_promoted?(to)
   end
 
   def trying_to_do_castling?

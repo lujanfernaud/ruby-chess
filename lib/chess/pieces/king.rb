@@ -38,7 +38,7 @@ class King < Piece
   end
 
   def can_castle_to?(side)
-    return false unless initial_position? && side != :null
+    return false unless initial_position? && side
 
     castling_movements = castling_destinations(side) - opponent_destinations
 
@@ -59,7 +59,7 @@ class King < Piece
   end
 
   def castling_destination(side)
-    return unless initial_position? && side != :null
+    return unless initial_position? && side
 
     CASTLING_POSITIONS[color][side].first
   end

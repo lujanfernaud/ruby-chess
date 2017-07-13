@@ -62,7 +62,7 @@ class Move < Board
     case column(from) <=> column(to)
     when  1 then :queen_side
     when -1 then :king_side
-    else         :null
+    else         false
     end
   end
 

@@ -45,6 +45,10 @@ class Piece
     false
   end
 
+  def opponent_color
+    color == :white ? :black : :white
+  end
+
   def moved_two?
     moved_two
   end
@@ -56,7 +60,7 @@ class Piece
   end
 
   def opponent_in_square?(row, column)
-    @board.grid[row][column].color == @opponent_color
+    @board.grid[row][column].color == opponent_color
   end
 
   def valid_move?(row, column)

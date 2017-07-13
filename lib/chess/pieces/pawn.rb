@@ -28,6 +28,10 @@ class Pawn < Piece
     (capturing_moves + valid_destinations).include?(to)
   end
 
+  def can_be_promoted?(to)
+    promotion_positions[color].include?(to)
+  end
+
   def update_position(to)
     @moved_two = move_two_from_initial?(to) ? true : false
     @position  = to

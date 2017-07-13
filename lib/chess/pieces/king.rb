@@ -45,19 +45,6 @@ class King < Piece
     castling_movements.size == 2
   end
 
-  def opponent_destinations
-    opponent_pieces = select_pieces(color: opponent_color)
-    destinations    = proc { |piece| piece.valid_destinations }
-
-    opponent_pieces.flat_map(&destinations)
-  end
-
-  def castling_destinations(side)
-    CASTLING_POSITIONS[color][side].map do |move|
-      move if valid_move?(move[0], move[1])
-    end.compact
-  end
-
   def castling_destination(side)
     return unless initial_position? && side
 
@@ -76,6 +63,19 @@ class King < Piece
 
   def initial_position?
     INITIAL_POSITIONS.include?(position)
+  end
+
+  def opponent_destinations
+    opponent_pieces = select_pieces(color: opponent_color)
+    destinations    = proc { |piece| piece.valid_destinations }
+
+    opponent_pieces.flat_map(&destinations)
+  end
+
+  def castling_destinations(side)
+    CASTLING_POSITIONS[color][side].map do |move|
+      move if valid_move?(move[0], move[1])
+    end.compact
   end
 
   def select_pieces(color:)

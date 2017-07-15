@@ -58,7 +58,7 @@ class Game
 
   def save_players_based_on(player)
     @current_player = player
-    @next_player    = players.reject { |plyr| plyr == player }
+    @next_player    = players.reject { |plyr| plyr == player }.first
   end
 
   def player_turn(player)

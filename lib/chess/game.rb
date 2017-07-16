@@ -20,11 +20,12 @@ class Game
   end
 
   def retry_turn
-    player_turn_without_printing_board(current_player)
+    player_turn_without_printing_board
   end
 
   def next_turn
-    player_turn_without_printing_board(next_player)
+    save_players_based_on(next_player)
+    player_turn_without_printing_board
   end
 
   def play_again
@@ -50,6 +51,7 @@ class Game
   def players_turns
     loop do
       players.each do |player|
+        next if player == current_player
         save_players_based_on(player)
         player_turn(player)
       end
@@ -67,9 +69,9 @@ class Game
     board.move_piece(player, movement)
   end
 
-  def player_turn_without_printing_board(player)
-    movement = input(player)
-    board.move_piece(player, movement)
+  def player_turn_without_printing_board
+    movement = input(current_player)
+    board.move_piece(current_player, movement)
   end
 
   def input(player)

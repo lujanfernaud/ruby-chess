@@ -705,5 +705,17 @@ describe Board do
         expect(board).to have_received(:puts).with(stalemate)
       end
     end
+
+    context "there is no stalemate" do
+      before do
+        board.move_piece(player_white, "c2c4")
+        board.move_piece(player_black, "d7d6")
+        board.move_piece(player_white, "d2d4")
+      end
+
+      it "doesn't return 'Stalemate.'" do
+        expect(board).not_to have_received(:puts).with(stalemate)
+      end
+    end
   end
 end

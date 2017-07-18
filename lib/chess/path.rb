@@ -107,7 +107,7 @@ class Path
         next  if column == from_column
         break if column == to_column
         path << [row, column]
-        column_step += column_step
+        column_step > 0 ? column_step += 1 : column_step -= 1
         break
       end
     end

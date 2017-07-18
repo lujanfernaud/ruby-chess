@@ -25,7 +25,7 @@ class Piece
     allowed_moves.map do |move|
       row    = position[0] + move[0]
       column = position[1] + move[1]
-      [row, column] if move_inside_board?(row, column)
+      [row, column] if valid_tresspassing_move?(row, column)
     end.compact
   end
 
@@ -69,12 +69,22 @@ class Piece
       not_player_piece?(row, column)
   end
 
+  def valid_tresspassing_move?(row, column)
+    move_inside_board?(row, column) &&
+      empty_path_tresspassing?(row, column) &&
+      not_player_piece?(row, column)
+  end
+
   def move_inside_board?(row, column)
     (0..7).cover?(row) && (0..7).cover?(column)
   end
 
   def empty_path?(row, column)
     Path.empty?(grid: @board.grid, piece: self, to: [row, column])
+  end
+
+  def empty_path_tresspassing?(row, column)
+    Path.empty_tresspassing?(grid: @board.grid, piece: self, to: [row, column])
   end
 
   def not_player_piece?(row, column)

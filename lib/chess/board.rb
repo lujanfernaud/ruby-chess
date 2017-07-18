@@ -126,7 +126,7 @@ class Board
   end
 
   def king_in_checkmate?
-    king.in_check? && king.cannot_escape?(opponent)
+    king.in_check? && king.cannot_escape?
   end
 
   def stalemate
@@ -137,7 +137,7 @@ class Board
   end
 
   def stalemate?
-    king.valid_destinations? && king.cannot_escape?(opponent)
+    king.valid_destinations? && king.cannot_escape?
   end
 
   def king
@@ -156,21 +156,5 @@ class Board
     grid.flatten
         .select { |piece| piece.is_a?(King) && piece.color == color }
         .first
-  end
-
-  def opponent
-    @last_moved_piece.color == :black ? black_pieces : white_pieces
-  end
-
-  def black_pieces
-    select_pieces(color: :black)
-  end
-
-  def white_pieces
-    select_pieces(color: :white)
-  end
-
-  def select_pieces(color:)
-    grid.flatten.select { |piece| piece.color == color }
   end
 end

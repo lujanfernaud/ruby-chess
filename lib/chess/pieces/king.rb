@@ -18,7 +18,7 @@ class King < Piece
 
   def allowed_move?(to)
     add_castling_moves if initial_position?
-    super(to)
+    valid_destinations_not_into_check.include?(to)
   end
 
   def valid_destinations?
@@ -29,12 +29,9 @@ class King < Piece
     @board.last_moved_piece.allowed_move?(position)
   end
 
-  def cannot_escape?(pieces)
-    destinations        = proc { |piece| piece.valid_destinations_tresspassing }
-    pieces_destinations = pieces.flat_map(&destinations)
-    escape_destinations = valid_destinations - pieces_destinations
-
-    escape_destinations.empty?
+  def cannot_escape?
+    escape_destinations = valid_destinations_tresspassing - opponent_destinations
+    not_moving_into_check(escape_destinations).empty?
   end
 
   def can_castle_to?(side)
@@ -65,20 +62,39 @@ class King < Piece
     INITIAL_POSITIONS.include?(position)
   end
 
-  def opponent_destinations
-    opponent_pieces = select_pieces(color: opponent_color)
-    destinations    = proc { |piece| piece.valid_destinations }
+  def valid_destinations_not_into_check
+    not_moving_into_check(valid_destinations)
+  end
 
-    opponent_pieces.flat_map(&destinations)
+  def not_moving_into_check(escape_destinations)
+    escape_destinations.each_with_object [] do |destination, result|
+      piece_from_destination = @board.grid[destination[0]][destination[1]]
+
+      remove_piece_from(destination)
+      result << destination unless opponent_destinations.include?(destination)
+      place_back_to(destination, piece_from_destination)
+    end
+  end
+
+  def remove_piece_from(destination)
+    @board.grid[destination[0]][destination[1]] = NullPiece.new
+  end
+
+  def place_back_to(destination, piece_from_destination)
+    @board.grid[destination[0]][destination[1]] = piece_from_destination
+  end
+
+  def opponent_destinations
+    opponent_pieces.flat_map { |piece| piece.valid_destinations }
+  end
+
+  def opponent_pieces
+    @board.grid.flatten.select { |piece| piece.color == opponent_color }
   end
 
   def castling_destinations(side)
     CASTLING_POSITIONS[color][side].map do |move|
       move if valid_move?(move[0], move[1])
     end.compact
-  end
-
-  def select_pieces(color:)
-    @board.grid.flatten.select { |piece| piece.color == color }
   end
 end

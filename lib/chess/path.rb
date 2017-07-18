@@ -10,6 +10,10 @@ class Path
     new(grid, piece, to).empty?
   end
 
+  def self.empty_tresspassing?(grid:, piece:, to:)
+    new(grid, piece, to).empty_tresspassing?
+  end
+
   def initialize(grid, piece, to)
     @grid        = grid
     @piece       = piece
@@ -27,6 +31,14 @@ class Path
     add_directions_to_path
     add_diagonals_to_path
     check_path
+  end
+
+  def empty_tresspassing?
+    return true if piece.is_a?(Knight)
+
+    add_directions_to_path
+    add_diagonals_to_path
+    check_path_tresspassing
   end
 
   private
@@ -48,8 +60,36 @@ class Path
   end
 
   def check_path
-    empty = proc { |position| grid[position[0]][position[1]].to_s == null }
-    path.all?(&empty)
+    available = proc do |position|
+      empty_square_in?(position) || opponent_king_in?(position)
+    end
+
+    path.all?(&available)
+  end
+
+  def check_path_tresspassing
+    available = proc do |position|
+      empty_square_in?(position) || opponent_piece_in?(position)
+    end
+
+    path.all?(&available)
+  end
+
+  def empty_square_in?(position)
+    piece_in(position).to_s == null
+  end
+
+  def opponent_king_in?(position)
+    piece_in(position).is_a?(King) &&
+      piece_in(position).color == piece.opponent_color
+  end
+
+  def opponent_piece_in?(position)
+    piece_in(position).color == piece.opponent_color
+  end
+
+  def piece_in(position)
+    grid[position[0]][position[1]]
   end
 
   def same_row

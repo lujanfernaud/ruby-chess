@@ -16,8 +16,8 @@ class Board
   end
 
   def move_piece(player, coords)
-    from = translate_coords(coords[0..1])
-    to   = translate_coords(coords[2..3])
+    from = Coordinates.translate(coords[0..1])
+    to   = Coordinates.translate(coords[2..3])
 
     @current_player = player
     @current_piece  = get_piece(from)
@@ -43,18 +43,6 @@ class Board
   end
 
   private
-
-  # Translates coordinates as expressed in the board
-  # to their positions in the grid.
-  # Letter represents column and number represents row.
-  # Example: "a2" would be translated as [6, 0]
-
-  def translate_coords(coords)
-    letter = COORDINATES[coords[0]]
-    number = COORDINATES[coords[1]]
-
-    [number, letter]
-  end
 
   def get_piece(from)
     grid[row(from)][column(from)]

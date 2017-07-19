@@ -26,7 +26,7 @@ class King < Piece
   end
 
   def in_check?
-    @board.last_moved_piece.allowed_move?(position)
+    @board.last_moved_piece.valid_destinations.include?(position)
   end
 
   def cannot_escape?

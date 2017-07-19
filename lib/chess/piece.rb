@@ -10,6 +10,8 @@ class Piece
   end
 
   def allowed_move?(to)
+    return false if king.in_check? && piece_is_not_a_king
+
     valid_destinations.include?(to)
   end
 
@@ -54,6 +56,20 @@ class Piece
   end
 
   private
+
+  def king
+    select_king || NullPiece.new
+  end
+
+  def select_king
+    @board.grid.flatten.select do |piece|
+      piece.is_a?(King) && piece.color == color
+    end.first
+  end
+
+  def piece_is_not_a_king
+    self.class != King
+  end
 
   def valid_move?(row, column)
     return false unless move_inside_board?(row, column)

@@ -11,6 +11,14 @@ class NullPiece
     false
   end
 
+  def valid_destinations
+    []
+  end
+
+  def in_check?
+    false
+  end
+
   def moved_two?
     false
   end

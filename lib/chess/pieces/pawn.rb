@@ -21,6 +21,8 @@ class Pawn < Piece
   end
 
   def allowed_move?(to)
+    return false if king.in_check?
+
     prepare_allowed_moves
     capturing_moves = prepare_capturing_moves(to)
     (capturing_moves + valid_destinations).include?(to)

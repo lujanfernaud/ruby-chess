@@ -83,9 +83,7 @@ class Move < Board
   end
 
   def castling_possible?
-    return board.move_not_possible unless castling?
-
-    castling?
+    board.move_not_possible || castling?
   end
 
   def castling?

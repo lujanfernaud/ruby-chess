@@ -55,10 +55,6 @@ class Piece
 
   private
 
-  def opponent_in_square?(row, column)
-    @board.grid[row][column].color == opponent_color
-  end
-
   def valid_move?(row, column)
     return false unless move_inside_board?(row, column)
     empty_path?(row, column) && not_player_piece_in?(row, column)
@@ -82,11 +78,11 @@ class Piece
   end
 
   def not_player_piece_in?(row, column)
-    opponent_in_square(row, column) || empty_square?(row, column)
+    opponent_in_square?(row, column) || empty_square?(row, column)
   end
 
-  def opponent_in_square(row, column)
-    @board.grid[row][column].color != @color
+  def opponent_in_square?(row, column)
+    @board.grid[row][column].color == opponent_color
   end
 
   def empty_square?(row, column)

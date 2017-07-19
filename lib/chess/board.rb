@@ -141,20 +141,10 @@ class Board
   end
 
   def king
-    @last_moved_piece.color == :black ? white_king : black_king
+    @last_moved_piece.color == :black ? select_king(:white) : select_king(:black)
   end
 
-  def white_king
-    select_king(color: :white)
-  end
-
-  def black_king
-    select_king(color: :black)
-  end
-
-  def select_king(color:)
-    grid.flatten
-        .select { |piece| piece.is_a?(King) && piece.color == color }
-        .first
+  def select_king(color)
+    grid.flatten.select { |piece| piece.is_a?(King) && piece.color == color }[0]
   end
 end

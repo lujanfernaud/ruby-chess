@@ -1,6 +1,6 @@
 # Controls game flow.
 class Game
-  attr_reader :board, :screen, :player1, :player2, :players
+  attr_reader :board, :screen, :player1, :player2
   attr_reader :current_player, :next_player
 
   def initialize(player1, player2)
@@ -8,7 +8,6 @@ class Game
     @screen         = Screen.new(board)
     @player1        = player1
     @player2        = player2
-    @players        = [player1, player2]
     @current_player = nil
     @next_player    = nil
   end
@@ -47,6 +46,10 @@ class Game
   end
 
   private
+
+  def players
+    [player1, player2]
+  end
 
   def players_turns
     loop do

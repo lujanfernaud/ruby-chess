@@ -86,6 +86,10 @@ class Pawn < Piece
     opponent_in_destination?(row, column, to) || en_passant?(to)
   end
 
+  def opponent_in_destination?(row, column, to)
+    [row, column] == to && opponent_in_square?(row, column)
+  end
+
   def en_passant?(to)
     column = to[1]
     piece  = @board.grid[position[0]][column]

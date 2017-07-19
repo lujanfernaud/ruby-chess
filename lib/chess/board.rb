@@ -110,7 +110,7 @@ class Board
 
   def king_in_check
     screen.print_board
-    puts "The #{current_piece.opponent_color} king is in check!\n\n"
+    puts "The #{current_piece.opponent_color} king is in check.\n\n"
     game.next_turn
   end
 

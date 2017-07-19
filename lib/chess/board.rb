@@ -15,9 +15,9 @@ class Board
     @en_passant       = false
   end
 
-  def move_piece(player, coords)
-    from = Coordinates.translate(coords[0..1])
-    to   = Coordinates.translate(coords[2..3])
+  def move_piece(player, coordinates)
+    from = Coordinates.translate(coordinates[0..1])
+    to   = Coordinates.translate(coordinates[2..3])
 
     @current_player = player
     @current_piece  = get_piece(from)
@@ -48,12 +48,12 @@ class Board
     grid[row(from)][column(from)]
   end
 
-  def row(coords)
-    coords[0]
+  def row(coordinates)
+    coordinates[0]
   end
 
-  def column(coords)
-    coords[1]
+  def column(coordinates)
+    coordinates[1]
   end
 
   def incorrect_color

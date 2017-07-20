@@ -1,3 +1,5 @@
+require "yaml"
+
 require_relative "chess/game_setup"
 require_relative "chess/player"
 require_relative "chess/game"

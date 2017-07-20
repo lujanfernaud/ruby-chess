@@ -84,11 +84,66 @@ class Game
 
   def sanitize_movement(movement)
     loop do
-      return movement if movement =~ /\A[a-h][1-8][a-h][1-8]\z/
-      return finish   if movement =~ /exit/
+      return movement  if movement =~ /\A[a-h][1-8][a-h][1-8]\z/
+      return save_game if movement =~ /save/
+      return load_game if movement =~ /load/
+      return finish    if movement =~ /exit/
 
       movement = please_introduce_a_correct_movement
     end
+  end
+
+  def save_game
+    yaml = YAML.dump(game_data)
+
+    File.open(game_file, "w") { |file| file.puts yaml }
+
+    retry_turn_printing(game_saved)
+  end
+
+  def load_game
+    yaml = YAML.load(File.open(game_file))
+
+    update_game_data_from(yaml)
+
+    retry_turn_printing(game_loaded)
+  end
+
+  def game_data
+    { "board"          => board,
+      "screen"         => screen,
+      "player1"        => player1,
+      "player2"        => player2,
+      "current_player" => current_player,
+      "next_player"    => next_player }
+  end
+
+  def game_file
+    "saved_game.yaml"
+  end
+
+  def update_game_data_from(yaml)
+    @board          = yaml["board"]
+    @screen         = yaml["screen"]
+    @player1        = yaml["player1"]
+    @player2        = yaml["player2"]
+    @current_player = yaml["current_player"]
+    @next_player    = yaml["next_player"]
+  end
+
+  def retry_turn_printing(message)
+    screen.print_board
+    puts message
+    retry_turn
+    players_turns
+  end
+
+  def game_saved
+    "Game saved.\n\n"
+  end
+
+  def game_loaded
+    "Game loaded.\n\n"
   end
 
   def please_introduce_a_correct_movement

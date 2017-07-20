@@ -15,6 +15,10 @@ class NullPiece
     []
   end
 
+  def left_in_check?(_destination)
+    false
+  end
+
   def in_check?
     false
   end

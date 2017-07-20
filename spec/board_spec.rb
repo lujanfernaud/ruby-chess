@@ -634,6 +634,40 @@ describe Board do
       end
     end
 
+    context "when moving a white piece leaves the king in check" do
+      before do
+        grid[1][0] = null_piece
+        grid[6][4] = null_piece
+        board.move_piece(player_white, "e1e2")
+        board.move_piece(player_white, "e2e3")
+        board.move_piece(player_white, "d2d3")
+        board.move_piece(player_black, "a8a3")
+      end
+
+      it "returns 'The move is not possible.'" do
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_white, "d3d4")
+        expect(board).to have_received(:puts).with(move_not_possible)
+      end
+    end
+
+    context "when moving a black piece leaves the king in check" do
+      before do
+        grid[6][0] = null_piece
+        grid[1][4] = null_piece
+        board.move_piece(player_black, "e8e7")
+        board.move_piece(player_black, "e7e6")
+        board.move_piece(player_black, "d7d6")
+        board.move_piece(player_white, "a1a6")
+      end
+
+      it "returns 'The move is not possible.'" do
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_black, "d6d5")
+        expect(board).to have_received(:puts).with(move_not_possible)
+      end
+    end
+
     context "the white king is in checkmate" do
       before do
         grid[1][2] = null_piece  # Remove pawn in front of black bishop.

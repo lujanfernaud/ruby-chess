@@ -11,6 +11,7 @@ class Piece
 
   def allowed_move?(to)
     return false if king.in_check? && piece_is_not_a_king
+    return false if king.left_in_check?(position)
 
     valid_destinations.include?(to)
   end

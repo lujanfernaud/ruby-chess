@@ -25,6 +25,16 @@ class King < Piece
     !valid_destinations.empty?
   end
 
+  def left_in_check?(destination)
+    piece_from_destination = @board.grid[destination[0]][destination[1]]
+
+    remove_piece_from(destination)
+    result = opponent_destinations.include?(position)
+    place_back_to(destination, piece_from_destination)
+
+    result
+  end
+
   def in_check?
     @board.last_moved_piece.valid_destinations.include?(position)
   end

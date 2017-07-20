@@ -22,6 +22,7 @@ class Pawn < Piece
 
   def allowed_move?(to)
     return false if king.in_check?
+    return false if king.left_in_check?(position)
 
     prepare_allowed_moves
     capturing_moves = prepare_capturing_moves(to)

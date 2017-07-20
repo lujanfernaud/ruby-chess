@@ -74,24 +74,24 @@ class Piece
   def valid_move?(row, column)
     return false unless move_inside_board?(row, column)
 
-    empty_path?(row, column) && not_player_piece_in?(row, column)
+    empty_path_to?(row, column) && not_player_piece_in?(row, column)
   end
 
   def valid_tresspassing_move?(row, column)
     return false unless move_inside_board?(row, column)
 
-    empty_path_tresspassing?(row, column) && not_player_piece_in?(row, column)
+    empty_path_tresspassing_to?(row, column) && not_player_piece_in?(row, column)
   end
 
   def move_inside_board?(row, column)
     (0..7).cover?(row) && (0..7).cover?(column)
   end
 
-  def empty_path?(row, column)
+  def empty_path_to?(row, column)
     Path.empty?(grid: @board.grid, piece: self, to: [row, column])
   end
 
-  def empty_path_tresspassing?(row, column)
+  def empty_path_tresspassing_to?(row, column)
     Path.empty_tresspassing?(grid: @board.grid, piece: self, to: [row, column])
   end
 

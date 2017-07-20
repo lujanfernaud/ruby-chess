@@ -36,11 +36,13 @@ class King < Piece
 
   def can_castle_to?(side)
     return false unless initial_position? && side
+
     (castling_destinations(side) - opponent_destinations).size == 2
   end
 
   def castling_destination(side)
     return unless initial_position? && side
+
     CASTLING_POSITIONS[color][side].first
   end
 

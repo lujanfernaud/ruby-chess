@@ -73,11 +73,13 @@ class Piece
 
   def valid_move?(row, column)
     return false unless move_inside_board?(row, column)
+
     empty_path?(row, column) && not_player_piece_in?(row, column)
   end
 
   def valid_tresspassing_move?(row, column)
     return false unless move_inside_board?(row, column)
+
     empty_path_tresspassing?(row, column) && not_player_piece_in?(row, column)
   end
 

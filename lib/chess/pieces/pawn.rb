@@ -21,7 +21,7 @@ class Pawn < Piece
   end
 
   def valid_destinations
-    prepare_allowed_moves
+    prepare_moves
     valid_moves + valid_capturing_moves
   end
 
@@ -40,22 +40,18 @@ class Pawn < Piece
 
   private
 
-  def prepare_allowed_moves
-    if color == :white
-      set_allowed_moves_for_white
-    else
-      set_allowed_moves_for_black
-    end
+  def prepare_moves
+    color == :white ? set_moves_for_white : set_moves_for_black
   end
 
-  def set_allowed_moves_for_white
+  def set_moves_for_white
     @allowed_moves = []
     @allowed_moves << [-1, 0] if empty_position?(-1)
     @allowed_moves << [-2, 0] if initial_position? && empty_position?(-2)
     @capturing_moves = [[-1, -1], [-1, 1]]
   end
 
-  def set_allowed_moves_for_black
+  def set_moves_for_black
     @allowed_moves = []
     @allowed_moves << [1, 0] if empty_position?(1)
     @allowed_moves << [2, 0] if initial_position? && empty_position?(2)

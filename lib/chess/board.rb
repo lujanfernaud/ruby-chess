@@ -16,8 +16,8 @@ class Board
   end
 
   def move_piece(player, coordinates)
-    from = Coordinates.translate(coordinates[0..1])
-    to   = Coordinates.translate(coordinates[2..3])
+    from = Coordinates.translate_to_numeric(coordinates[0..1])
+    to   = Coordinates.translate_to_numeric(coordinates[2..3])
 
     @current_player = player
     @current_piece  = get_piece(from)
@@ -30,6 +30,12 @@ class Board
     return king_in_checkmate if king_in_checkmate?
     return king_in_check     if king_in_check?
     return stalemate         if stalemate?
+  end
+
+  def possible_moves_for(position)
+    piece_position = Coordinates.translate_to_numeric(position)
+    piece = grid[row(piece_position)][column(piece_position)]
+    game.retry_turn_printing(destinations_for(piece, position))
   end
 
   protected
@@ -134,5 +140,29 @@ class Board
 
   def select_king(color)
     grid.flatten.select { |piece| piece.is_a?(King) && piece.color == color }[0]
+  end
+
+  def destinations_for(piece, position)
+    destinations = find_destinations_for(piece)
+
+    return no_possible_destinations_for(piece, position) if destinations.empty?
+
+    possible_destinations_for(piece, position, destinations)
+  end
+
+  def find_destinations_for(piece)
+    piece.valid_destinations.each_with_object [] do |destination, result|
+      result << Coordinates.translate_to_alphanumeric(destination)
+    end.join(", ")
+  end
+
+  def no_possible_destinations_for(piece, position)
+    return "There is no piece in #{position}.\n\n" if piece.is_a?(NullPiece)
+
+    "There are no possible destinations for #{piece.class} in #{position}.\n\n"
+  end
+
+  def possible_destinations_for(piece, position, destinations)
+    "Possible destinations for #{piece.class} in #{position}:\n#{destinations}\n\n"
   end
 end

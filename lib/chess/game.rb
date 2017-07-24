@@ -22,6 +22,13 @@ class Game
     player_turn_without_printing_board
   end
 
+  def retry_turn_printing(message)
+    screen.print_board
+    puts message
+    retry_turn
+    players_turns
+  end
+
   def next_turn
     save_players_based_on(next_player)
     player_turn_without_printing_board
@@ -79,11 +86,13 @@ class Game
 
   def input(player)
     puts "#{player.name}, introduce a movement:"
-    sanitize_movement(gets.chomp.downcase)
+    sanitize(gets.chomp.downcase)
   end
 
-  def sanitize_movement(movement)
+  def sanitize(movement)
     loop do
+      return board.possible_moves_for(movement) if movement =~ /\A[a-h][1-8]\z/
+
       return movement  if movement =~ /\A[a-h][1-8][a-h][1-8]\z/
       return save_game if movement =~ /save/
       return load_game if movement =~ /load/
@@ -129,13 +138,6 @@ class Game
     @player2        = yaml["player2"]
     @current_player = yaml["current_player"]
     @next_player    = yaml["next_player"]
-  end
-
-  def retry_turn_printing(message)
-    screen.print_board
-    puts message
-    retry_turn
-    players_turns
   end
 
   def game_saved

@@ -814,4 +814,47 @@ describe Board do
       end
     end
   end
+
+  describe "#possible_moves_for" do
+    context "when the possition is a2" do
+      it "returns 'a3, a4'" do
+        message = "Possible destinations for Pawn in a2:\na3, a4\n\n"
+        allow(game).to receive(:retry_turn_printing).with(message)
+        board.possible_moves_for("a2")
+        expect(game).to have_received(:retry_turn_printing).with(message)
+      end
+    end
+
+    context "when the possition is a4 and there's a capturing move" do
+      before do
+        board.move_piece(player_white, "a2a4")
+        board.move_piece(player_black, "b7b5")
+      end
+
+      it "returns 'a5, b5'" do
+        message = "Possible destinations for Pawn in a4:\na5, b5\n\n"
+        allow(game).to receive(:retry_turn_printing).with(message)
+        board.possible_moves_for("a4")
+        expect(game).to have_received(:retry_turn_printing).with(message)
+      end
+    end
+
+    context "when the are no possible destinations" do
+      it "returns 'No possible destinatiions'" do
+        message = "There are no possible destinations for King in e1.\n\n"
+        allow(game).to receive(:retry_turn_printing).with(message)
+        board.possible_moves_for("e1")
+        expect(game).to have_received(:retry_turn_printing).with(message)
+      end
+    end
+
+    context "when the is no piece in the position" do
+      it "returns 'There is no piece in position'" do
+        message = "There is no piece in e4.\n\n"
+        allow(game).to receive(:retry_turn_printing).with(message)
+        board.possible_moves_for("e4")
+        expect(game).to have_received(:retry_turn_printing).with(message)
+      end
+    end
+  end
 end

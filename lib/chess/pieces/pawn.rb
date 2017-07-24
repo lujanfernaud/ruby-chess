@@ -20,13 +20,9 @@ class Pawn < Piece
     @moved_two     = false
   end
 
-  def allowed_move?(to)
-    return false if king.in_check?
-    return false if king.left_in_check?(position)
-
+  def valid_destinations
     prepare_allowed_moves
-    capturing_moves = prepare_capturing_moves(to)
-    (capturing_moves + valid_destinations).include?(to)
+    valid_moves + valid_capturing_moves
   end
 
   def can_be_promoted?(to)
@@ -77,27 +73,32 @@ class Pawn < Piece
     INITIAL_POSITIONS[color].include?(position)
   end
 
-  def prepare_capturing_moves(to)
+  def valid_moves
+    allowed_moves.map do |move|
+      row    = position[0] + move[0]
+      column = position[1] + move[1]
+      [row, column] if valid_move?(row, column)
+    end.compact
+  end
+
+  def valid_capturing_moves
     capturing_moves.map do |move|
       row    = position[0] + move[0]
       column = position[1] + move[1]
-      [row, column] if valid_capture?(row, column, to)
-    end
+      [row, column] if valid_capture?(row, column)
+    end.compact
   end
 
-  def valid_capture?(row, column, to)
-    opponent_in_destination?(row, column, to) || en_passant?(to)
+  def valid_capture?(row, column)
+    return false unless move_inside_board?(row, column)
+
+    opponent_in_square?(row, column) || en_passant?(row, column)
   end
 
-  def opponent_in_destination?(row, column, to)
-    [row, column] == to && opponent_in_square?(row, column)
-  end
+  def en_passant?(row, column)
+    piece = @board.grid[position[0]][column]
 
-  def en_passant?(to)
-    column = to[1]
-    piece  = @board.grid[position[0]][column]
-
-    return false unless empty_square?(to[0], column)
+    return false unless empty_square?(row, column)
 
     piece.moved_two && @board.en_passant
   end

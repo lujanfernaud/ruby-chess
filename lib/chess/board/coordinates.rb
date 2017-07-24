@@ -16,10 +16,18 @@ module Coordinates
                   "1" => 7, "2" => 6, "3" => 5, "4" => 4,
                   "5" => 3, "6" => 2, "7" => 1, "8" => 0 }.freeze
 
-  def self.translate(coordinates)
+  def self.translate_to_numeric(coordinates)
     letter = COORDINATES[coordinates[0]]
     number = COORDINATES[coordinates[1]]
 
     [number, letter]
+  end
+
+  def self.translate_to_alphanumeric(coordinates)
+    letter = COORDINATES.key(coordinates[1])
+    number = COORDINATES.select { |_key, value| value == coordinates[0] }
+                        .flatten.reverse[1]
+
+    letter + number
   end
 end

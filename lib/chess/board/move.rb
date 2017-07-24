@@ -111,6 +111,6 @@ class Move < Board
   end
 
   def update_en_passant
-    board.en_passant = current_piece.moved_two?
+    board.en_passant = current_piece.moved_two? ? current_piece : false
   end
 end

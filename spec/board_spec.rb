@@ -840,7 +840,7 @@ describe Board do
     end
 
     context "when the are no possible destinations" do
-      it "returns 'No possible destinatiions'" do
+      it "returns 'No possible destinations'" do
         message = "There are no possible destinations for King in e1.\n\n"
         allow(game).to receive(:retry_turn_printing).with(message)
         board.possible_moves_for("e1")
@@ -853,6 +853,22 @@ describe Board do
         message = "There is no piece in e4.\n\n"
         allow(game).to receive(:retry_turn_printing).with(message)
         board.possible_moves_for("e4")
+        expect(game).to have_received(:retry_turn_printing).with(message)
+      end
+    end
+
+    context "when the possition is b5 and there two pawns that moved two" do
+      before do
+        board.move_piece(player_white, "b2b4")
+        board.move_piece(player_black, "a7a5")
+        board.move_piece(player_white, "b4b5")
+        board.move_piece(player_black, "c7c5")
+      end
+
+      it "returns 'b6, c6'" do
+        message = "Possible destinations for Pawn in b5:\nb6, c6\n\n"
+        allow(game).to receive(:retry_turn_printing).with(message)
+        board.possible_moves_for("b5")
         expect(game).to have_received(:retry_turn_printing).with(message)
       end
     end

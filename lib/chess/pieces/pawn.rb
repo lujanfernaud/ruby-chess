@@ -96,7 +96,7 @@ class Pawn < Piece
 
     return false unless empty_square?(row, column)
 
-    piece.moved_two && @board.en_passant
+    piece.moved_two? && @board.en_passant == piece
   end
 
   def move_two_from_initial?(to)

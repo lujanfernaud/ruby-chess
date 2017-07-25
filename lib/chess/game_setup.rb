@@ -47,7 +47,10 @@ class GameSetup
   end
 
   def check_input(input)
-    input =~ /exit/ ? game.finish : input
+    return game.load_game if input =~ /load/
+    return game.finish    if input =~ /exit/
+
+    input
   end
 
   def set_players_colors
@@ -59,8 +62,9 @@ class GameSetup
 
   def sanitize_color(input)
     loop do
-      return input       if input == :black || input == :white
-      return game.finish if input =~ /exit/
+      return input          if input == :black || input == :white
+      return game.load_game if input =~ /load/
+      return game.finish    if input =~ /exit/
 
       input = please_introduce_black_or_white
     end

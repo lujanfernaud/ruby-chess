@@ -7,10 +7,26 @@ class Screen
     @grid  = board.grid
   end
 
+  def print_introduction
+    print_main_title
+    print_instructions
+  end
+
+  def print_main_title
+    clear
+    puts "   _____ _    _ ______  _____ _____"
+    puts "  / ____| |  | |  ____|/ ____/ ____|"
+    puts " | |    | |__| | |__  | (___| (___"
+    puts " | |    |  __  |  __|  \\___ \\\___  \\"
+    puts " | |____| |  | | |____ ____) |___) |"
+    puts "  \\_____|_|  |_|______|_____/_____/"
+    puts
+  end
+
   def print_board
     clear
     puts
-    print_game_title
+    print_game_header
     puts
     print_game_grid
     puts
@@ -22,7 +38,23 @@ class Screen
 
   private
 
-  def print_game_title
+  def print_instructions
+    puts "Available commands during the game:"
+    puts
+    puts "- exit"
+    puts "- save"
+    puts "- load"
+    puts
+    puts "To move a piece type the piece position and the destination."
+    puts "For example: 'a2a4'"
+    puts
+    puts "To see available destinations for a piece type only the piece position."
+    puts "For example: 'a2'"
+    puts
+    puts "Type 'load' or press ENTER to start the game."
+  end
+
+  def print_game_header
     puts "   #################################"
     puts "   #                               #"
     puts "   #             CHESS             #"

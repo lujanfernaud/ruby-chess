@@ -6,16 +6,22 @@ describe GameSetup do
 
   describe "#setup" do
     before do
-      allow(screen).to receive(:clear)
+      allow(screen).to receive(:print_introduction)
+      allow(screen).to receive(:print_main_title)
       allow(game_setup).to receive(:puts)
         .with("Please, introduce Player 1 name:")
-      allow(game_setup).to receive(:gets).and_return("Matz", "black", "Sandi")
+      allow(game_setup).to receive(:gets)
+        .and_return("", "Matz", "black", "Sandi")
       allow(game_setup).to receive(:puts)
         .with("Matz, do you want to be black or white?:")
       allow(game_setup).to receive(:puts)
         .with("Please, introduce Player 2 name:")
       allow(game_setup.game).to receive(:start)
       game_setup.setup
+    end
+
+    it "shows main screen" do
+      expect(screen).to have_received(:print_introduction)
     end
 
     it "sets player 1 name" do

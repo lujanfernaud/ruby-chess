@@ -10,6 +10,7 @@ class GameSetup
   end
 
   def setup
+    introduction
     ask_names_and_colors
     game.start
   rescue Interrupt
@@ -18,6 +19,21 @@ class GameSetup
 
   private
 
+  def introduction
+    screen.print_introduction
+    sanitize_command(gets.chomp.downcase)
+  end
+
+  def sanitize_command(input)
+    loop do
+      return game.load_game if input =~ /load/
+      return game.finish    if input =~ /exit/
+      break                 if input.empty?
+
+      introduction
+    end
+  end
+
   def ask_names_and_colors
     ask_name_for(player1)
     set_players_colors
@@ -25,7 +41,7 @@ class GameSetup
   end
 
   def ask_name_for(player)
-    screen.clear
+    screen.print_main_title
     puts "Please, introduce #{player.name} name:"
     player.name = check_input(gets.chomp)
   end
@@ -35,7 +51,7 @@ class GameSetup
   end
 
   def set_players_colors
-    screen.clear
+    screen.print_main_title
     puts "#{player1.name}, do you want to be black or white?:"
     player1.color = sanitize_color(gets.chomp.downcase.to_sym)
     player2.color = choose_player2_color
@@ -51,7 +67,7 @@ class GameSetup
   end
 
   def please_introduce_black_or_white
-    screen.clear
+    screen.print_main_title
     puts "Please #{player1.name}, introduce 'black' or 'white':"
     gets.chomp.downcase.to_sym
   end

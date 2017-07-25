@@ -52,6 +52,14 @@ class Game
     exit
   end
 
+  def load_game
+    yaml = YAML.load(File.open(game_file))
+
+    update_game_data_from(yaml)
+
+    retry_turn_printing(game_loaded)
+  end
+
   private
 
   def players
@@ -108,14 +116,6 @@ class Game
     File.open(game_file, "w") { |file| file.puts yaml }
 
     retry_turn_printing(game_saved)
-  end
-
-  def load_game
-    yaml = YAML.load(File.open(game_file))
-
-    update_game_data_from(yaml)
-
-    retry_turn_printing(game_loaded)
   end
 
   def game_data

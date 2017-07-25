@@ -153,7 +153,7 @@ class Board
   def find_destinations_for(piece)
     piece.valid_destinations.each_with_object [] do |destination, result|
       result << Coordinates.translate_to_alphanumeric(destination)
-    end.join(", ")
+    end.sort.join(", ")
   end
 
   def no_possible_destinations_for(piece, position)

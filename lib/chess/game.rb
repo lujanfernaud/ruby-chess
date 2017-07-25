@@ -63,7 +63,11 @@ class Game
   private
 
   def players
-    [player1, player2]
+    [player(:white), player(:black)]
+  end
+
+  def player(color)
+    [player1, player2].select { |player| player.color == color }.first
   end
 
   def players_turns

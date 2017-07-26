@@ -6,8 +6,6 @@ All the rules of chess are implemented, including en passant, pawn promotion and
 
 It may be run with `ruby play.rb`
 
-*This is a work in progress.*
-
 ## TO-DO
 
 - Implement AI

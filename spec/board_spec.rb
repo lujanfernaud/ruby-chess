@@ -67,7 +67,7 @@ describe Board do
     context "when the color of the player and the piece are not the same" do
       it "says so when the player is white and the piece black" do
         allow(board).to receive(:puts).with(same_color_white)
-        board.move_piece(player_white, "a6a5")
+        board.move_piece(player_white, "a7a5")
         expect(board).to have_received(:puts).with(same_color_white)
       end
 
@@ -75,6 +75,22 @@ describe Board do
         allow(board).to receive(:puts).with(same_color_black)
         board.move_piece(player_black, "b2b3")
         expect(board).to have_received(:puts).with(same_color_black)
+      end
+    end
+
+    context "when there is no piece in the initial position" do
+      it "returns 'There is no piece in a6.'" do
+        message = "There is no piece in a6.\n\n"
+        allow(board).to receive(:puts).with(message)
+        board.move_piece(player_white, "a6a5")
+        expect(board).to have_received(:puts).with(message)
+      end
+
+      it "returns 'There is no piece in b3.'" do
+        message = "There is no piece in b3.\n\n"
+        allow(board).to receive(:puts).with(message)
+        board.move_piece(player_black, "b3b4")
+        expect(board).to have_received(:puts).with(message)
       end
     end
 

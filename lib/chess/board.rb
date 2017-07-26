@@ -22,6 +22,7 @@ class Board
     @current_player = player
     @current_piece  = get_piece(from)
 
+    return no_piece(from)    unless piece_in_position?
     return incorrect_color   unless current_piece.color == current_player.color
     return move_not_possible unless current_piece.allowed_move?(to)
 
@@ -60,6 +61,17 @@ class Board
 
   def column(coordinates)
     coordinates[1]
+  end
+
+  def no_piece(position)
+    screen.print_board
+    coordinates = Coordinates.translate_to_alphanumeric(position)
+    puts "There is no piece in #{coordinates}.\n\n"
+    game.retry_turn
+  end
+
+  def piece_in_position?
+    !current_piece.is_a?(NullPiece)
   end
 
   def incorrect_color

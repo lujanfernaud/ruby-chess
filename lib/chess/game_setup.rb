@@ -11,8 +11,9 @@ class GameSetup
 
   def setup
     introduction
-    ask_names_and_colors
     game.start
+  rescue Errno::ENOENT
+    no_saved_game
   rescue Interrupt
     game.finish
   end
@@ -26,11 +27,11 @@ class GameSetup
 
   def sanitize_command(input)
     loop do
-      return game.load_game if input =~ /load/
-      return game.finish    if input =~ /exit/
-      break                 if input.empty?
+      return ask_names_and_colors if input.empty?
+      return game.load_game       if input =~ /load/
+      return game.finish          if input =~ /exit/
 
-      introduction
+      setup
     end
   end
 
@@ -38,6 +39,8 @@ class GameSetup
     ask_name_for(player1)
     set_players_colors
     ask_name_for(player2)
+  rescue Errno::ENOENT
+    no_saved_game
   end
 
   def ask_name_for(player)
@@ -78,5 +81,14 @@ class GameSetup
 
   def choose_player2_color
     player1.color == :black ? :white : :black
+  end
+
+  def no_saved_game
+    screen.print_main_title
+    puts "There is no saved game to load. Please press ENTER to continue."
+    sanitize_command(gets.chomp.downcase)
+    game.start
+  rescue Errno::ENOENT
+    no_saved_game
   end
 end

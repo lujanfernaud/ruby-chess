@@ -14,6 +14,8 @@ class Game
 
   def start
     players_turns
+  rescue Errno::ENOENT
+    no_saved_game
   rescue Interrupt
     finish
   end
@@ -27,6 +29,8 @@ class Game
     puts message
     retry_turn
     players_turns
+  rescue Errno::ENOENT
+    no_saved_game
   end
 
   def next_turn
@@ -142,6 +146,10 @@ class Game
     @player2        = yaml["player2"]
     @current_player = yaml["current_player"]
     @next_player    = yaml["next_player"]
+  end
+
+  def no_saved_game
+    retry_turn_printing("There is no saved game to load.\n\n")
   end
 
   def game_saved

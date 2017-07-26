@@ -64,7 +64,7 @@ class Screen
 
   def print_game_grid
     column_letters
-    separator
+    separator_top_and_bottom
     print_row(0)
     separator
     print_row(1)
@@ -80,7 +80,7 @@ class Screen
     print_row(6)
     separator
     print_row(7)
-    separator
+    separator_top_and_bottom
     column_letters
   end
 
@@ -88,8 +88,12 @@ class Screen
     puts "     a   b   c   d   e   f   g   h"
   end
 
-  def separator
+  def separator_top_and_bottom
     puts "   ---------------------------------"
+  end
+
+  def separator
+    puts "   |                               |"
   end
 
   def row_numbers
@@ -100,7 +104,7 @@ class Screen
     grid[row].each.with_index do |_column, column_index|
       print " #{row_numbers[row]}" if column_index.zero?
       print " | " if column_index.zero?
-      print " | " if (1..7).cover?(column_index)
+      print "   " if (1..7).cover?(column_index)
       print_square(row, column_index)
       print " |" if column_index == 7
       print " #{row_numbers[row]}\n" if column_index == 7

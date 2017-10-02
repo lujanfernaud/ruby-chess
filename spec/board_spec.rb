@@ -588,7 +588,7 @@ describe Board do
       end
     end
 
-    context "when the black king can't move to a possition where he is in check" do
+    context "when the black king can't move to a position where he is in check" do
       before do
         grid[6][4] = null_piece
         grid[1][0] = null_piece
@@ -603,7 +603,7 @@ describe Board do
       end
     end
 
-    context "when the white king can't move to a possition where he is in check" do
+    context "when the white king can't move to a position where he is in check" do
       before do
         grid[1][4] = null_piece
         grid[6][0] = null_piece
@@ -618,7 +618,7 @@ describe Board do
       end
     end
 
-    context "when the white king can't move to a possition where he is in check" do
+    context "when the white king can't move to a position where he is in check" do
       before do
         grid[6][4] = null_piece
         board.move_piece(player_black, "f7f5")
@@ -849,7 +849,7 @@ describe Board do
   end
 
   describe "#possible_moves_for" do
-    context "when the possition is a2" do
+    context "when the position is a2" do
       it "returns 'a3, a4'" do
         message = "Possible destinations for Pawn in a2:\na3, a4\n\n"
         allow(game).to receive(:retry_turn_printing).with(message)
@@ -858,7 +858,7 @@ describe Board do
       end
     end
 
-    context "when the possition is a4 and there's a capturing move" do
+    context "when the position is a4 and there's a capturing move" do
       before do
         board.move_piece(player_white, "a2a4")
         board.move_piece(player_black, "b7b5")
@@ -890,7 +890,7 @@ describe Board do
       end
     end
 
-    context "when the possition is b5 and there two pawns that moved two" do
+    context "when the position is b5 and there two pawns that moved two" do
       before do
         board.move_piece(player_white, "b2b4")
         board.move_piece(player_black, "a7a5")

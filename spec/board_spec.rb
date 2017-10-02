@@ -618,6 +618,23 @@ describe Board do
       end
     end
 
+    context "when the white king can't move to a possition where he is in check" do
+      before do
+        grid[6][4] = null_piece
+        board.move_piece(player_black, "f7f5")
+        board.move_piece(player_white, "e1e2")
+        board.move_piece(player_black, "g7g5")
+        board.move_piece(player_white, "e2e3")
+        board.move_piece(player_black, "f5f4")
+      end
+
+      it "returns 'The move is not possible.'" do
+        allow(board).to receive(:puts).with(move_not_possible)
+        board.move_piece(player_white, "e3f4")
+        expect(board).to have_received(:puts).with(move_not_possible)
+      end
+    end
+
     context "when the king is in check and the player wants to move another piece" do
       before do
         grid[1][0] = null_piece

@@ -76,16 +76,24 @@ class King < Piece
 
   def not_moving_into_check(escape_destinations)
     escape_destinations.each_with_object [] do |destination, result|
-      piece_from_destination = @board.grid[destination[0]][destination[1]]
-
-      remove_piece_from(destination)
-      result << destination unless opponent_destinations.include?(destination)
-      place_back_to(destination, piece_from_destination)
+      add_destination_if_move_possible_to(destination, result)
     end
+  end
+
+  def add_destination_if_move_possible_to(destination, result)
+    piece_from_destination = @board.grid[destination[0]][destination[1]]
+
+    place_king_in(destination)
+    result << destination unless opponent_destinations.include?(destination)
+    place_back_to(destination, piece_from_destination)
   end
 
   def remove_piece_from(destination)
     @board.grid[destination[0]][destination[1]] = NullPiece.new
+  end
+
+  def place_king_in(destination)
+    @board.grid[destination[0]][destination[1]] = self
   end
 
   def place_back_to(destination, piece_from_destination)

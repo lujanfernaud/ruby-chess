@@ -16,4 +16,4 @@ It may be run with `ruby play.rb`
 
 ## Author
 
-- [Luján Fernaud](https://github.com/lujanfernaud)
+[Luján Fernaud](https://github.com/lujanfernaud)
